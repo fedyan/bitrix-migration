@@ -7,6 +7,9 @@ class BitrixMigration
     protected $file = '';
     protected $dir = '';
 
+    protected $filter = array();
+    protected $setFilter = false;
+
     protected function init($file="restore.php")
     {
         CModule::IncludeModule("iblock");
@@ -17,15 +20,50 @@ class BitrixMigration
 
     }
 
+    protected function ajax()
+    {
+        if ($_REQUEST['ajax_call']=="Y"){
+
+            $this->filter = explode('&iblocks=','&'.$_REQUEST['results']);
+
+            if (count($this->filter)>0) $this->setFilter = true;
+            $this->getIbStructure();
+            print_r($this->generateFileContent());
+
+            die();
+        }
+
+    }
+
     public function start()
     {
+
+
+
         $this->init();
+        $this->ajax();
         $this->getIbStructure();
+
+        
         ?>
 
             <html>
             <head>
-                <title>title</title>
+                <title>Импорт Инфоблоков 1c-Bitrix</title>
+                <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+                <script>
+                    $(document).ready(function(){
+                          $("#iblocks-list").find("input").change( function(){
+                                var formInputs =  $("#iblocks-list").serialize();
+                              $.post("index.php", { ajax_call: "Y", results: formInputs },      function(data) {
+                                 //$("#addShowSuccess").empty().slideDown("slow").append(data);
+                                 $("#result_textarea").text(data);
+                              });
+
+                          });
+                    });
+
+                </script>
             </head>
             <body>
                 <div class="iblocks-lists">
@@ -35,7 +73,12 @@ class BitrixMigration
                         <li><b><?=$arIblockType['NAME']?></b>
                             <ul>
                             <?foreach ($arIblockType['IBLOCKS'] as $arIblock):?>
-                                <li><input type="checkbox" name="iblock<?=$arIblock['ID']?>"><?=$arIblock['NAME']?></li>
+                                <li>                                    
+                                    <input class="iblocks" id="iblock<?=$arIblock['ID']?>" type="checkbox" CHECKED name="iblocks" value="<?=$arIblock['ID']?>">
+                                    <label for="iblock<?=$arIblock['ID']?>">
+                                        <?=$arIblock['NAME']?>
+                                    </label>
+                                </li>
                             <?endforeach;?>
                             </ul>
                         </li>
@@ -45,7 +88,7 @@ class BitrixMigration
 
 
                 </div>
-               <textarea style="width:100%; height: 50%; position: relative; bottom: 0;">
+               <textarea id="result_textarea" style="width:100%; height: 50%; position: relative; bottom: 0;">
                 <?                
                 print_r($this->generateFileContent());                
                 ?>
@@ -125,7 +168,13 @@ class BitrixMigration
         while($ar_res = $res->Fetch()){
 
             $ar_res['PROPS'] = $this->getIBlocksProperties($ar_res['ID']);
+
             $arResult[$ar_res['CODE']] = $ar_res;
+
+            if ( $this->setFilter && !in_array($ar_res['ID'],$this->filter) )
+                unset($arResult[$ar_res['CODE']]);
+
+
 
         }
         return $arResult;
