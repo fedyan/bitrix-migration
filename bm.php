@@ -44,7 +44,7 @@ class BitrixMigration
     protected function init($file="restore.php")
     {
         $this->arrayName = 'arResult';
-        $this->dir = $_SERVER['DOCUMENT_ROOT'].'/_adv/bm/';
+        $this->dir = $_SERVER['DOCUMENT_ROOT'].'/bm/';
         $this->fullFileName = $this->dir.$file;
         $this->file = $file;
 
