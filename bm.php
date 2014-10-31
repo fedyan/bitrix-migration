@@ -91,17 +91,11 @@ class BitrixMigration
 
     public function start()
     {
-
         $this->init();
-
         if ($_REQUEST['ajax_call']=="Y") $this->ajax();
         if ($_REQUEST['save']=="Y") $this->saveFile();
-
         $this->getIbStructure();
-
-        
         ?>
-
         <html>
         <head>
             <title>Импорт Инфоблоков 1c-Bitrix</title>
@@ -161,9 +155,7 @@ class BitrixMigration
                         $("#result_textarea").text("");
                         $(".iblocks-lists").after("<div id='loader'>Загружается...</div>")
                         var formInputs = $("#iblocks-list").serialize();
-                        //console.log(formInputs);
                         $.post("index.php", { ajax_call: "Y", results: formInputs }, function (data) {
-                            //$("#addShowSuccess").empty().slideDown("slow").append(data);
                             $("#result_textarea").text(data);
                             $("#loader").remove();
                         });
@@ -193,24 +185,14 @@ class BitrixMigration
                 </ul>
             </form>
         </div>
-
         <input type="text" name="file-name" value="import.php">
         <input type="button" name="save" value="Сохранить в файл"> Внимание! Если такой файл уже существует, он будет перезаписан. Будьте внимательны!
-
         <textarea id="result_textarea" style="width:100%; height: 50%; position: relative; bottom: 0;">
-            <?
-            //print_r($this->generateFileContent());
-            ?>
+            Выберите один из инфоблоков.
         </textarea>
-
         </body>
         </html>
-
-
-        
         <?
-        
-
     }
 
     public function uploadArray( $arResult )
@@ -409,9 +391,6 @@ class BitrixMigration
     }
 
 
-
-
-
     protected static function arrayToString($array,$arrayName, $indent='    ')
     {
         if ($indent=='    ')
@@ -433,186 +412,5 @@ class BitrixMigration
         return $resultText;
     }
 
-    public function import($array)
-    {
-
-        $this->importIbStructure($array);
-
-    }
-    protected function importIbStructure($array)
-    {
-        //импорт Типов Инфо-блоков
-        foreach($array as $arIblockType){
-            $this->importIblockType($arIblockType);
-
-
-            //импорт инфоблоков
-            if (count($arIblockType['IBLOCKS'])>0){
-                foreach ($arIblockType['IBLOCKS'] as $arIblock){
-                    $this->importIblock($arIblock);
-
-
-                    //импорт свойств
-                    if (count($arIblockType['PROPS'])>0){
-                        foreach ($arIblockType['PROPS'] as $arProperty){
-                            $this->importProperty($arProperty);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    protected function importIblockType($arIblockType)
-    {
-        CModule::IncludeModule("iblock");
-        unset($arIblockType['IBLOCKS']);
-        $db_iblock_type = CIBlockType::GetList(array(),array('ID'=>$arIblockType['ID']));
-        $arResult = array();
-        if(!$db_iblock_type->Fetch()){
-
-            echo '$obBlocktype->Add<pre>';
-            print_r($arIblockType);
-            echo '</pre>';
-            /*$obBlocktype = new CIBlockType;
-            $DB->StartTransaction();
-            $res = $obBlocktype->Add($arIblockType);
-            if(!$res)
-            {
-                $DB->Rollback();
-                echo 'Error: '.$obBlocktype->LAST_ERROR.'<br>';
-            }
-            else
-                $DB->Commit();
-            */
-        }else{
-            echo 'Такой тип инфоблоков уже существует '.$arIblockType['ID'];
-        }
-    }
-
-    protected function importIblock($arIblock)
-    {
-
-        unset($arIblock['ID']);
-        unset($arIblock['PROPS']);
-        unset($arIblock['ELEMENT_CNT']);
-        unset($arIblock['TMP_ID']);
-        $arIblock['SITE_ID'] = $arIblock['LID'];
-        unset($arIblock['LID']);
-
-
-        $res = CIBlock::GetList(
-            Array(),
-            Array(
-                'TYPE'=>$arIblock['IBLOCK_TYPE_ID'],
-                "CODE"=>$arIblock['CODE']
-            ), true
-        );
-
-        $arFields = $this->clearFields($arIblock);
-        if(!$res->Fetch()){
-
-            $ib = new CIBlock;
-
-            echo '$ib->Add<pre>';
-            print_r($arFields);
-            echo '</pre>';
-            //$ID = $ib->Add($arFields);
-            //$res = ($ID>0);
-
-        }else {
-            echo 'Такой инфоблок уже существует '.$arFields['CODE'];
-            echo '$ib->Add<pre>';
-            print_r($arFields);
-            echo '</pre>';
-        }
-
-    }
-
-    /*
-     * "PRICE" => Array (
-                        "ID" => "16",
-                        "~ID" => "16",
-                        "TIMESTAMP_X" => "2014-03-31 20:23:04",
-                        "~TIMESTAMP_X" => "2014-03-31 20:23:04",
-                        "IBLOCK_ID" => "11",
-                        "~IBLOCK_ID" => "11",
-                        "NAME" => "Цена всего",
-                        "~NAME" => "Цена всего",
-                        "ACTIVE" => "Y",
-                        "~ACTIVE" => "Y",
-                        "SORT" => "20",
-                        "~SORT" => "20",
-                        "CODE" => "PRICE",
-                        "~CODE" => "PRICE",
-                        "DEFAULT_VALUE" => "",
-                        "~DEFAULT_VALUE" => "",
-                        "PROPERTY_TYPE" => "N",
-                        "~PROPERTY_TYPE" => "N",
-                        "ROW_COUNT" => "1",
-                        "~ROW_COUNT" => "1",
-                        "COL_COUNT" => "30",
-                        "~COL_COUNT" => "30",
-                        "LIST_TYPE" => "L",
-                        "~LIST_TYPE" => "L",
-                        "MULTIPLE" => "N",
-                        "~MULTIPLE" => "N",
-                        "XML_ID" => "",
-                        "~XML_ID" => "",
-                        "FILE_TYPE" => "",
-                        "~FILE_TYPE" => "",
-                        "MULTIPLE_CNT" => "5",
-                        "~MULTIPLE_CNT" => "5",
-                        "TMP_ID" => "",
-                        "~TMP_ID" => "",
-                        "LINK_IBLOCK_ID" => "0",
-                        "~LINK_IBLOCK_ID" => "0",
-                        "WITH_DESCRIPTION" => "N",
-                        "~WITH_DESCRIPTION" => "N",
-                        "SEARCHABLE" => "N",
-                        "~SEARCHABLE" => "N",
-                        "FILTRABLE" => "N",
-                        "~FILTRABLE" => "N",
-                        "IS_REQUIRED" => "N",
-                        "~IS_REQUIRED" => "N",
-                        "VERSION" => "1",
-                        "~VERSION" => "1",
-                        "USER_TYPE" => "",
-                        "~USER_TYPE" => "",
-                        "USER_TYPE_SETTINGS" => "",
-                        "~USER_TYPE_SETTINGS" => "",
-                        "HINT" => "",
-                        "~HINT" => "",
-                    ),
-     * */
-    protected function importProperty($arProperty,$iblockId)
-    {
-
-        $arProperty = $this->clearFields($arProperty);
-        unset($arProperty['ID']);
-        $properties = CIBlockProperty::GetList(Array("sort"=>"asc"), Array("ACTIVE"=>"Y", "IBLOCK_ID"=>$iblockId,"CODE"=>$arProperty['CODE']));
-        if (!$properties->GetNext()){
-
-            $ibp = new CIBlockProperty;
-            if ($PropID = $ibp->Add($arProperty)) echo 'Свойство добавлено!';
-
-        }else {
-            echo 'Свойство "'.$arProperty['NAME'].'" уже есть.';
-        }
-
-    }
-
-
-
-    protected function clearFields($arFields)
-    {
-        $arNewFields = array();
-        foreach ($arFields as $key=>$value){
-            if (substr($key,0,1)!='~')
-                $arNewFields[$key] = $value;
-        }
-        return $arNewFields;
-    }
 }
-
 ?>
