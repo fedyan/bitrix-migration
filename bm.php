@@ -282,7 +282,7 @@ class BitrixMigration
         $arrayString = self::arrayToString( $this->arResult ,$this->arrayName,'    ');
         $content = "<?php \n";
         $content .= "require(\$_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_before.php'); \n";
-        $content .= "include(\"BitrixMigration.php\");\n";
+        $content .= "include(\"bm.php\");\n";
         $content .= $arrayString;
         $content .= "\$bm = new BitrixMigration();\n";
         $content .= "\$bm->uploadArray(\$arResult);\n";
