@@ -99,6 +99,14 @@ class BitrixMigration
             <script>
                 var currentScriptName = '<?php echo $this->scriptName?>';
                 $(document).ready(function () {
+
+
+                    var resultMessage = function(text,color){
+                        $("#save-results").remove();
+                        var resDiv = $("<div>").attr("id","save-results").html(text).css({'color':color,'font-weight':'bold'});
+                        $(".iblocks-lists").after(resDiv);
+                    }
+
                     $("#iblocks-list").find("input").change(function () {
                         sendRequest();
 
@@ -106,7 +114,7 @@ class BitrixMigration
 
                     $("input[name=save]").click(function () {
                         if ( $("#result_textarea").text().length<=0 ) {
-                            console.log('no code');
+                            resultMessage('Выберите один из инфоблоков.','red');
                             return false;
                         }
                         var context$ = $(this);
@@ -124,14 +132,14 @@ class BitrixMigration
                                  if (data=="True") {
                                      sFileName += '.php';
                                      var fileLink = $("<a>").attr("href",sFileName).text("Запустить его.");
-                                     var resDiv = $("<div>").attr("id","save-results").text("Файл сохранен.").append(fileLink);
-                                     $(".iblocks-lists").after(resDiv);
+                                     var resText = $("<span>").text("Файл сохранен.").append(fileLink);
+                                     resultMessage(resText,'green');
+
                                  }else {
-                                     var resDiv = $("<div>").attr("id","save-results").html("Возникли проблемы при сохранение файла. Возможные причины: <br />" +
+                                     resultMessage("Возникли проблемы при сохранение файла. Возможные причины: <br />" +
                                          "- Имя файла может состоять из букв латинского алфавита и цифр, <br />" +
                                          "- Такой файл не должен существовать. <br />" +
-                                         "- Возможно у скрипта не хватает прав на запись в эту папку").css({'color':'red','font-weight':'bold'});
-                                     $(".iblocks-lists").after(resDiv);
+                                         "- Возможно у скрипта не хватает прав на запись в эту папку",'red');
                                  }
 
                                  $("#loader").remove();
@@ -193,7 +201,7 @@ class BitrixMigration
                     <? endforeach; ?>
                 </ul>
             </form>
-            
+
         </div>
         <input type="text" name="file-name" value="import">
         <input type="button" name="save" value="Сохранить в файл"> или можете сделать copy&paste кода:
