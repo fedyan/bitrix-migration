@@ -6,18 +6,17 @@
  * @author Verbovenko Fyodor <4fyodor@gmail.com>
  * @version 1.0
  */
-//TODO Сделать проверку доступа
 
 class BitrixMigration
 {
     protected $arResult = array();
     protected $arrayName = NULL;
-    protected $fullFileName = '';
-    protected $file = '';
-    protected $dir = '';
+
 
     protected $filter = array();
     protected $setFilter = false;
+
+    protected $scriptName = "";
 
     protected $arRequiredProps =  array("CODE","NAME","ACTIVE","SORT","IS_REQUIRED","MULTIPLE","MULTIPLE_CNT","PROPERTY_TYPE","LINK_IBLOCK_ID", "USER_TYPE","FILE_TYPE");
     protected $arRequiredEnumFields =  array("VALUE","DEF","SORT","EXTERNAL_ID");
@@ -36,57 +35,46 @@ class BitrixMigration
 
     protected $iblockIdByCode = array();
 
-    public function __construct()
+    public function __construct($scriptName)
     {
         CModule::IncludeModule("iblock");
+        $this->scriptName = basename( $scriptName );
     }
 
-    protected function init($file="restore.php")
+    protected function init()
     {
         $this->arrayName = 'arResult';
-        $this->dir = $_SERVER['DOCUMENT_ROOT'].'/bm/';
-        $this->fullFileName = $this->dir.$file;
-        $this->file = $file;
 
     }
 
     protected function ajax()
     {
-        //iblockType=mind&iblocks=27&iblock_elements=27
-        $this->filter = $this->parseAjaxRequest($_REQUEST['results']); //explode('&iblocks=','&'.$_REQUEST['results']);
-        if (count($this->filter)>0) $this->setFilter = true;
-        $this->getIbStructure();
-        print_r($this->generateFileContent());
-
+        if (isset($_REQUEST['iblocks'][0])){
+            $this->filter = $_REQUEST;
+            if (count($this->filter)>0) $this->setFilter = true;
+            $this->getIbStructure();
+            print_r($this->generateFileContent());
+        }
         exit();
     }
 
     protected function saveFile()
     {
-        $fileName = $_REQUEST['file'];
+        $fileName = preg_replace("/\W/i", "",$_REQUEST['file']);
         $scriptString = $_REQUEST['script'];
-        $res = file_put_contents($fileName,$scriptString);
-        if ($res>0)
-            echo 'True';
-        else
+        $ext = '.php';
+        if ( !file_exists($fileName.$ext) && $fileName===$_REQUEST['file']){
+            $fileName = $fileName.$ext;
+            $res = file_put_contents($fileName,$scriptString);
+            if ($res>0)
+                echo 'True';
+            else
+                echo 'False';
+        }else {
             echo 'False';
+        }
 
         exit();
-    }
-
-
-
-
-    //iblockType=mind&iblocks=27&iblock_elements=27
-    protected function parseAjaxRequest($request)
-    {
-        $arParams = explode('&',$request);
-        $arResult = array();
-        foreach ($arParams as $sParam){
-            $arTemp = explode('=', $sParam);
-            $arResult[$arTemp[0]][] = $arTemp[1];
-        }
-        return $arResult;
     }
 
     public function start()
@@ -95,18 +83,21 @@ class BitrixMigration
         if ($_REQUEST['ajax_call']=="Y") $this->ajax();
         if ($_REQUEST['save']=="Y") $this->saveFile();
         $this->getIbStructure();
+
+        if (empty($this->arResult) ) die('Инфоблоки не найдены.');
         ?>
         <html>
         <head>
             <title>Импорт Инфоблоков 1c-Bitrix</title>
             <style>
-                .disabled {
-                    color: #ddd;
-                }
+                .disabled {color: #ddd;}
+                label, input[type=button] {cursor: pointer;}
+                li{list-style: none}
+
             </style>
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
             <script>
-                var ajaxPath = "index.php";
+                var currentScriptName = '<?php echo $this->scriptName?>';
                 $(document).ready(function () {
                     $("#iblocks-list").find("input").change(function () {
                         sendRequest();
@@ -114,6 +105,10 @@ class BitrixMigration
                     });
 
                     $("input[name=save]").click(function () {
+                        if ( $("#result_textarea").text().length<=0 ) {
+                            console.log('no code');
+                            return false;
+                        }
                         var context$ = $(this);
                         if (!$(this).hasClass("disabled")) {
                             $(this).addClass("disabled");
@@ -123,12 +118,19 @@ class BitrixMigration
 
                             $(".iblocks-lists").after("<div id='loader'>Загружается...</div>")
 
-                            $.post( ajaxPath,{save:"Y",file:sFileName, script: sScript}, function( data ) {
+                            $.post( currentScriptName,{save:"Y",file:sFileName, script: sScript}, function( data ) {
                                  //console.log(data);
 
                                  if (data=="True") {
+                                     sFileName += '.php';
                                      var fileLink = $("<a>").attr("href",sFileName).text("Запустить его.");
                                      var resDiv = $("<div>").attr("id","save-results").text("Файл сохранен.").append(fileLink);
+                                     $(".iblocks-lists").after(resDiv);
+                                 }else {
+                                     var resDiv = $("<div>").attr("id","save-results").html("Возникли проблемы при сохранение файла. Возможные причины: <br />" +
+                                         "- Имя файла может состоять из букв латинского алфавита и цифр, <br />" +
+                                         "- Такой файл не должен существовать. <br />" +
+                                         "- Возможно у скрипта не хватает прав на запись в эту папку").css({'color':'red','font-weight':'bold'});
                                      $(".iblocks-lists").after(resDiv);
                                  }
 
@@ -141,21 +143,28 @@ class BitrixMigration
                     });
 
                     $("#unselect_all").click(function () {
-                        $(".iblocks-lists").find("input[type=checkbox]").prop('', false);
-                        sendRequest();
+                        $(".iblocks-lists").find("input[type=checkbox]").prop('checked',false);
+                        setTimeout(function(){
+                            sendRequest();
+                        },100)
+
                     });
 
                     $("#select_all").click(function () {
-                        $(".iblocks-lists").find("input[type=checkbox]").attr('checked', 'checked');
-                        sendRequest();
+                        $(".iblocks-lists").find("input[type=checkbox]").prop('checked', true);
+                        setTimeout(function(){
+                            sendRequest();
+                        },100)
                     });
 
 
                     var sendRequest = function () {
+                        $("#do-something").text("");
                         $("#result_textarea").text("");
                         $(".iblocks-lists").after("<div id='loader'>Загружается...</div>")
                         var formInputs = $("#iblocks-list").serialize();
-                        $.post("index.php", { ajax_call: "Y", results: formInputs }, function (data) {
+                        formInputs +="&ajax_call=Y";
+                        $.post(currentScriptName, formInputs, function (data) {
                             $("#result_textarea").text(data);
                             $("#loader").remove();
                         });
@@ -174,7 +183,7 @@ class BitrixMigration
                     <? foreach ($this->arResult as $arIblockType): ?>
                         <? foreach ($arIblockType['IBLOCKS'] as $arIblock): ?>
                             <li>
-                                <input class="iblocks" id="iblock<?= $arIblock['ID'] ?>" type="checkbox" name="iblocks"
+                                <input class="iblocks" id="iblock<?= $arIblock['ID'] ?>" type="checkbox" name="iblocks[]"
                                        value="<?= $arIblock['ID'] ?>">
                                 <label for="iblock<?= $arIblock['ID'] ?>">
                                     <?= $arIblock['NAME'] ?>
@@ -184,12 +193,12 @@ class BitrixMigration
                     <? endforeach; ?>
                 </ul>
             </form>
+            
         </div>
-        <input type="text" name="file-name" value="import.php">
-        <input type="button" name="save" value="Сохранить в файл"> Внимание! Если такой файл уже существует, он будет перезаписан. Будьте внимательны!
-        <textarea id="result_textarea" style="width:100%; height: 50%; position: relative; bottom: 0;">
-            Выберите один из инфоблоков.
-        </textarea>
+        <input type="text" name="file-name" value="import">
+        <input type="button" name="save" value="Сохранить в файл"> или можете сделать copy&paste кода:
+        <span id="do-something"><br /><br />Выберите один из инфоблоков.</span>
+        <textarea id="result_textarea" style="width:100%; height: 50%; position: relative; bottom: 0;"></textarea>
         </body>
         </html>
         <?
@@ -197,9 +206,6 @@ class BitrixMigration
 
     public function uploadArray( $arResult )
     {
-        echo '<pre>';
-        print_r($arResult);
-        echo '</pre>';
         foreach($arResult as $arType){
 
             $this->addType( $arType );
@@ -209,12 +215,12 @@ class BitrixMigration
                 foreach($arIblock['PROPS'] as $arProperties){
                     $arProperties['IBLOCK_ID'] = $this->iblockIdByCode[$arIblock['CODE']];
                     $this->addProperty( $arProperties );
-
                 }
             }
         }
-
-
+        echo '<pre>';
+        print_r($arResult);
+        echo '</pre>';
     }
 
     protected function addType( $arType )
@@ -268,15 +274,6 @@ class BitrixMigration
         }
     }
 
-    public function writeToFile($array)
-    {
-        if ($this->writeArrayToFile($array))
-            echo 'Файл записан. <a href="'.$this->file.'">'.$this->file.'</a>';
-        else
-            echo 'возникли проблемы с записью! '.$this->fullFileName;
-    }
-
-
     protected function generateFileContent()
     {
         $arrayString = self::arrayToString( $this->arResult ,$this->arrayName,'    ');
@@ -286,20 +283,10 @@ class BitrixMigration
         $content .= $arrayString;
         $content .= "\$bm = new BitrixMigration();\n";
         $content .= "\$bm->uploadArray(\$arResult);\n";
-
-        //$content .= "echo '<pre>';\n";
-        //$content .= "print_r(\$".$this->arrayName.");\n";
-        //$content .= "echo '</pre>';\n";
         $content .= "?>";
         return $content;
     }
 
-
-    protected function writeArrayToFile($content)
-    {
-        return file_put_contents($this->fullFileName,$content);
-
-    }
 
     protected function filterItem($id,$type)
     {
@@ -310,17 +297,15 @@ class BitrixMigration
 
     protected function getIbStructure()
     {
-        //CModule::IncludeModule("iblock");
+        CModule::IncludeModule("iblock");
         $db_iblock_type = CIBlockType::GetList(array(),array()); //"id"=>"help"
         $arResult = array();
         while($ar_iblock_type = $db_iblock_type->Fetch()){
+
             if($arIBType = CIBlockType::GetByIDLang($ar_iblock_type["ID"], LANG)){
-                //echo htmlspecialcharsEx($arIBType["NAME"])."<br>";
                 $arIBType = array_intersect_key($arIBType, array_flip( $this->arIblockTypeKeys ) );
                 $arIBType['IBLOCKS'] = $this->getIBlocksArray($arIBType['IBLOCK_TYPE_ID']);
-                //if ($this->filterItem($arIBType['ID'],'type'))
                 $arResult[] =  $arIBType;
-
             }
         }
 
@@ -380,7 +365,6 @@ class BitrixMigration
                         }
                     }
                     $prop_fields['VALUES'][] = $enum_fields;
-                    //echo $enum_fields["ID"]." - ".$enum_fields["VALUE"]."<br>";
                 }
             }
 
