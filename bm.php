@@ -9,6 +9,9 @@
 
 class BitrixMigration
 {
+    public $sStoreFilesDir = '/bm_files/';
+    public $bImportElements = true;
+    protected $sFullFilesPath;
     protected $arResult = array();
     protected $arrayName = NULL;
 
@@ -31,6 +34,14 @@ class BitrixMigration
         "IBLOCK_TYPE_ID","LID","NAME","SECTION_NAME","ELEMENT_NAME","ID","SECTIONS","EDIT_FILE_BEFORE","EDIT_FILE_AFTER","IN_RSS","SORT","IBLOCKS"
     );
 
+    protected $arSectionKeys = array(
+        "TIMESTAMP_X","DATE_CREATE","IBLOCK_SECTION_ID","ACTIVE","GLOBAL_ACTIVE","SORT","NAME","PICTURE","LEFT_MARGIN","RIGHT_MARGIN","DEPTH_LEVEL","DESCRIPTION","DESCRIPTION_TYPE","SEARCHABLE_CONTENT","CODE","XML_ID","DETAIL_PICTURE","EXTERNAL_ID"
+    );
+    protected $arElementKeys = array(
+        "PROPERTIES","CODE","EXTERNAL_ID","NAME","SECTION_ID","ACTIVE","DATE_ACTIVE_FROM","
+                        DATE_ACTIVE_TO","SORT","PREVIEW_PICTURE","PREVIEW_TEXT","PREVIEW_TEXT_TYPE","DETAIL_PICTURE","DETAIL_TEXT",
+        "DETAIL_TEXT_TYPE","DATE_CREATE","TIMESTAMP_X","TAGS"
+    );
 
 
     protected $iblockIdByCode = array();
@@ -39,6 +50,7 @@ class BitrixMigration
     {
         CModule::IncludeModule("iblock");
         $this->scriptName = basename( $scriptName );
+        $this->sFullFilesPath = getcwd ().$this->sStoreFilesDir;
     }
 
     protected function init()
@@ -51,6 +63,7 @@ class BitrixMigration
     {
         if (isset($_REQUEST['iblocks'][0])){
             $this->filter = $_REQUEST;
+            $this->bImportElements = $_REQUEST['items']==="Y";
             if (count($this->filter)>0) $this->setFilter = true;
             $this->getIbStructure();
             print_r($this->generateFileContent());
@@ -82,6 +95,7 @@ class BitrixMigration
         $this->init();
         if ($_REQUEST['ajax_call']=="Y") $this->ajax();
         if ($_REQUEST['save']=="Y") $this->saveFile();
+        $this->bImportElements = false;
         $this->getIbStructure();
 
         if (empty($this->arResult) ) die('Инфоблоки не найдены.');
@@ -138,8 +152,8 @@ class BitrixMigration
                                  }else {
                                      resultMessage("Возникли проблемы при сохранение файла. Возможные причины: <br />" +
                                          "- Имя файла может состоять из букв латинского алфавита и цифр, <br />" +
-                                         "- Такой файл не должен существовать. <br />" +
-                                         "- Возможно у скрипта не хватает прав на запись в эту папку",'red');
+                                         "- Файл с таким именем уже существует, <br />" +
+                                         "- Возможно у скрипта не хватает прав на запись в эту папку.",'red');
                                  }
 
                                  $("#loader").remove();
@@ -200,10 +214,18 @@ class BitrixMigration
                         <? endforeach; ?>
                     <? endforeach; ?>
                 </ul>
+
+                <hr />
+                <input class="iblocks" id="items" type="checkbox" name="items" value="Y">
+                <label for="items">
+                    Выгружать разделы и элементы
+                </label>
+
+
             </form>
 
         </div>
-        <input type="text" name="file-name" value="import">
+        <input type="text" name="file-name" value="import">.php
         <input type="button" name="save" value="Сохранить в файл"> или можете сделать copy&paste кода:
         <span id="do-something"><br /><br />Выберите один из инфоблоков.</span>
         <textarea id="result_textarea" style="width:100%; height: 50%; position: relative; bottom: 0;"></textarea>
@@ -224,11 +246,95 @@ class BitrixMigration
                     $arProperties['IBLOCK_ID'] = $this->iblockIdByCode[$arIblock['CODE']];
                     $this->addProperty( $arProperties );
                 }
+                if ( count($arIblock['SECTIONS'])>0 ){
+                    $this->uploadSections( $arIblock['SECTIONS'], $this->iblockIdByCode[$arIblock['CODE']] );
+                }
             }
         }
         echo '<pre>';
         print_r($arResult);
         echo '</pre>';
+    }
+
+    /*
+     * Загрузка разделов и элементов
+     */
+    public function uploadSections( $arItems, $iIblockId )
+    {
+        foreach($arItems as $arSection){
+            if ($arSection['IS_ROOT']=="Y"){
+
+                foreach($arSection['ELEMENTS'] as $arElement){
+                    $arElement["IBLOCK_SECTION_ID"] = false;
+                    $arElement["IBLOCK_ID"] = $iIblockId;
+                    $this->addElement( $arElement );
+                }
+
+            }else {
+                $arSection["IBLOCK_ID"] = $iIblockId;
+                $iSectionId = $this->addSection( $arSection);
+                if ( intval($iSectionId) > 0) {
+                    foreach($arSection['ELEMENTS'] as $arElement){
+                        $arElement["IBLOCK_SECTION_ID"] = $iSectionId;
+                        $arElement["IBLOCK_ID"] = $iIblockId;
+                        $this->addElement( $arElement );
+                    }
+                }
+            }
+
+        }
+    }
+    protected function addSection( $arSection )
+    {
+
+        if ( strlen($arSection['CODE'])>0){
+            $arFilter = Array('IBLOCK_ID'=>$arSection['IBLOCK_ID'], 'CODE'=>$arSection['CODE']);
+            $db_list = CIBlockSection::GetList(Array(), $arFilter, true);
+            if($arRes = $db_list->GetNext()){
+               return $arRes['ID'];//такой раздел уже есть
+            }
+        }
+        $bs = new CIBlockSection;
+        unset( $arSection['ELEMENTS'] );
+        if (is_array($arSection['PICTURE']))
+            $arSection['PICTURE'] = $this->prepareFile( $arSection['PICTURE'] );
+        $iNewSectionId= $bs->Add($arSection);
+        unset( $bs );
+        return $iNewSectionId;
+    }
+    protected function addElement( $arElement )
+    {
+
+        if (is_array($arElement['DETAIL_PICTURE']))
+            $arSection['DETAIL_PICTURE'] = $this->prepareFile( $arElement['DETAIL_PICTURE'] );
+        if (is_array($arElement['PREVIEW_PICTURE']))
+            $arSection['PREVIEW_PICTURE'] = $this->prepareFile( $arElement['PREVIEW_PICTURE'] );
+
+        if (strlen($arElement['CODE'])>0 ){
+            $arSelect = Array("ID");
+            $arFilter = Array("IBLOCK_ID"=>$arElement['IBLOCK_ID'], "CODE"=>$arElement['CODE']);
+            $res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1), $arSelect);
+            if($ob = $res->GetNextElement()){
+                $arFields = $ob->GetFields();
+                $el = new CIblockElement();
+                if ($el->Update($arFields['ID'],$arElement))
+                    echo 'Элемент '.$arElement['CODE'].' обновлен.';
+                else
+                    echo $el->LAST_ERROR;
+
+                unset( $el );
+                return $arFields['ID'];
+            }else {
+                $el = new CIblockElement();
+                if ($iNewId = $el->Add( $arElement ))
+                    echo 'Новый элемент '.$iNewId.' добавлен.';
+                else
+                    echo $el->LAST_ERROR;
+
+                unset( $el );
+                return $iNewId;
+            }
+        }
     }
 
     protected function addType( $arType )
@@ -260,8 +366,10 @@ class BitrixMigration
         }else {
             echo 'Инфоблок не найден.';
             $ib = new CIBlock;
-            if ($this->iblockIdByCode[$arIblock['CODE']] = $ib->Add($arIblock)) echo 'Инфоблок успешно добавлен.';
-            else echo $ib->LAST_ERROR;
+            if ($this->iblockIdByCode[$arIblock['CODE']] = $ib->Add($arIblock))
+                echo 'Инфоблок успешно добавлен.';
+            else
+                echo $ib->LAST_ERROR;
             unset($ib);
 
         }
@@ -289,7 +397,8 @@ class BitrixMigration
         $content .= "require(\$_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_before.php'); \n";
         $content .= "include(\"bm.php\");\n";
         $content .= $arrayString;
-        $content .= "\$bm = new BitrixMigration();\n";
+        $content .= "\$bm = new BitrixMigration(__FILE__);\n";
+        $content .= "\$bm->sStoreFilesDir = '/bm_files/';\n";
         $content .= "\$bm->uploadArray(\$arResult);\n";
         $content .= "?>";
         return $content;
@@ -338,6 +447,10 @@ class BitrixMigration
                 $ar_res = array_intersect_key($ar_res, array_flip( $this->arIblockKeys ) );
                 $ar_res['SITE_ID']  = array(SITE_ID);
                 $ar_res['PROPS'] = $this->getIBlocksProperties( $iIBlockID );
+
+                if ($this->bImportElements){
+                    $ar_res['SECTIONS'] = $this->getIblockSections( $iIBlockID );
+                }
                 //myPrintR($ar_res,__FILE__,__LINE__ );
 
                 $arResult[] = $ar_res;
@@ -382,6 +495,139 @@ class BitrixMigration
         return $arResult;
     }
 
+
+    public function getIblockSections( $iIblockId, $iParentSectionId = false )
+    {
+        $arSections = array();
+
+        //добавляем корневой раздел если есть элементы в корне
+        if (!$iParentSectionId){
+            $arRootElements = $this->getIblockElements( $iIblockId, false );
+            if (count($arRootElements)>0){
+                $arSections[] = array(
+                    "IS_ROOT" => "Y",
+                    "ELEMENTS"=>$arRootElements,
+                );
+            }
+        }
+        $db_list = CIBlockSection::GetList(Array(), Array('IBLOCK_ID'=>$iIblockId, "SECTION_ID"=>$iParentSectionId), false);
+        while($arSection = $db_list->GetNext()){
+            //фильтруем параметры
+            $iSectionId = $arSection['ID'];
+            $arSection = array_intersect_key($arSection, array_flip( $this->arSectionKeys ) );
+
+            if (intval($arSection['PICTURE'])>0){
+                $arSection['PICTURE'] = $this->getFile( intval($arSection['PICTURE']) );
+            }
+
+            //подключаем подразделы
+            if ($iSectionId>0){
+                $arSubSections = $this->getIblockSections( $iIblockId, $iSectionId );
+                if ( count($arSubSections)>0 ) {
+                    $arSection['SECTIONS'] = $arSubSections;
+                }
+            }
+            $arSection['ELEMENTS'] = $this->getIblockElements( $iIblockId, $iSectionId );
+
+            $arSections[] = $arSection;
+        }
+        $arSections[] = $arSection;
+        return $arSections; //$this->arrayToString($arSections,'arElements');
+    }
+
+    protected function getIblockElements( $iIblockId, $iSectionId  )
+    {
+        $arElements = array();
+        $arSelect = Array("ID","CODE","EXTERNAL_ID","NAME","IBLOCK_ID","IBLOCK_SECTION_ID","ACTIVE","DATE_ACTIVE_FROM","
+                        DATE_ACTIVE_TO","SORT","PREVIEW_PICTURE","PREVIEW_TEXT","PREVIEW_TEXT_TYPE","DETAIL_PICTURE","DETAIL_TEXT",
+                        "DETAIL_TEXT_TYPE","SEARCHABLE_CONTENT","DATE_CREATE","CREATED_BY","TIMESTAMP_X","TAGS");
+        $arFilter = Array("IBLOCK_ID"=>$iIblockId, "SECTION_ID"=>$iSectionId );
+        $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+        while($ob = $res->GetNextElement()){
+            $arFields = $ob->GetFields();
+
+            if (intval($arFields['DETAIL_PICTURE'])>0){
+                $arFields['DETAIL_PICTURE'] = $this->getFile( intval($arFields['DETAIL_PICTURE']) );
+            }
+
+            if (intval($arFields['PREVIEW_PICTURE'])>0){
+                $arFields['PREVIEW_PICTURE'] = $this->getFile( intval( $arFields['PREVIEW_PICTURE'] ) );
+            }
+
+            /*
+            //Получаем массив разделов элемента
+            $dbGroups = CIBlockElement::GetElementGroups($arFields['ID'], true);
+            $arElementSections = Array();
+            while($arGroup = $dbGroups->Fetch()){
+                $arElementSections[] = $arGroup["ID"];
+            }
+            if (!isset($arElementSections[0])) $arElementSections = false;
+
+            $arFields['SECTION_ID'] = $arElementSections;*/
+
+
+            $arProperties = $ob->GetProperties();
+            foreach($arProperties as $sPropertyCode => $arProperty){
+
+                if ( empty($arProperty['VALUE']) ) continue;
+                //фильтруем поля
+                $arProperty = array_intersect_key($arProperty, array_flip( array("PROPERTY_TYPE","VALUE") ) );
+                if ($arProperty["PROPERTY_TYPE"]=="F"){
+                    $arProperty['FILE'] = $this->getFile( $arProperty['VALUE'] );
+                }
+                $arFields["PROPERTIES"][ $sPropertyCode ] = $arProperty;
+            }
+
+            $arFields = array_intersect_key($arFields, array_flip( $this->arElementKeys ) );
+            $arElements[] = $arFields;
+        }
+        return $arElements;
+    }
+
+    protected function getFile( $iFileId )
+    {
+        $arFile = CFile::GetFileArray( $iFileId );
+
+        $arPathInfo = pathinfo( $_SERVER['DOCUMENT_ROOT'].$arFile['SRC'] );
+        $sFileName = $arFile['ID'].'.'.$arPathInfo['extension'];
+
+        if (!file_exists( $this->sFullFilesPath )) {
+            mkdir($this->sFullFilesPath, 0775, true);
+        }
+        if (!file_exists( $this->sFullFilesPath.'/'.$sFileName)) {
+            if (copy( $_SERVER['DOCUMENT_ROOT'].$arFile['SRC'],$this->sFullFilesPath.'/'.$sFileName))
+                $arFile['NEW_SRC'] =  $sFileName;
+        }else {
+            $arFile['NEW_SRC'] =  $sFileName;
+        }
+        return $arFile;
+    }
+
+    /*
+     *  "ID" => "17",
+        "TIMESTAMP_X" => "13.01.2015 21:09:47",
+        "MODULE_ID" => "iblock",
+        "HEIGHT" => "1080",
+        "WIDTH" => "1920",
+        "FILE_SIZE" => "3299943",
+        "CONTENT_TYPE" => "image/jpeg",
+        "SUBDIR" => "iblock/95d",
+        "FILE_NAME" => "conflating_by_mbaldelli-d82slpr.jpg",
+        "ORIGINAL_NAME" => "conflating_by_mbaldelli-d82slpr.jpg",
+        "DESCRIPTION" => "",
+        "HANDLER_ID" => "",
+        "~src" => "",
+        "SRC" => "/upload/iblock/95d/conflating_by_mbaldelli-d82slpr.jpg",
+        "NEW_SRC" => "17.jpg",
+     * */
+    protected function prepareFile( $arFile )
+    {
+        if (!file_exists( $this->sFullFilesPath.'/'.$arFile['NEW_SRC'] )) {
+            return CFile::MakeFileArray($this->sFullFilesPath.'/'.$arFile['NEW_SRC']);
+
+        }
+        return false;
+    }
 
     protected static function arrayToString($array,$arrayName, $indent='    ')
     {
