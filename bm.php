@@ -25,7 +25,7 @@ class BitrixMigration
     protected $arRequiredEnumFields =  array("VALUE","DEF","SORT","EXTERNAL_ID");
 
     protected $arIblockKeys = array(
-        "ID","SITE_ID","IBLOCK_TYPE_ID","CODE","NAME","ACTIVE","SORT","LIST_PAGE_URL","DETAIL_PAGE_URL","SECTION_PAGE_URL","INDEX_ELEMENT",
+        "ID","SITE_ID","CODE","NAME","ACTIVE","SORT","LIST_PAGE_URL","DETAIL_PAGE_URL","SECTION_PAGE_URL","INDEX_ELEMENT",
         "INDEX_SECTION","WORKFLOW","BIZPROC","SECTION_CHOOSER","LIST_MODE","RIGHTS_MODE","VERSION","EDIT_FILE_BEFORE",
         "EDIT_FILE_AFTER","SECTIONS_NAME","SECTION_NAME","ELEMENTS_NAME","ELEMENT_NAME","PROPS"
     );
@@ -53,42 +53,6 @@ class BitrixMigration
         $this->sFullFilesPath = getcwd ().$this->sStoreFilesDir;
     }
 
-    protected function init()
-    {
-        $this->arrayName = 'arResult';
-
-    }
-
-    protected function ajax()
-    {
-        if (isset($_REQUEST['iblocks'][0])){
-            $this->filter = $_REQUEST;
-            $this->bImportElements = $_REQUEST['items']==="Y";
-            if (count($this->filter)>0) $this->setFilter = true;
-            $this->getIbStructure();
-            print_r($this->generateFileContent());
-        }
-        exit();
-    }
-
-    protected function saveFile()
-    {
-        $fileName = preg_replace("/\W/i", "",$_REQUEST['file']);
-        $scriptString = $_REQUEST['script'];
-        $ext = '.php';
-        if ( !file_exists($fileName.$ext) && $fileName===$_REQUEST['file']){
-            $fileName = $fileName.$ext;
-            $res = file_put_contents($fileName,$scriptString);
-            if ($res>0)
-                echo 'True';
-            else
-                echo 'False';
-        }else {
-            echo 'False';
-        }
-
-        exit();
-    }
 
     public function start()
     {
@@ -240,7 +204,7 @@ class BitrixMigration
 
             $this->addType( $arType );
             foreach($arType['IBLOCKS'] as $arIblock){
-
+                $arIblock['IBLOCK_TYPE_ID'] = $arType['IBLOCK_TYPE_ID'];
                 $this->addIblock( $arIblock );
                 foreach($arIblock['PROPS'] as $arProperties){
                     $arProperties['IBLOCK_ID'] = $this->iblockIdByCode[$arIblock['CODE']];
@@ -255,15 +219,50 @@ class BitrixMigration
         print_r($arResult);
         echo '</pre>';
     }
+    protected function init()
+    {
+        $this->arrayName = 'arResult';
+
+    }
+
+    protected function ajax()
+    {
+        if (isset($_REQUEST['iblocks'][0])){
+            $this->filter = $_REQUEST;
+            $this->bImportElements = $_REQUEST['items']==="Y";
+            if (count($this->filter)>0) $this->setFilter = true;
+            $this->getIbStructure();
+            print_r($this->generateFileContent());
+        }
+        exit();
+    }
+
+    protected function saveFile()
+    {
+        $fileName = preg_replace("/\W/i", "",$_REQUEST['file']);
+        $scriptString = $_REQUEST['script'];
+        $ext = '.php';
+        if ( !file_exists($fileName.$ext) && $fileName===$_REQUEST['file']){
+            $fileName = $fileName.$ext;
+            $res = file_put_contents($fileName,$scriptString);
+            if ($res>0)
+                echo 'True';
+            else
+                echo 'False';
+        }else {
+            echo 'False';
+        }
+
+        exit();
+    }
 
     /*
      * Загрузка разделов и элементов
      */
-    public function uploadSections( $arItems, $iIblockId )
+    protected function uploadSections( $arItems, $iIblockId )
     {
         foreach($arItems as $arSection){
             if ($arSection['IS_ROOT']=="Y"){
-
                 foreach($arSection['ELEMENTS'] as $arElement){
                     $arElement["IBLOCK_SECTION_ID"] = false;
                     $arElement["IBLOCK_ID"] = $iIblockId;
@@ -304,7 +303,6 @@ class BitrixMigration
     }
     protected function addElement( $arElement )
     {
-
         if (is_array($arElement['DETAIL_PICTURE']))
             $arSection['DETAIL_PICTURE'] = $this->prepareFile( $arElement['DETAIL_PICTURE'] );
         if (is_array($arElement['PREVIEW_PICTURE']))
@@ -324,17 +322,17 @@ class BitrixMigration
 
                 unset( $el );
                 return $arFields['ID'];
-            }else {
-                $el = new CIblockElement();
-                if ($iNewId = $el->Add( $arElement ))
-                    echo 'Новый элемент '.$iNewId.' добавлен.';
-                else
-                    echo $el->LAST_ERROR;
-
-                unset( $el );
-                return $iNewId;
             }
         }
+
+        $el = new CIblockElement();
+        if ($iNewId = $el->Add( $arElement ))
+            echo 'Новый элемент '.$iNewId.' добавлен.';
+        else
+            echo $el->LAST_ERROR;
+
+        unset( $el );
+        return $iNewId;
     }
 
     protected function addType( $arType )
@@ -420,12 +418,19 @@ class BitrixMigration
         while($ar_iblock_type = $db_iblock_type->Fetch()){
 
             if($arIBType = CIBlockType::GetByIDLang($ar_iblock_type["ID"], LANG)){
+                $sTypeId = $arIBType['IBLOCK_TYPE_ID'];
                 $arIBType = array_intersect_key($arIBType, array_flip( $this->arIblockTypeKeys ) );
-                $arIBType['IBLOCKS'] = $this->getIBlocksArray($arIBType['IBLOCK_TYPE_ID']);
+                $arIBType['LANG']=Array(
+                    $arIBType['LID']=>Array(
+                        'NAME'=>$arIBType['NAME'],
+                        'SECTION_NAME'=>$arIBType['SECTION_NAME'],
+                        'ELEMENT_NAME'=>$arIBType['ELEMENT_NAME']
+                    )
+                );
+                $arIBType['IBLOCKS'] = $this->getIBlocksArray( $sTypeId );
                 $arResult[] =  $arIBType;
             }
         }
-
         $this->arResult = $arResult;
 
     }
@@ -496,7 +501,7 @@ class BitrixMigration
     }
 
 
-    public function getIblockSections( $iIblockId, $iParentSectionId = false )
+    protected function getIblockSections( $iIblockId, $iParentSectionId = false )
     {
         $arSections = array();
 
@@ -546,14 +551,8 @@ class BitrixMigration
         while($ob = $res->GetNextElement()){
             $arFields = $ob->GetFields();
 
-            if (intval($arFields['DETAIL_PICTURE'])>0){
-                $arFields['DETAIL_PICTURE'] = $this->getFile( intval($arFields['DETAIL_PICTURE']) );
-            }
 
-            if (intval($arFields['PREVIEW_PICTURE'])>0){
-                $arFields['PREVIEW_PICTURE'] = $this->getFile( intval( $arFields['PREVIEW_PICTURE'] ) );
-            }
-
+            $this->prepareElementFields( $arFields );
             /*
             //Получаем массив разделов элемента
             $dbGroups = CIBlockElement::GetElementGroups($arFields['ID'], true);
@@ -584,8 +583,27 @@ class BitrixMigration
         return $arElements;
     }
 
+    protected function prepareElementFields(&$arFields)
+    {
+        foreach($arFields as $key=>$value){
+            switch($key){
+                case "DETAIL_PICTURE":
+                case "PREVIEW_PICTURE":
+                    $arFields[$key] = $this->getFile( intval($arFields[$key]) );
+                break;
+                case "DETAIL_TEXT":
+                case "PREVIEW_TEXT":
+
+                    $arFields[$key] = htmlspecialchars($arFields["~".$key], ENT_QUOTES);;
+                break;
+
+            }
+        }
+    }
+
     protected function getFile( $iFileId )
     {
+        if (!$iFileId) return "";
         $arFile = CFile::GetFileArray( $iFileId );
 
         $arPathInfo = pathinfo( $_SERVER['DOCUMENT_ROOT'].$arFile['SRC'] );
@@ -636,11 +654,11 @@ class BitrixMigration
 
         foreach ($array as $key=>$value){
             if (is_array($value)){
-                $resultText .= $indent."\"".$key."\" => Array (\n";
+                $resultText .= $indent."'".$key."' => Array (\n";
                 $resultText .= self::arrayToString($value,'',$indent.'    ');
                 $resultText .= $indent."),\n";
             }else {
-                $resultText.= $indent."\"".$key."\" => \"".$value."\",\n";
+                $resultText.= $indent."'".$key."' => '".$value."',\n";
             }
         }
 
