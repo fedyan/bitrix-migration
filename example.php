@@ -3,34 +3,33 @@ require($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_before.ph
 include("bm.php");
 $arResult = Array (
     '0' => Array (
-        'IBLOCK_TYPE_ID' => 'articles',
         'LID' => 'ru',
-        'NAME' => 'Статьи',
-        'SECTION_NAME' => 'Разделы',
-        'ELEMENT_NAME' => 'Статья',
-        'ID' => 'articles',
+        'NAME' => 'Новости',
+        'SECTION_NAME' => 'Группы',
+        'ELEMENT_NAME' => 'Новость',
+        'ID' => 'news2',
         'SECTIONS' => 'Y',
         'EDIT_FILE_BEFORE' => '',
         'EDIT_FILE_AFTER' => '',
         'IN_RSS' => 'N',
-        'SORT' => '20',
+        'SORT' => '10',
         'LANG' => Array (
             'ru' => Array (
-                'NAME' => 'Статьи',
-                'SECTION_NAME' => 'Разделы',
-                'ELEMENT_NAME' => 'Статья',
+                'NAME' => 'Новости',
+                'SECTION_NAME' => 'Группы',
+                'ELEMENT_NAME' => 'Новость',
             ),
         ),
         'IBLOCKS' => Array (
             '0' => Array (
-                'ID' => '2',
-                'CODE' => 'articles',
-                'NAME' => 'Статьи',
+                'ID' => '3',
+                'CODE' => 'shop_news',
+                'NAME' => 'Новости магазина',
                 'ACTIVE' => 'Y',
-                'SORT' => '200',
-                'LIST_PAGE_URL' => '/content/articles/',
-                'DETAIL_PAGE_URL' => '/content/articles/#ELEMENT_ID#/',
-                'SECTION_PAGE_URL' => '',
+                'SORT' => '100',
+                'LIST_PAGE_URL' => '/content/news/',
+                'DETAIL_PAGE_URL' => '/content/news/#SECTION_ID#/#ELEMENT_ID#/',
+                'SECTION_PAGE_URL' => '/content/news/#SECTION_ID#/',
                 'INDEX_ELEMENT' => 'Y',
                 'INDEX_SECTION' => 'Y',
                 'WORKFLOW' => 'Y',
@@ -41,18 +40,44 @@ $arResult = Array (
                 'VERSION' => '1',
                 'EDIT_FILE_BEFORE' => '',
                 'EDIT_FILE_AFTER' => '',
-                'SECTIONS_NAME' => 'Разделы статей',
-                'SECTION_NAME' => 'Раздел статей',
-                'ELEMENTS_NAME' => 'Статьи',
-                'ELEMENT_NAME' => 'Статья',
+                'SECTIONS_NAME' => 'Разделы новостей',
+                'SECTION_NAME' => 'Раздел новостей',
+                'ELEMENTS_NAME' => 'Новости',
+                'ELEMENT_NAME' => 'Новость',
                 'SITE_ID' => Array (
                     '0' => 's1',
                 ),
                 'PROPS' => Array (
+                    'DESCRIPTION' => Array (
+                        'NAME' => 'Описание',
+                        'ACTIVE' => 'Y',
+                        'SORT' => '100',
+                        'CODE' => 'DESCRIPTION',
+                        'PROPERTY_TYPE' => 'S',
+                        'MULTIPLE' => 'N',
+                        'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg',
+                        'MULTIPLE_CNT' => '5',
+                        'LINK_IBLOCK_ID' => '',
+                        'IS_REQUIRED' => '',
+                        'USER_TYPE' => '',
+                    ),
+                    'SOURCE' => Array (
+                        'NAME' => 'Источник',
+                        'ACTIVE' => 'Y',
+                        'SORT' => '200',
+                        'CODE' => 'SOURCE',
+                        'PROPERTY_TYPE' => 'S',
+                        'MULTIPLE' => 'N',
+                        'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg',
+                        'MULTIPLE_CNT' => '5',
+                        'LINK_IBLOCK_ID' => '',
+                        'IS_REQUIRED' => '',
+                        'USER_TYPE' => '',
+                    ),
                     'KEYWORDS' => Array (
                         'NAME' => 'Ключевые слова',
                         'ACTIVE' => 'Y',
-                        'SORT' => '100',
+                        'SORT' => '300',
                         'CODE' => 'KEYWORDS',
                         'PROPERTY_TYPE' => 'S',
                         'MULTIPLE' => 'N',
@@ -62,92 +87,14 @@ $arResult = Array (
                         'IS_REQUIRED' => '',
                         'USER_TYPE' => '',
                     ),
-                    'AUTHOR' => Array (
-                        'NAME' => 'Автор',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '200',
-                        'CODE' => 'AUTHOR',
-                        'PROPERTY_TYPE' => 'S',
-                        'MULTIPLE' => 'N',
-                        'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg',
-                        'MULTIPLE_CNT' => '5',
-                        'LINK_IBLOCK_ID' => '',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
-                    'FORUM_TOPIC_ID' => Array (
-                        'NAME' => 'Идентификатор темы форума',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '300',
-                        'CODE' => 'FORUM_TOPIC_ID',
-                        'PROPERTY_TYPE' => 'N',
-                        'MULTIPLE' => 'N',
-                        'FILE_TYPE' => '',
-                        'MULTIPLE_CNT' => '0',
-                        'LINK_IBLOCK_ID' => '',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
-                    'FORUM_MESSAGE_CNT' => Array (
-                        'NAME' => 'Количество комментариев',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '400',
-                        'CODE' => 'FORUM_MESSAGE_CNT',
-                        'PROPERTY_TYPE' => 'N',
-                        'MULTIPLE' => 'N',
-                        'FILE_TYPE' => '',
-                        'MULTIPLE_CNT' => '0',
-                        'LINK_IBLOCK_ID' => '',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
-                    'vote_count' => Array (
-                        'NAME' => 'Количество голосов',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '500',
-                        'CODE' => 'vote_count',
-                        'PROPERTY_TYPE' => 'N',
-                        'MULTIPLE' => 'N',
-                        'FILE_TYPE' => '',
-                        'MULTIPLE_CNT' => '0',
-                        'LINK_IBLOCK_ID' => '',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
-                    'vote_sum' => Array (
-                        'NAME' => 'Сумма голосов',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '600',
-                        'CODE' => 'vote_sum',
-                        'PROPERTY_TYPE' => 'N',
-                        'MULTIPLE' => 'N',
-                        'FILE_TYPE' => '',
-                        'MULTIPLE_CNT' => '0',
-                        'LINK_IBLOCK_ID' => '',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
-                    'rating' => Array (
-                        'NAME' => 'Рейтинг',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '700',
-                        'CODE' => 'rating',
-                        'PROPERTY_TYPE' => 'N',
-                        'MULTIPLE' => 'N',
-                        'FILE_TYPE' => '',
-                        'MULTIPLE_CNT' => '0',
-                        'LINK_IBLOCK_ID' => '',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
                     'THEMES' => Array (
                         'NAME' => 'Темы',
                         'ACTIVE' => 'Y',
-                        'SORT' => '800',
+                        'SORT' => '400',
                         'CODE' => 'THEMES',
                         'PROPERTY_TYPE' => 'G',
                         'MULTIPLE' => 'Y',
-                        'FILE_TYPE' => '',
+                        'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg',
                         'MULTIPLE_CNT' => '5',
                         'LINK_IBLOCK_ID' => '1',
                         'IS_REQUIRED' => '',
@@ -169,705 +116,361 @@ $arResult = Array (
                 ),
                 'SECTIONS' => Array (
                     '0' => Array (
-                        'IS_ROOT' => 'Y',
+                        'TIMESTAMP_X' => '12.01.2015 23:09:58',
+                        'DATE_CREATE' => '12.01.2015 23:09:58',
+                        'IBLOCK_SECTION_ID' => '',
+                        'ACTIVE' => 'Y',
+                        'GLOBAL_ACTIVE' => 'Y',
+                        'SORT' => '500',
+                        'NAME' => 'Выставки',
+                        'PICTURE' => '',
+                        'LEFT_MARGIN' => '1',
+                        'RIGHT_MARGIN' => '4',
+                        'DEPTH_LEVEL' => '1',
+                        'DESCRIPTION' => '',
+                        'DESCRIPTION_TYPE' => 'text',
+                        'SEARCHABLE_CONTENT' => 'ВЫСТАВКИ
+',
+                        'CODE' => 'OLD_ID_5',
+                        'XML_ID' => '222',
+                        'DETAIL_PICTURE' => '',
+                        'EXTERNAL_ID' => '222',
+                        'SECTIONS' => Array (
+                            '0' => Array (
+                                'TIMESTAMP_X' => '15.01.2015 21:24:19',
+                                'DATE_CREATE' => '15.01.2015 21:24:19',
+                                'IBLOCK_SECTION_ID' => '5',
+                                'ACTIVE' => 'Y',
+                                'GLOBAL_ACTIVE' => 'Y',
+                                'SORT' => '500',
+                                'NAME' => 'Подраздел выставок',
+                                'PICTURE' => '',
+                                'LEFT_MARGIN' => '2',
+                                'RIGHT_MARGIN' => '3',
+                                'DEPTH_LEVEL' => '2',
+                                'DESCRIPTION' => '',
+                                'DESCRIPTION_TYPE' => 'text',
+                                'SEARCHABLE_CONTENT' => 'ПОДРАЗДЕЛ ВЫСТАВОК
+',
+                                'CODE' => 'OLD_ID_90',
+                                'XML_ID' => '',
+                                'DETAIL_PICTURE' => '',
+                                'EXTERNAL_ID' => '',
+                                'SECTIONS' => Array (
+                                    '0' => '',
+                                ),
+                                'ELEMENTS' => Array (
+                                    '0' => Array (
+                                        'CODE' => 'OLD_ID_345',
+                                        'EXTERNAL_ID' => '345',
+                                        'NAME' => 'Тестовая новость',
+                                        'ACTIVE' => 'Y',
+                                        'DATE_ACTIVE_FROM' => '15.01.2015 21:24:55',
+                                        'SORT' => '500',
+                                        'PREVIEW_PICTURE' => Array (
+                                            'ID' => '173',
+                                            'TIMESTAMP_X' => '15.01.2015 21:28:35',
+                                            'MODULE_ID' => 'iblock',
+                                            'HEIGHT' => '150',
+                                            'WIDTH' => '200',
+                                            'FILE_SIZE' => '6844',
+                                            'CONTENT_TYPE' => 'image/jpeg',
+                                            'SUBDIR' => 'iblock/8c9',
+                                            'FILE_NAME' => 'G0852686.JPG',
+                                            'ORIGINAL_NAME' => 'G0852686.JPG',
+                                            'DESCRIPTION' => '',
+                                            'HANDLER_ID' => '',
+                                            '~src' => '',
+                                            'SRC' => '/upload/iblock/8c9/G0852686.JPG',
+                                            'NEW_SRC' => '173.JPG',
+                                        ),
+                                        'PREVIEW_TEXT' => 'Мажоритарная избирательная система позволяет пренебречь колебаниями корпуса, хотя этого в любом случае требует континентально-европейский тип политической культуры. Идея правового государства, в соответствии с основным законом динамики, очевидна не для всех. Институциализация вызывает марксизм. Ротор поступательно даёт более простую систему дифференциальных уравнений, если исключить гирокомпас, даже если не учитывать выбег гироскопа. Регулярная прецессия определяет социализм, утверждает руководитель аппарата Правительства. Динамическое уравнение Эйлера категорически иллюстрирует христианско-демократический национализм.',
+                                        'PREVIEW_TEXT_TYPE' => 'text',
+                                        'DETAIL_PICTURE' => Array (
+                                            'ID' => '174',
+                                            'TIMESTAMP_X' => '15.01.2015 21:28:35',
+                                            'MODULE_ID' => 'iblock',
+                                            'HEIGHT' => '300',
+                                            'WIDTH' => '400',
+                                            'FILE_SIZE' => '20733',
+                                            'CONTENT_TYPE' => 'image/jpeg',
+                                            'SUBDIR' => 'iblock/d0e',
+                                            'FILE_NAME' => 'G0852686.JPG',
+                                            'ORIGINAL_NAME' => 'G0852686.JPG',
+                                            'DESCRIPTION' => '',
+                                            'HANDLER_ID' => '',
+                                            '~src' => '',
+                                            'SRC' => '/upload/iblock/d0e/G0852686.JPG',
+                                            'NEW_SRC' => '174.JPG',
+                                        ),
+                                        'DETAIL_TEXT' => 'Мажоритарная избирательная система позволяет пренебречь колебаниями корпуса, хотя этого в любом случае требует континентально-европейский тип политической культуры. Идея правового государства, в соответствии с основным законом динамики, очевидна не для всех. Институциализация вызывает марксизм. Ротор поступательно даёт более простую систему дифференциальных уравнений, если исключить гирокомпас, даже если не учитывать выбег гироскопа. Регулярная прецессия определяет социализм, утверждает руководитель аппарата Правительства. Динамическое уравнение Эйлера категорически иллюстрирует христианско-демократический национализм.',
+                                        'DETAIL_TEXT_TYPE' => 'text',
+                                        'DATE_CREATE' => '15.01.2015 21:28:35',
+                                        'TIMESTAMP_X' => '15.01.2015 21:28:35',
+                                        'TAGS' => 'тег1, тег2',
+                                        'PROPERTIES' => Array (
+                                            'SOURCE' => Array (
+                                                'PROPERTY_TYPE' => 'S',
+                                                'VALUE' => 'энциклопедия',
+                                            ),
+                                            'THEMES' => Array (
+                                                'PROPERTY_TYPE' => 'G',
+                                                'VALUE' => Array (
+                                                    '0' => '3',
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            '1' => '',
+                        ),
                         'ELEMENTS' => Array (
                             '0' => Array (
-                                'CODE' => '',
-                                'EXTERNAL_ID' => '1051',
-                                'NAME' => 'Комплексные компоненты',
+                                'CODE' => 'OLD_ID_9',
+                                'EXTERNAL_ID' => '1310',
+                                'NAME' => 'Выставка &quot;Книжный мир - 2007&quot;',
                                 'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '01.10.2009',
+                                'DATE_ACTIVE_FROM' => '05.10.2009',
                                 'SORT' => '500',
                                 'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Описание новой технологии в &amp;quot;Битрикс: Управление сайтом 6.0&amp;quot;
-',
+                                'PREVIEW_TEXT' => 'С 15.03.2007 по 17.03.2007 в Краснодаре пройдет 3-я специализированная выставка книжной продукции &amp;quot;Книжный мир - 2007&amp;quot;.
+&lt;br /&gt;
+ ',
                                 'PREVIEW_TEXT_TYPE' => 'html',
                                 'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => '&lt;b&gt;Определение&lt;/b&gt;
-&lt;br /&gt;
+                                'DETAIL_TEXT' => '
+&lt;p&gt;С 15.03.2007 по 17.03.2007 в Краснодаре пройдет 3-я специализированная выставка книжной продукции &amp;quot;Книжный мир - 2007&amp;quot;. &lt;/p&gt;
 
-&lt;br /&gt;
-Обычные (простые, одностраничные) компоненты создают какую-либо область на одной конкретной странице. Например, компонент показа новости по ее коду создает на одной конкретной странице (той, где он размещен) область, в которой показывает заголовок, текст и прочие параметры новости.
-&lt;br /&gt;
+&lt;p&gt;Cпециализированная выставка издательств, книготорговых компаний, книжной и полиграфической продукции.Учебно-методическая литература, пособия; учебники и специализированные издания; научная литература; справочники, словари, энциклопедии; художественная литература; детская литература (сказки, развивающие пособия); газеты, журналы; календари, альбомы, открытки; канцелярские принадлежности; школьно-письменные принадлежности; бумажно-беловая продукция.&lt;/p&gt;
 
-&lt;br /&gt;
-Комплексные (сложные, многостраничные) компоненты - это компоненты, которые создают разделы сайта. Например, компонент каталога создает на сайте весь раздел каталога: и список каталогов, и список групп, и страницы товаров. То есть комплексный компонент состоит из набора страниц. Комплексные компоненты строятся на основе обычных компонентов.
-&lt;br /&gt;
+&lt;p&gt;&lt;b&gt;Место проведения:&lt;/b&gt; Выставочный Центр &amp;quot;КраснодарЭкспо&amp;quot;, ул. Зиповская, 5&lt;/p&gt;
 
-&lt;br /&gt;
-&lt;b&gt;MVC&lt;/b&gt;
-&lt;br /&gt;
+&lt;p&gt;Выставка проходит в рамках Форума &lt;b&gt;&amp;quot;Создай себя сам&amp;quot;&lt;/b&gt;&lt;/p&gt;
 
-&lt;br /&gt;
-Комплексные компоненты построены на паттерне проектирования MVC (Model View Controller), в котором модель данных приложения, пользовательский интерфейс и управляющая логика разделены на три отдельных части, так, что модификация одной из частей оказывает минимальное воздействие на другие части.
-&lt;br /&gt;
-
-&lt;br /&gt;
-Model (модель) в данном случае - это ядро системы. Model представляет собой данные и бизнес-логику, отвечает на запросы View. View (представление) - это простые компоненты (на самом деле все чуть сложнее, но для начала можно понимать именно так). View представляет вывод данных пользователю, запрашивает данные у Model, посылает действия пользователя в Controller (как правило через HTTP запрос). Controller (контроллер) - это комплексный компонент. Controller на основании действий пользователя и ответа Model выбирает соответствующий View.
-&lt;br /&gt;
-
-&lt;br /&gt;
-Алгоритм работы паттерна MVC примерно таков: на основании действий пользователя Controller (контроллер) определяет, какое View (представление) должно быть показано пользователю, и отдает управление этому View (представлению); View (представление) запрашивает необходимые ему данные у Model (модели), получает эти данные и выводит их соответствующим образом пользователю; пользователь с помощью каких-либо элементов управления, которые ему предоставил View (представление), посылает новый запрос в Controller (контроллер).
-&lt;br /&gt;
-
-&lt;br /&gt;
-Алгоритм работы паттерна MVC в применении к комплексным компонентам таков: на основании действий пользователя (как правило HTTP запрос) комплексный компонент (controller) определяет, какая страница (view) должна быть показана пользователю, и подключает свой шаблон компонента для этой страницы; шаблон страницы (view) подключает обычные компоненты, настраивая необходимым образом их свойства; обычные компоненты выполняют свою работу: запрашивают данные у ядра (model), форматируют их и выводят посетителю, а так же предоставляют пользователю различные элементы управления (ссылки, формы, кнопки и т.п.); пользователь с помощью каких-либо элементов управления, посылает новый запрос (как правило HTTP запрос) комплексному компоненту (controller).
-&lt;br /&gt;
-&lt;BREAK /&gt;
-&lt;br /&gt;
-&lt;b&gt;Пример&lt;/b&gt;
-&lt;br /&gt;
-
-&lt;br /&gt;
-Расмотрим упрощенный пример работы комплексного компонента новостей. Пусть у нас есть обычные компоненты список новостей и детальной новости (последний принимает во входных параметрах код новости, которую нужно показать).
-&lt;br /&gt;
-
-&lt;br /&gt;
-Раздел новостей можно организовать, например, разместив на странице index.php компонент списка новостей, а на странице news.php - компонент детальной новости. При этом у компонента списка новостей нужно настроить входные параметры так, чтобы он мог формировать ссылки на страницу детальной новости (с кодом новости), а у компонента детальной новости нужно настроить входные параметры так, чтобы он мог формировать ссылку на страницу списка новостей. Для того, чтобы задать ссылку на страницу детальной новости, нужно задать путь к этой странице, а так же название параметра, в котором будет передаваться код новости для показа. То же название параметра нужно задать и во входных параметрах компонента детальной новости, чтобы он знал, где брать код новости для показа. Даже в данном максимально упрощенном случае настройки не так просты. А если это набор из десятков компонентов форума?
-&lt;br /&gt;
-
-&lt;br /&gt;
-Более удобной альтернативой для сборщика сайта будет использование комплексного компонента новостей. Этот компонент, например, можно просто установить на страницу index.php и все. Согласованием ссылок и параметров будет заниматься сам комплексный компонент. От сборщика сайта никаких дополнительных действий не потребуется. Для создания комплексного компонента новостей нам необходимо создать новый компонент, в коде которого проверить, пришел ли в параметрах код новости. Если код новости пришел, то нужно подключить страницу шаблона комплексного компонента, которая предназначена для показа детальной новости, а если не пришел - страницу для показа списка новостей. Страницы шаблона комплексного компонента будут содержать подключение соответствующих обычных компонентов с правильной настройкой их входных параметров. Обычные компоненты будут выполнять свою обычную работу. Им все равно, кто их вызвал и зачем. Для обычных компонентов важна только правильная настройка их входных параметров.
-&lt;br /&gt;
-
-&lt;br /&gt;
-Таким образом реализуется паттерн MVC: на комплексный компонент новостей (controller) приходит HTTP запрос (действия пользователя); комплексный компонент новостей (controller) проверяет, установлен ли через HTTP запрос код новости и подключает из своего шаблона страницу списка новостей или страницу детальной новости (view); подключенная страница в свою очередь подключает соответствующий обычный компонент, устанавливая при этом его входные параметры соответствующим образом; обычный компонент выполняет свою работу: запрашивает данные у ядра (model), форматирует их и выводит посетителю, а так же предоставляет пользователю различные элементы управления (ссылки, формы, кнопки и т.п.); пользователь с помощью каких-либо элементов управления, посылает новый HTTP запрос на комплексный компонент новостей (controller); и далее по кругу.',
+&lt;p&gt;&lt;b&gt;Организаторы выставки:&lt;/b&gt;
+  &lt;br /&gt;
+ Выставочный Центр &amp;quot;КраснодарЭКСПО&amp;quot;
+  &lt;br /&gt;
+ Администрация Краснодарского края
+  &lt;br /&gt;
+ Департамент образования и науки Краснодарского края
+  &lt;br /&gt;
+ Департамент культуры Краснодарского края
+  &lt;br /&gt;
+ Департамент по физической культуре и спорту Краснодарского края
+  &lt;br /&gt;
+ Департамент здравоохранения Краснодарского края
+  &lt;br /&gt;
+ Департамент федеральной государственной службы занятости населения по Краснодарскому краю
+  &lt;br /&gt;
+ Комитет по делам молодежи Краснодарского края&lt;/p&gt;
+ ',
                                 'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:56',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:56',
-                                'TAGS' => 'компонент, компоненты 2.0, MVC',
+                                'DATE_CREATE' => '12.01.2015 23:09:59',
+                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
+                                'TAGS' => 'выставка',
                                 'PROPERTIES' => Array (
                                     'KEYWORDS' => Array (
                                         'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'компонент, компоненты 2.0, MVC',
-                                    ),
-                                    'AUTHOR' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'Алексей Кирсанов',
-                                    ),
-                                    'FORUM_TOPIC_ID' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '76',
-                                    ),
-                                    'FORUM_MESSAGE_CNT' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '1',
-                                    ),
-                                    'vote_count' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '1',
-                                    ),
-                                    'vote_sum' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '5',
-                                    ),
-                                    'rating' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '3.3',
+                                        'VALUE' => 'выставка',
                                     ),
                                     'THEMES' => Array (
                                         'PROPERTY_TYPE' => 'G',
                                         'VALUE' => Array (
-                                            '0' => '4',
+                                            '0' => '1',
                                         ),
                                     ),
                                 ),
                             ),
                             '1' => Array (
-                                'CODE' => '',
-                                'EXTERNAL_ID' => '1341',
-                                'NAME' => 'Пользовательские движки шаблонизации',
+                                'CODE' => 'OLD_ID_12',
+                                'EXTERNAL_ID' => '1698',
+                                'NAME' => 'Выставка &quot;Книги России&quot;',
                                 'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '02.10.2009',
+                                'DATE_ACTIVE_FROM' => '06.10.2009',
                                 'SORT' => '500',
                                 'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Добавление нового движка шаблонизации на сайт',
+                                'PREVIEW_TEXT' => 'Традиционный весенний форум отечественных книжников - Национальная выставка-ярмарка &amp;laquo;Книги России&amp;raquo; проходит на территории Всероссийского выставочного центра с 1998 года. В этом году выставка проходит с 14 по 19 марта. ',
                                 'PREVIEW_TEXT_TYPE' => 'html',
                                 'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => '&lt;p&gt;Для добавления нового движка шаблонизации на сайт в файл &lt;i&gt;/bitrix/php_interface/init.php&lt;/i&gt; необходимо добавить следующее:&lt;/p&gt;
+                                'DETAIL_TEXT' => '&lt;p&gt;Деловое мероприятие, традиционно ориентированное на продвижение издательской продукции накануне весенне-летнего сезона, выставка весьма положительно сказывается на торговой судьбе новинок, которые должны поступить в продажу в течение лета и осени.&lt;/p&gt;
 
-&lt;p&gt;1. Глобальную переменную&lt;i&gt; $arCustomTemplateEngines&lt;/i&gt;, которая содержит ассоциативный массив, каждый элемент которого имеет вид:
-  &lt;br /&gt;
- &lt;i&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;код_шаблонизатора&amp;quot; =&amp;gt; array(
-    &lt;br /&gt;
-   &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;templateExt&amp;quot; =&amp;gt; array(&amp;quot;расширение1&amp;quot;[, &amp;quot;расширение2&amp;quot;...]),
-    &lt;br /&gt;
-   &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;function&amp;quot; =&amp;gt; &amp;quot;имя_функции_подключения_движка&amp;quot;
-    &lt;br /&gt;
-   &amp;nbsp;&amp;nbsp;&amp;nbsp;)&lt;/i&gt;
-  &lt;br /&gt;
- где:
-  &lt;br /&gt;
- &lt;i&gt;&amp;quot;код_шаблонизатора&amp;quot;&lt;/i&gt; - произвольное уникальное в рамках сайта слово;
-  &lt;br /&gt;
- &lt;i&gt;&amp;quot;расширениеN&amp;quot;&lt;/i&gt; - расширение файла, который должен обрабатываться этим движком шаблонизации;
-  &lt;br /&gt;
- &lt;i&gt;&amp;quot;имя_функции_подключения_движка&amp;quot;&lt;/i&gt; - имя функции, которая будет вызываться, если шаблон компонента имеет указанное расширение.
-  &lt;br /&gt;
- &lt;/p&gt;
+&lt;p&gt;Участники выставки &amp;ndash; книгораспространители, издатели, полиграфисты, библиотекари, изготовители бумаги, финансисты (около 1000 организаций) оборудуют свои экспозиции на площади в 10 000 квадратных метров, представив до 200 000 наименований книг на языках народов Российской Федерации. &lt;/p&gt;
 
-&lt;p&gt;2. Функцию подключения движков:
-  &lt;br /&gt;
- &lt;i&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;function имя_функции_подключения_движка($templateFile, $arResult, $arParams, $arLangMessages, $templateFolder, $parentTemplateFolder, $template)&lt;/i&gt;&lt;i&gt;,&lt;/i&gt;
-  &lt;br /&gt;
- где:
-  &lt;br /&gt;
- &lt;span&gt;&lt;em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $templateFile &amp;ndash; &lt;/em&gt;путь к файлу шаблона относительно корня сайта&lt;em&gt;,
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $arResult &amp;ndash;&lt;/em&gt; массив результатов работы компонента,
-    &lt;br /&gt;
-   &lt;em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $arParams &amp;ndash;&lt;/em&gt; массив входных параметров компонента,
-    &lt;br /&gt;
-   &lt;em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $arLangMessages &amp;ndash;&lt;/em&gt; массив языковых сообщений (переводов) шаблона,
-    &lt;br /&gt;
-   &lt;em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $templateFolder &amp;ndash;&lt;/em&gt; путь к папке шаблона относительно корня сайта (если шаблон лежит не в
-    &lt;br /&gt;
-   папке, то эта переменная пуста),
-    &lt;br /&gt;
-   &lt;em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $parentTemplateFolder -&lt;/em&gt; путь относительно корня сайта к папке шаблона комплексного
-    &lt;br /&gt;
-   компонента, в составе которого подключается данный компонент (если компонент
-    &lt;br /&gt;
-   подключается самостоятельно, то эта переменная пуста),
-    &lt;br /&gt;
-   &lt;em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $template &amp;ndash;&lt;/em&gt; объект шаблона.
-    &lt;br /&gt;
+&lt;p&gt;Оргкомитет выставки ведет твердую линию по поддержке регионального книгоиздания. Именно поэтому все региональные издатели получают возможность представить свои книги на специальных коллективных стендах. В числе этих экспозиций &amp;ndash; коллективный стенд региональных и национальных издательств России, выставка изданий для профессионального образования. &lt;/p&gt;
 
-    &lt;br /&gt;
-   Рассмотрим подключение движков на конкретных примерах.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Особый интерес журналистов и читателей вызовет традиционный стенд &amp;laquo;Российские литературные журналы&amp;raquo;, на котором представлены &amp;laquo;Новый мир&amp;raquo;, &amp;laquo;Знамя&amp;raquo;, &amp;laquo;Октябрь&amp;raquo; и другие &amp;laquo;толстые&amp;raquo; журналы, специальная авторская программа которых предусматривает встречи лучших авторов со своими преданными читателями. &lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;Издательства России также представят разнообразную и насыщенную деловую программу: презентации, круглые столы, встречи с авторами. В рамках выставки-ярмарки многие издательства по традиции приглашает своих самых знаменитых авторов, встречи с которыми выливаются в праздник духовного общения книголюбов и писателей. &lt;/p&gt;
 
-&lt;p align=&quot;left&quot;&gt;&lt;BREAK /&gt;&lt;/p&gt;
+&lt;p&gt;Состояние чтения отражает состояние общества, а состояние детского чтения показывает отношение общества к своему будущему. Именно поэтому в рамках Национальной ярмарки постоянно предусматривается большое количество деловых мероприятий, посвященных проблемам детского чтения, детского книгоиздания. &lt;/p&gt;
 
-&lt;p align=&quot;left&quot;&gt;&lt;strong&gt;Пример подключения движка Smarty:
-    &lt;br /&gt;
-
-    &lt;br /&gt;
-   &lt;/strong&gt;&lt;/p&gt;
-
-&lt;p align=&quot;left&quot;&gt;В массиве &lt;i&gt;$arCustomTemplateEngines&lt;/i&gt; регистрируется движок Smarty&lt;span&gt;:&lt;/span&gt;&lt;i&gt;
-    &lt;p&gt;&lt;i&gt;global&lt;/i&gt;&lt;i&gt; $&lt;/i&gt;&lt;i&gt;arCustomTemplateEngines&lt;/i&gt;&lt;i&gt;;
-        &lt;br /&gt;
-       $&lt;/i&gt;&lt;i&gt;arCustomTemplateEngines&lt;/i&gt;&lt;i&gt; = &lt;/i&gt;&lt;i&gt;array&lt;/i&gt;&lt;i&gt;(
-        &lt;br /&gt;
-       &lt;/i&gt;&lt;i&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/i&gt;&lt;i&gt;&amp;quot;&lt;/i&gt;&lt;i&gt;smarty&lt;/i&gt;&lt;i&gt;&amp;quot; =&amp;gt; &lt;/i&gt;&lt;i&gt;array&lt;/i&gt;&lt;i&gt;(
-        &lt;br /&gt;
-       &lt;/i&gt;&lt;i&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/i&gt;&lt;i&gt;&amp;quot;&lt;/i&gt;&lt;i&gt;templateExt&lt;/i&gt;&lt;i&gt;&amp;quot; =&amp;gt; &lt;/i&gt;&lt;i&gt;array&lt;/i&gt;&lt;i&gt;(&amp;quot;&lt;/i&gt;&lt;i&gt;tpl&lt;/i&gt;&lt;i&gt;&amp;quot;),
-        &lt;br /&gt;
-       &lt;/i&gt;&lt;i&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/i&gt;&lt;i&gt;&amp;quot;&lt;/i&gt;&lt;i&gt;function&lt;/i&gt;&lt;i&gt;&amp;quot; =&amp;gt; &amp;quot;&lt;/i&gt;&lt;i&gt;SmartyEngine&lt;/i&gt;&lt;i&gt;&amp;quot;
-        &lt;br /&gt;
-       &lt;/i&gt;&lt;i&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/i&gt;&lt;i&gt;),
-        &lt;br /&gt;
-       );
-        &lt;br /&gt;
-
-        &lt;br /&gt;
-       &lt;/i&gt;&lt;/p&gt;
-   &lt;/i&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p align=&quot;left&quot;&gt;В функции &lt;i&gt;SmartyEngine&lt;/i&gt; инициализируются параметры движка в соответствии с требованиями Smarty (см. систему помощи Smarty). Далее в Smarty передаются переменные результатов работы компонента, входных параметров, языковых сообщений и т.д., а в конце вызывается метод обработки и показа шаблона Smarty:
-  &lt;br /&gt;
- &lt;i&gt;
-    &lt;br /&gt;
-   &lt;/i&gt;&lt;i&gt;function SmartyEngine($templateFile, $arResult, $arParams, $arLangMessages, $templateFolder, $parentTemplateFolder, $template)
-    &lt;br /&gt;
-   {
-    &lt;br /&gt;
-   &amp;nbsp;&amp;nbsp;&amp;nbsp;if (!defined(&amp;quot;SMARTY_DIR&amp;quot;))
-    &lt;br /&gt;
-   &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;define(&amp;quot;SMARTY_DIR&amp;quot;, &amp;quot;&amp;lt;&lt;/i&gt;&lt;i&gt;абсолютный&lt;/i&gt;&lt;i&gt;путь&lt;/i&gt;&lt;i&gt;к&lt;/i&gt;&lt;i&gt;движку&lt;/i&gt;&lt;i&gt; &lt;span&gt;Smarty&amp;gt;/libs/&amp;quot;);
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;require_once( &#039;&amp;lt;&lt;/span&gt;&lt;/i&gt;&lt;i&gt;абсолютный&lt;/i&gt;&lt;i&gt;путь&lt;/i&gt;&lt;i&gt;к&lt;/i&gt;&lt;i&gt;движку&lt;/i&gt;&lt;i&gt; &lt;span&gt;Smarty&amp;gt;/libs/Smarty.class.php&#039; );
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty = new Smarty;
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;compile_dir = &amp;quot;&amp;lt;&lt;/span&gt;&lt;/i&gt;&lt;i&gt;абсолютный&lt;/i&gt;&lt;i&gt;путь&lt;/i&gt;&lt;i&gt;к&lt;/i&gt;&lt;i&gt;движку&lt;/i&gt;&lt;i&gt; &lt;span&gt;Smarty&amp;gt;/templates_c/&amp;quot;;
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;config_dir = &amp;quot;&amp;lt;&lt;/span&gt;&lt;/i&gt;&lt;i&gt;абсолютный&lt;/i&gt;&lt;i&gt;путь&lt;/i&gt;&lt;i&gt;к&lt;/i&gt;&lt;i&gt;движку&lt;/i&gt;&lt;i&gt; &lt;span&gt;Smarty&amp;gt;/configs/&amp;quot;;
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;template_dir = &amp;quot;&amp;lt;&lt;/span&gt;&lt;/i&gt;&lt;i&gt;абсолютный&lt;/i&gt;&lt;i&gt;путь&lt;/i&gt;&lt;i&gt;к&lt;/i&gt;&lt;i&gt;движку&lt;/i&gt;&lt;i&gt; &lt;span&gt;Smarty&amp;gt;/templates/&amp;quot;;
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;cache_dir = &amp;quot;&amp;lt;&lt;/span&gt;&lt;/i&gt;&lt;i&gt;абсолютный&lt;/i&gt;&lt;i&gt;путь&lt;/i&gt;&lt;i&gt;к&lt;/i&gt;&lt;i&gt;движку&lt;/i&gt;&lt;i&gt; &lt;span&gt;Smarty&amp;gt;/cache/&amp;quot;;
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;compile_check = true;
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;debugging = false;
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;assign(&amp;quot;arResult&amp;quot;, $arResult);
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;assign(&amp;quot;arParams&amp;quot;, $arParams);
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;assign(&amp;quot;MESS&amp;quot;, $arLangMessages);
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;assign(&amp;quot;templateFolder&amp;quot;, $templateFolder);
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;assign(&amp;quot;parentTemplateFolder&amp;quot;, $parentTemplateFolder);
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$smarty-&amp;gt;display( $_SERVER[&amp;quot;DOCUMENT_ROOT&amp;quot;].$templateFile );
-      &lt;br /&gt;
-     }
-      &lt;br /&gt;
-     &lt;/span&gt;&lt;/i&gt;
-  &lt;br /&gt;
- В строке &lt;i&gt;&lt;span&gt;&amp;quot;&amp;lt;&lt;/span&gt;&lt;/i&gt;&lt;i&gt;абсолютный&lt;/i&gt;&lt;i&gt;путь&lt;/i&gt;&lt;i&gt;к&lt;/i&gt;&lt;i&gt;движку&lt;/i&gt;&lt;i&gt; &lt;span&gt;Smarty&amp;gt;&amp;quot;&lt;/span&gt;&lt;/i&gt; указывается абсолютный путь к движку &lt;span&gt;Smarty.
-    &lt;br /&gt;
-   &lt;/span&gt;&lt;/p&gt;
-
-&lt;p align=&quot;left&quot;&gt;&lt;BREAK /&gt;
-  &lt;br /&gt;
- &lt;span&gt;&lt;/span&gt;&lt;strong&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Пример подключения движка XML/XSLT:
-    &lt;br /&gt;
-   &lt;/strong&gt;&lt;i&gt;
-    &lt;br /&gt;
-   &lt;/i&gt;&lt;span&gt;Сначала регистрируем движок:&lt;/span&gt;&lt;/p&gt;
-
-&lt;p align=&quot;left&quot;&gt;&lt;i&gt;global $arCustomTemplateEngines;
-    &lt;br /&gt;
-   $arCustomTemplateEngines = array(
-    &lt;br /&gt;
-   &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;xslt&amp;quot; =&amp;gt; array(
-    &lt;br /&gt;
-   &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;templateExt&amp;quot; =&amp;gt; array(&amp;quot;xsl&amp;quot;),
-    &lt;br /&gt;
-   &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;function&amp;quot; =&amp;gt; &amp;quot;XSLTEngine&amp;quot;
-    &lt;br /&gt;
-   &amp;nbsp;&amp;nbsp;&amp;nbsp;),
-    &lt;br /&gt;
-   );
-    &lt;br /&gt;
-
-    &lt;br /&gt;
-   &lt;/i&gt;&lt;/p&gt;
-
-&lt;p align=&quot;left&quot;&gt;Функция инициализации параметров движка:&lt;i&gt;
-    &lt;p&gt;function CreateXMLFromArray($xDoc, $xNode, $ar)
-      &lt;br /&gt;
-     {
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;foreach($ar as $key=&amp;gt;$val)
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;{
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;if(!is_string($key) || strlen($key)&amp;lt;=0)
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;$key = &amp;quot;value&amp;quot;;
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;$xElement = $xDoc-&amp;gt;createElement($key);
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;if(is_array($val))
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;{
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;CreateXMLFromArray($xDoc, $xElement, $val);
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;else
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;{
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;$xElement-&amp;gt;appendChild($xDoc-&amp;gt;createTextNode(iconv( SITE_CHARSET, &amp;quot;utf-8&amp;quot;, $val)));
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;}
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;$xNode-&amp;gt;appendChild($xElement);
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;}
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;return $xNode;
-      &lt;br /&gt;
-     }
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &lt;/p&gt;
-   &lt;/i&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p align=&quot;left&quot;&gt;Функция подключения движка:&lt;i&gt;
-    &lt;p&gt;function XSLTEngine($templateFile, $arResult, $arParams, $arLangMessages, $templateFolder, $parentTemplateFolder, $template)
-      &lt;br /&gt;
-     {
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$arResult[&amp;quot;PARAMS&amp;quot;] = array(
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;templateFolder&amp;quot; =&amp;gt; $templateFolder,
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;parentTemplateFolder&amp;quot; =&amp;gt; $parentTemplateFolder,
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;arParams&amp;quot; =&amp;gt; $arParams,
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;quot;arLangMessages&amp;quot; =&amp;gt; $arLangMessages
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;);
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$xDoc = new DOMDocument(&amp;quot;1.0&amp;quot;, SITE_CHARSET);
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$xRoot = $xDoc-&amp;gt;createElement(&#039;result&#039;);
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;CreateXMLFromArray($xDoc, $xRoot, $arResult);
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$xDoc-&amp;gt;appendChild($xRoot);
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$xXsl = new DOMDocument();
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$xXsl-&amp;gt;load( $_SERVER[&amp;quot;DOCUMENT_ROOT&amp;quot;].$templateFile );
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$xProc = new XSLTProcessor;
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;$xProc-&amp;gt;importStyleSheet($xXsl);
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &amp;nbsp;&amp;nbsp;&amp;nbsp;echo $xProc-&amp;gt;transformToXML($xDoc);
-      &lt;br /&gt;
-     }
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-     &lt;/p&gt;
-   &lt;/i&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;Национальная ярмарка &amp;ndash; прекрасный испытательный полигон, позволяющий протестировать российский издательский бизнес, проверить соответствие отечественного книгоиздания международному уровню и объединить российских книжников в сообщество подлинных профессионалов. &lt;/p&gt;
  ',
                                 'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:56',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:57',
-                                'TAGS' => 'движки',
+                                'DATE_CREATE' => '12.01.2015 23:09:59',
+                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
+                                'TAGS' => 'выставка книги',
                                 'PROPERTIES' => Array (
                                     'KEYWORDS' => Array (
                                         'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'движки',
-                                    ),
-                                    'FORUM_TOPIC_ID' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '59',
+                                        'VALUE' => 'выставка книги',
                                     ),
                                     'THEMES' => Array (
                                         'PROPERTY_TYPE' => 'G',
                                         'VALUE' => Array (
-                                            '0' => '3',
+                                            '0' => '1',
                                         ),
                                     ),
                                 ),
                             ),
                             '2' => Array (
-                                'CODE' => '',
-                                'EXTERNAL_ID' => '1346',
-                                'NAME' => 'Инструменты для отладки производительности',
+                                'CODE' => 'OLD_ID_14',
+                                'EXTERNAL_ID' => '1732',
+                                'NAME' => 'Выставка &quot;PostPrint - 2007&quot;',
                                 'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '03.10.2009',
+                                'DATE_ACTIVE_FROM' => '06.10.2009',
                                 'SORT' => '500',
                                 'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Инструменты для оценки и отладки производительности компонент и всего сайта в целом',
+                                'PREVIEW_TEXT' => 'Торговая выставка книгопечатания. ',
                                 'PREVIEW_TEXT_TYPE' => 'html',
                                 'DETAIL_PICTURE' => '',
                                 'DETAIL_TEXT' => '
-&lt;p&gt;Для оценки и отладки производительности компонент и всего сайта в целом используются следующие инструменты. Это общеизвестные параметры для страницы:&lt;/p&gt;
+&lt;p&gt;С 25.04.2007 по 27.04.2007 в Берлине (Германия) пройдет торговая выставка книгопечатания.&lt;/p&gt;
 
-&lt;p&gt;&lt;b&gt;show_page_exec_time=Y&lt;/b&gt; - выводит общее время исполнения страницы;&lt;/p&gt;
+&lt;p&gt;Организаторы выставки: &lt;strong&gt;Messe Berlin GmbH&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;b&gt;show_include_exec_time=Y&lt;/b&gt; - выводит время исполнения каждой из компонент, время формирования меню. &lt;/p&gt;
+&lt;p&gt;Рубрика: &lt;strong&gt;Рекламная и издательская деятельность&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;В корреляции с этими параметрами работает параметр &lt;b&gt;show_sql_stat=Y&lt;/b&gt;, который выводит число SQL запросов, общее время исполнения SQL запросов и позволяет проанализировать сами запросы, как на всю страницу, так и на отдельно взятый компонент или меню. &lt;/p&gt;
+&lt;p&gt;Место проведения: &lt;strong&gt;Messegelande&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Пример:&lt;/p&gt;
+&lt;p&gt;Выставка &lt;b&gt;PostPrint&lt;/b&gt; сосредотачивается на печати и распределении. Преимущество состоит в том, что всестороннее понятие выставки теперь включает все стадии технологического процесса печати (планирование, цифровая печать, бумага, распределение).&lt;/p&gt;
 
-&lt;p&gt;&amp;nbsp;&lt;img src=&quot;/content/articles/images/sql_news.png&quot; height=&quot;307&quot; width=&quot;350&quot;/&gt;
-  &lt;br clear=&quot;all&quot; /&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Основные тематические разделы&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;p&gt;На этом рисунке представлена статистика SQL запросов для компоненты новостей на главной странице. Выводится она 2 запросами. Общее время работы компоненты составляет 0.0463 сек. Время SQL запросов 0.0274 сек. или 59.18% от времени работы компоненты (% помогает выявлять ресурсоемкий PHP код или тяжелые запросы). Возле каждого запроса указывается, сколько раз аналогичные запросы повторялись с вариацией параметров, сколько времени выполнялся запрос. В статистике перечисляется, откуда вызван запрос и с какими параметрами. &lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Маркировка &lt;/li&gt;
 
-&lt;p&gt;&lt;/p&gt;
+  &lt;li&gt;Обработка бумаги &lt;/li&gt;
 
-&lt;p&gt;&lt;BREAK /&gt;&lt;/p&gt;
+  &lt;li&gt;Печать &lt;/li&gt;
 
-&lt;p&gt;Рассмотрим другой пример: запросы на странице блогов. &lt;/p&gt;
-
-&lt;p&gt;&amp;nbsp;&lt;img src=&quot;/content/articles/images/sql_menu.png&quot; height=&quot;346&quot; width=&quot;350&quot;/&gt;
-  &lt;br clear=&quot;all&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Количество запросов равно четырем. Но они потребляют меньше 4% от времени компоненты, которое составляет 0.0228 сек. Важно, что количество запросов не играет решающей роли, важнее время выполнения запросов. &lt;/p&gt;
-
-&lt;p&gt;На практике использование этого инструментария позволяет:
-  &lt;br /&gt;
-* быстро выявлять больные участки сайта;
-  &lt;br /&gt;
-* находить ошибки программирования, в которых компонент генерирует очень много запросов (или мало, но медленных запросов);
-  &lt;br /&gt;
-* выявлять особенности и недостатки конфигурации SQL сервера или отдельных таблиц.
-  &lt;br /&gt;
-&lt;/p&gt;
+  &lt;li&gt;Программное обеспечение &lt;/li&gt;
+&lt;/ul&gt;
 ',
                                 'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:57',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:57',
-                                'TAGS' => 'производительность',
+                                'DATE_CREATE' => '12.01.2015 23:10:00',
+                                'TIMESTAMP_X' => '12.01.2015 23:10:00',
+                                'TAGS' => 'выставка',
                                 'PROPERTIES' => Array (
                                     'KEYWORDS' => Array (
                                         'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'производительность',
-                                    ),
-                                    'FORUM_TOPIC_ID' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '75',
-                                    ),
-                                    'FORUM_MESSAGE_CNT' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '1',
+                                        'VALUE' => 'выставка',
                                     ),
                                     'THEMES' => Array (
                                         'PROPERTY_TYPE' => 'G',
                                         'VALUE' => Array (
-                                            '0' => '3',
+                                            '0' => '1',
                                         ),
                                     ),
                                 ),
                             ),
-                            '3' => Array (
-                                'CODE' => '',
-                                'EXTERNAL_ID' => '1359',
-                                'NAME' => 'Компоненты 2.0: настройка поддержки ЧПУ',
+                        ),
+                    ),
+                    '1' => Array (
+                        'TIMESTAMP_X' => '12.01.2015 23:09:58',
+                        'DATE_CREATE' => '12.01.2015 23:09:58',
+                        'IBLOCK_SECTION_ID' => '',
+                        'ACTIVE' => 'Y',
+                        'GLOBAL_ACTIVE' => 'Y',
+                        'SORT' => '500',
+                        'NAME' => 'Доставка и поиск',
+                        'PICTURE' => '',
+                        'LEFT_MARGIN' => '5',
+                        'RIGHT_MARGIN' => '6',
+                        'DEPTH_LEVEL' => '1',
+                        'DESCRIPTION' => '',
+                        'DESCRIPTION_TYPE' => 'text',
+                        'SEARCHABLE_CONTENT' => 'ДОСТАВКА И ПОИСК
+',
+                        'CODE' => 'OLD_ID_6',
+                        'XML_ID' => '223',
+                        'DETAIL_PICTURE' => '',
+                        'EXTERNAL_ID' => '223',
+                        'SECTIONS' => Array (
+                            '0' => '',
+                        ),
+                        'ELEMENTS' => Array (
+                            '0' => Array (
+                                'CODE' => 'OLD_ID_6',
+                                'EXTERNAL_ID' => '1302',
+                                'NAME' => 'Доставка книг',
+                                'ACTIVE' => 'Y',
+                                'DATE_ACTIVE_FROM' => '02.10.2009',
+                                'SORT' => '500',
+                                'PREVIEW_PICTURE' => '',
+                                'PREVIEW_TEXT' => 'Доставка книг возможна по почте во все регионы России. ',
+                                'PREVIEW_TEXT_TYPE' => 'html',
+                                'DETAIL_PICTURE' => '',
+                                'DETAIL_TEXT' => 'Доставка товаров по Москве.&lt;br&gt;&lt;br&gt;1. Доставка книг осуществляется на следующий рабочий день после оплаты. По возможности, мы стараемся доставлять книги в день заказа.&lt;br&gt;2. Доставка работает ежедневно с 11 до 19 часов. В субботу и воскресенье до 16 часов.&lt;br&gt;3. Время доставки сотрудник службы доставки согласует с Вами по телефону.&lt;br&gt;4. Доставка по Москве БЕСПЛАТНАЯ. Заказанные книги принесут Вам домой до двери.&lt;br&gt;5. Доставка товаров по Московской области осуществляется по определенным тарифам.&lt;br&gt;&lt;br&gt;Доставка товаров по России.&lt;br&gt;&lt;br&gt;1. Доставка товаров за пределы Московской области осуществляется транспортными компаниями.&lt;br&gt;2. Стоимость доставки зависит от веса и объема товара, а также от типа доставки.&lt;br&gt;3. В стоимость доставки заказа включается страховка.&lt;br&gt;4. Срок выполнения доставки зависит от типа доставки и города. Заказ передается на доставку транспортной компании на следующий день после получения денег.&lt;br&gt;5. Счет с полной стоимостью заказа &amp;#40;сумма товаров &amp;#43; стоимость доставки &amp;#43; страховка&amp;#41; высылается в течение рабочего дня по электронной почте или по факсу.&lt;br&gt;6. Вы можете оплатить счет в любом &amp;#40;или предложенном в счете&amp;#41; отделении Сбербанка для частных лиц или через свой расчетный счет для организаций.&lt;br&gt;7. Для своевременного резервирования товара вышлите нам копии платежных документов по электронной почте или по факсу.',
+                                'DETAIL_TEXT_TYPE' => 'html',
+                                'DATE_CREATE' => '12.01.2015 23:09:58',
+                                'TIMESTAMP_X' => '12.01.2015 23:09:58',
+                                'TAGS' => 'доставка книг',
+                                'PROPERTIES' => Array (
+                                    'KEYWORDS' => Array (
+                                        'PROPERTY_TYPE' => 'S',
+                                        'VALUE' => 'доставка книг',
+                                    ),
+                                    'THEMES' => Array (
+                                        'PROPERTY_TYPE' => 'G',
+                                        'VALUE' => Array (
+                                            '0' => '2',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            '1' => Array (
+                                'CODE' => 'OLD_ID_8',
+                                'EXTERNAL_ID' => '1306',
+                                'NAME' => 'Google отсканирует 30 млн книг',
                                 'ACTIVE' => 'Y',
                                 'DATE_ACTIVE_FROM' => '04.10.2009',
                                 'SORT' => '500',
                                 'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Настройка поддержки ЧПУ производится для работающих проектов (вы должны установить обновление главного модуля до версии 5.1.8 и выше, поскольку в обновление ядра 5.1.8 включен механизм переопределения адресов для поддержки ЧПУ). Все, кто будет ставить новый дистрибутив, получат уже настроенную поддержку.',
+                                'PREVIEW_TEXT' => 'Компания Google намерена приложить большие усилия для совершенствования своей системы поиска книг Google Book Search. ',
                                 'PREVIEW_TEXT_TYPE' => 'html',
-                                'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => '
-&lt;p&gt;Настройка поддержки ЧПУ производится для работающих проектов (вы должны установить обновление главного модуля до версии 5.1.8 и выше, поскольку в обновление ядра 5.1.8 включен механизм переопределения адресов для поддержки ЧПУ). Все, кто будет ставить новый дистрибутив, получат уже настроенную поддержку.
-  &lt;br /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;&lt;b&gt;Понятие обработки адресов &lt;/b&gt;&lt;/p&gt;
-
-&lt;p&gt;Обработка адресов (UrlRewrite) применяется для того, чтобы скрипт мог отвечать не только по своему физическому, но и по любому другому указанному адресу. Например, можно задать такие настройки обработки адресов, что скрипт, лежащий в файле &lt;i&gt;/fld/c.php&lt;/i&gt; и отвечающий по адресу:
-  &lt;br /&gt;
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; /fld/c.php?id=15
-  &lt;br /&gt;
-будет отвечать также по адресу:
-  &lt;br /&gt;
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; /catalog/15.php
-  &lt;br /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Адрес, по которому будет отвечать скрипт, не должен физически существовать на сервере. Если такой адрес физически существует, то будет вызван скрипт по этому адресу. Система обработки адресов запущена в этом случае не будет. &lt;/p&gt;
-
-&lt;p&gt;Управление правилами преобразования адресов производится на странице: &lt;em&gt;/bitrix/admin/urlrewrite_list.php.
-    &lt;br /&gt;
-  &lt;/em&gt;Механизм переопределения адресов создан в основном для компонентов 2.0, поддерживающих режим ЧПУ. В то же время, данный обработчик можно использовать для переопределения любых URL, а не только связанных с компонентами. &lt;/p&gt;
-
-&lt;p&gt;При добавлении на страницу компонента с поддержкой ЧПУ (если файл сохраняется с помощью API), автоматически создается правило переопределения адреса. Если страница создается не с помощью API, а, например, записывается через FTP, то необходимо выполнить пересоздание правил (кнопка на панели инструментов на странице управления правилами).
-  &lt;br /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;&lt;b&gt;Подключение механизма обработки адресов:&lt;/b&gt; &lt;/p&gt;
-
-&lt;p&gt;&lt;b&gt;1&lt;/b&gt;. Если у вас на веб-сервере настроена обработка ошибки 404, например, для Apache установлена опция ErrorDocument или аналогичная инструкция прописана в файле .htaccess:
-  &lt;br /&gt;
-&lt;span&gt;&lt;em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; ErrorDocument 404 /404.php,
-      &lt;br /&gt;
-    &lt;/em&gt;то вы должны изменить файл &lt;em&gt;/404.php,&lt;/em&gt; вставив в самое начало файла команду:
-    &lt;br /&gt;
-  &lt;em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp; include_once( $_SERVER[&#039;DOCUMENT_ROOT&#039;]. &#039;/bitrix/modules/main/include/urlrewrite.php&#039; );
-      &lt;br /&gt;
-    &lt;/em&gt;
-    &lt;p&gt;&lt;em&gt;&lt;b&gt;2&lt;/b&gt;.&lt;/em&gt; Если вы для Apache используете модуль mod_rewrite, то в его настройках вы можете указать (например, в файле .htaccess):
-      &lt;br /&gt;
-    &lt;em&gt;&amp;lt;IfModule mod_rewrite.c&amp;gt;
-        &lt;br /&gt;
-      RewriteEngine On
-        &lt;br /&gt;
-      RewriteCond %{REQUEST_FILENAME} !-f
-        &lt;br /&gt;
-      RewriteCond %{REQUEST_FILENAME} !-l
-        &lt;br /&gt;
-      RewriteCond %{REQUEST_FILENAME} !-d
-        &lt;br /&gt;
-      RewriteCond %{REQUEST_FILENAME} !/bitrix/urlrewrite.php$
-        &lt;br /&gt;
-      RewriteRule ^(.*)$ /bitrix/urlrewrite.php [L]
-        &lt;br /&gt;
-      &amp;lt;/IfModule&amp;gt;
-        &lt;br /&gt;
-      &lt;/em&gt;&lt;/p&gt;
-
-    &lt;p&gt;После этих настроек будет работать штатный механизм поддержки ЧПУ для новых компонент.&lt;/p&gt;
-  &lt;BREAK /&gt;
-    &lt;p&gt;&lt;b&gt;Простой тест для проверки проведенной настройки:&lt;/b&gt;
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-    &lt;b&gt;1&lt;/b&gt;. Зайти на страницу &lt;em&gt;&amp;quot;Настройки&amp;quot; - &amp;quot;Настройки продукта&amp;quot; - &amp;quot;Обработка адресов&amp;quot;
-        &lt;br /&gt;
-      &lt;/em&gt;
-      &lt;br /&gt;
-    &lt;b&gt;2&lt;/b&gt;. Выбирать пункт &amp;quot;Новая запись&amp;quot; и добавить:
-      &lt;br /&gt;
-    &lt;em&gt;&amp;nbsp;&amp;nbsp; Условие&lt;/em&gt;: #^/sef_test/#
-      &lt;br /&gt;
-    &lt;em&gt;&amp;nbsp;&amp;nbsp; Компонент&lt;/em&gt;: ничего не указываем
-      &lt;br /&gt;
-    &lt;em&gt;&amp;nbsp;&amp;nbsp; Файл&lt;/em&gt;: /index.php (нужно указать файл, который фактически будет работать)
-      &lt;br /&gt;
-    &lt;em&gt;&amp;nbsp;&amp;nbsp; Правило&lt;/em&gt;: ничего не указываем.
-      &lt;br /&gt;
-    Сохранить изменения.
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-    &lt;b&gt;3&lt;/b&gt;. Перейти по адресу в разделе /sef_test/
-      &lt;br /&gt;
-    &amp;nbsp;&amp;nbsp;&amp;nbsp; Например, http://localhost/sef_test/test.html
-      &lt;br /&gt;
-
-      &lt;br /&gt;
-    Если ЧПУ работает, то вы должны увидеть содержимое страницы, указанной в поле &lt;em&gt;Файл&lt;/em&gt; в правиле переопределения. &lt;/p&gt;
-
-    &lt;p&gt;&lt;b&gt;Примеры: &lt;/b&gt;&lt;/p&gt;
-
-    &lt;p&gt;1. Если в системе обработки адресов зарегистрировано правило:
-      &lt;br /&gt;
-    &amp;nbsp;&amp;nbsp; &lt;em&gt;Условие&lt;/em&gt; = #^/gallery/#&amp;nbsp;
-      &lt;br /&gt;
-    &amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;em&gt;Файл&lt;/em&gt; = /max/images/index.php
-      &lt;br /&gt;
-    и пользователем запрошена страница /gallery/38.php, которая физически не существует, то система обработки адресов подключит скрипт /max/images/index.php. &lt;/p&gt;
-
-    &lt;p&gt;2. Если в системе обработки адресов зарегистрировано правило:
-      &lt;br /&gt;
-    &amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;em&gt;Условие&lt;/em&gt; = #^/index/([0-9]+)/([0-9]+)/#
-      &lt;br /&gt;
-    &amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;em&gt;Правило&lt;/em&gt; = mode=read&amp;amp;CID=$1&amp;amp;GID=$2
-      &lt;br /&gt;
-    &amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;em&gt;Файл&lt;/em&gt; = /newforum/index.php
-      &lt;br /&gt;
-    и пользователем запрошена страница /index/5/48/, то будет подключен скрипт /newforum/index.php?mode=read&amp;amp;CID=5&amp;amp;GID=48.
-      &lt;br /&gt;
-    &lt;/p&gt;
-
-    &lt;p&gt;3. Если в системе обработки адресов зарегистрировано правило:
-      &lt;br /&gt;
-    &amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;em&gt;Условие&lt;/em&gt; = #(.+?)\\.html(.*)#
-      &lt;br /&gt;
-    &amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;em&gt;Правило&lt;/em&gt; = $1.php$2
-      &lt;br /&gt;
-    и пользователем запрошена страница /about/company.html?show, то будет подключен скрипт /about/company.php?show.&lt;/p&gt;
-  &lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-',
+                                'DETAIL_PICTURE' => Array (
+                                    'ID' => '1',
+                                    'TIMESTAMP_X' => '12.01.2015 23:09:59',
+                                    'MODULE_ID' => 'iblock',
+                                    'HEIGHT' => '155',
+                                    'WIDTH' => '220',
+                                    'FILE_SIZE' => '21887',
+                                    'CONTENT_TYPE' => 'image/jpeg',
+                                    'SUBDIR' => 'iblock/e19',
+                                    'FILE_NAME' => 'google.jpg',
+                                    'ORIGINAL_NAME' => 'google.jpg',
+                                    'DESCRIPTION' => '',
+                                    'HANDLER_ID' => '',
+                                    '~src' => '',
+                                    'SRC' => '/upload/iblock/e19/google.jpg',
+                                    'NEW_SRC' => '1.jpg',
+                                ),
+                                'DETAIL_TEXT' => 'Компания Google намерена приложить большие усилия для совершенствования своей системы поиска книг Google Book Search. &lt;br&gt;&lt;br&gt;В рамках данной инициативы компания Google осуществляет сканирование книг, которые хранятся в Нью-Йоркской публичной библиотеке, а также библиотеках Стенфордского, Гарвардского, Мичиганского и Оксфордского университетов. На сегодня отсканированы примерно миллион книг.&lt;br&gt;&lt;br&gt;Защищенные копирайтом материалы пользователи полностью просматривать не могут. Книжный поисковик предлагает доступ и к полным текстам, однако это касается лишь тех произведений, которые не защищены авторским правом. &lt;br&gt;&lt;br&gt;Предполагается, что в цифровой вид будут переведены до 30 млн книг. Google обещает, что вскоре пользователи Google Book Search смогут покупать книги для просмотра непосредственно в окне браузера, причем их копирование и распечатка будут запрещены. &lt;br&gt;&lt;br&gt;Одновременно с книжным бизнесом Google, как отмечает Hollywood Reporter, намерена развивать и видеосервисы. В первую очередь, это касается служб Google Video и YouTube. Причем в компании Google подчеркивают, что система Google Video предназначена для поиска видео в интернете, тогда как сервис YouTube позволяет размещать и просматривать ролики, в том числе любительские. Иными словами, поскольку Google Video и YouTube выполняют различные функции, они не должны мешать работе друг друга. &lt;br&gt;&lt;br&gt;Google также уделяет внимание рынку видеорекламы. Нужно отметить, что большую часть доходов Google получает именно от размещения рекламных ссылок в результатах поиска. Отображение анимированных рекламных объявлений и видеороликов, теоретически, позволит Google увеличить прибыль.',
                                 'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:57',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:57',
-                                'TAGS' => 'ЧПУ',
+                                'DATE_CREATE' => '12.01.2015 23:09:59',
+                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
+                                'TAGS' => 'Google книги',
                                 'PROPERTIES' => Array (
+                                    'SOURCE' => Array (
+                                        'PROPERTY_TYPE' => 'S',
+                                        'VALUE' => 'science.compulenta.ru ',
+                                    ),
                                     'KEYWORDS' => Array (
                                         'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'ЧПУ',
-                                    ),
-                                    'FORUM_TOPIC_ID' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '74',
-                                    ),
-                                    'FORUM_MESSAGE_CNT' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '1',
-                                    ),
-                                    'vote_count' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '2',
-                                    ),
-                                    'vote_sum' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '10',
-                                    ),
-                                    'rating' => Array (
-                                        'PROPERTY_TYPE' => 'N',
-                                        'VALUE' => '3.44',
+                                        'VALUE' => 'Google книги',
                                     ),
                                     'THEMES' => Array (
                                         'PROPERTY_TYPE' => 'G',
@@ -879,119 +482,268 @@ Model (модель) в данном случае - это ядро систем
                             ),
                         ),
                     ),
-                    '1' => '',
+                    '2' => Array (
+                        'TIMESTAMP_X' => '12.01.2015 23:09:58',
+                        'DATE_CREATE' => '12.01.2015 23:09:58',
+                        'IBLOCK_SECTION_ID' => '',
+                        'ACTIVE' => 'Y',
+                        'GLOBAL_ACTIVE' => 'Y',
+                        'SORT' => '500',
+                        'NAME' => 'Книги и авторы',
+                        'PICTURE' => '',
+                        'LEFT_MARGIN' => '7',
+                        'RIGHT_MARGIN' => '8',
+                        'DEPTH_LEVEL' => '1',
+                        'DESCRIPTION' => '',
+                        'DESCRIPTION_TYPE' => 'text',
+                        'SEARCHABLE_CONTENT' => 'КНИГИ И АВТОРЫ
+',
+                        'CODE' => 'OLD_ID_7',
+                        'XML_ID' => '220',
+                        'DETAIL_PICTURE' => '',
+                        'EXTERNAL_ID' => '220',
+                        'SECTIONS' => Array (
+                            '0' => '',
+                        ),
+                        'ELEMENTS' => Array (
+                            '0' => Array (
+                                'CODE' => 'OLD_ID_7',
+                                'EXTERNAL_ID' => '1304',
+                                'NAME' => 'Названы лучшие книги и издательства 2006 года',
+                                'ACTIVE' => 'Y',
+                                'DATE_ACTIVE_FROM' => '03.10.2009',
+                                'SORT' => '500',
+                                'PREVIEW_PICTURE' => '',
+                                'PREVIEW_TEXT' => 'В Российской государственной библиотеке (РГБ) состоялась церемония вручения премий &amp;quot;Лучшие книги и издательства года&amp;quot;, сообщает РИА &amp;quot;Новости&amp;quot;.',
+                                'PREVIEW_TEXT_TYPE' => 'html',
+                                'DETAIL_PICTURE' => '',
+                                'DETAIL_TEXT' => 'В Российской государственной библиотеке &amp;#40;РГБ&amp;#41; состоялась церемония вручения премий &amp;quot;Лучшие книги и издательства года&amp;quot;, сообщает РИА &amp;quot;Новости&amp;quot;.&lt;br&gt;&lt;br&gt;Премий были удостоены Евгений Примаков &amp;#40;мемуары &amp;quot;Минное поле политики&amp;quot;&amp;#41;, кардиохирург Лео Бокерия &amp;#40;&amp;quot;Здоровье России&amp;quot;, &amp;quot;Социально-значимые болезни в Российской Федерации&amp;quot;&amp;#41;, историк Анатолий Смирнов &amp;#40;жизнеописание Карамзина&amp;#41;, Владимир и Сергей Луневы &amp;#40;иллюстрированная история Святогорской лавры &amp;quot;Путь к Истине&amp;quot;&amp;#41;, юрист Александр Звягинцев &amp;#40;&amp;quot;Нюрнбергский набат&amp;quot;&amp;#41;, директор издательства &amp;quot;Росспэн&amp;quot; Андрей Сорокин &amp;#40;энциклопедия &amp;quot;Государственная Дума России 1906-2006&amp;quot;&amp;#41;.&lt;br&gt;&lt;br&gt;Лауреатами стали также писатель Анатолий Салуцкий &amp;#40;роман &amp;quot;Из России с любовью&amp;quot;&amp;#41;, историк Александр Боханов &amp;#40;цикл книг по истории России&amp;#41;, политолог Вячеслав Кеворков &amp;#40;&amp;quot;Исповедь перед казнью. Из воспоминаний следователя по особо важным делам МГБ СССР&amp;quot;&amp;#41;, доктор биологических наук Марина Бобкова &amp;#40;исследование &amp;quot;Иммунитет и ВИЧ-инфекция&amp;quot;&amp;#41;, настоятель Сретенского монастыря архимандрит Тихон &amp;#40;Шевкунов&amp;#41; за издание религиозной литературы, писатель Владимир Бутромеев &amp;#40;энциклопедический справочник &amp;quot;Символ власти&amp;quot;&amp;#41;.&lt;br&gt;&lt;br&gt;Лучшими издательствами названы &amp;quot;Молодая гвардия&amp;quot;, &amp;quot;Эксмо&amp;quot;, &amp;quot;Правда Севера&amp;quot;, Тюменского государственного университета, центр &amp;quot;Учебная книга&amp;quot; &amp;#40;Екатеринбург&amp;#41;, &amp;quot;Русский путь&amp;quot;, Пушкинский фонд &amp;quot;Классика&amp;quot;.&lt;br&gt;&lt;br&gt;&amp;quot;Особенность нынешнего награждения состоит в том, что жюри обращает внимание на книги, символизирующие преемственность отечественной истории&amp;quot;, - сказал, открывая церемонию председатель жюри, генеральный директор Русского биографического института Святослав Рыбас. &amp;quot;Мы хотим этим сказать нашему обществу: пора более взвешено относиться к собственной истории и перестать рассматривать ее как поле брани&amp;quot;, - подчеркнул он.&lt;br&gt;&lt;br&gt;В свою очередь директор РГБ Виктор Федоров заявил, что книгоиздание в России успешно развивается и по числу названий изданных книг уже достигло уровня СССР.&lt;br&gt;&lt;br&gt;Премия &amp;quot;Лучшие книги и издательства года&amp;quot;, девизом которой является &amp;quot;Благородство, красота, общественная польза&amp;quot;, учреждена пять лет назад Русским биографическим институтом, Российской государственной библиотекой и &amp;quot;Литературной газетой&amp;quot;.',
+                                'DETAIL_TEXT_TYPE' => 'html',
+                                'DATE_CREATE' => '12.01.2015 23:09:58',
+                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
+                                'TAGS' => 'лучшие книги издательства',
+                                'PROPERTIES' => Array (
+                                    'SOURCE' => Array (
+                                        'PROPERTY_TYPE' => 'S',
+                                        'VALUE' => 'NEWSru.com',
+                                    ),
+                                    'KEYWORDS' => Array (
+                                        'PROPERTY_TYPE' => 'S',
+                                        'VALUE' => 'лучшие книги издательства',
+                                    ),
+                                    'THEMES' => Array (
+                                        'PROPERTY_TYPE' => 'G',
+                                        'VALUE' => Array (
+                                            '0' => '3',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            '1' => Array (
+                                'CODE' => 'OLD_ID_10',
+                                'EXTERNAL_ID' => '1317',
+                                'NAME' => 'Самые популярные авторы',
+                                'ACTIVE' => 'Y',
+                                'DATE_ACTIVE_FROM' => '06.10.2009',
+                                'SORT' => '500',
+                                'PREVIEW_PICTURE' => '',
+                                'PREVIEW_TEXT' => 'Известен список&amp;nbsp;популярных авторов за последний год. Пятерка лучших:&amp;nbsp;Б. Акунин, Л.П. Франкел, А. Карр, С. Минаев, А. Гавальда.',
+                                'PREVIEW_TEXT_TYPE' => 'html',
+                                'DETAIL_PICTURE' => '',
+                                'DETAIL_TEXT' => '
+&lt;p&gt;Известен список&amp;nbsp;популярных авторов за последний год:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Борис Акунин&lt;/strong&gt; - псевдоним писателя, литературоведа и переводчика Григория Шалвовича Чхартишвили, под которым он публикует детективные произведения о сыщике Эрасте Фандорине. Родился писатель в Грузии в 1956 году. С 1958 года живет в Москве. Закончил историко-филологическое отделение Института стран Азии и Африки (МГУ). Заместитель главного редактора журнала &amp;quot;Иностранная литература&amp;quot;, главный редактор 20-томной &amp;quot;Антологии японской литературы&amp;quot;, председатель правления мегапроекта &amp;quot;Пушкинская библиотека&amp;quot; (Фонд Сороса). Автор книги &amp;quot;Писатель и самоубийство&amp;quot; (М.: Новое литературное обозрение, 1999), литературно-критических статей, переводов японской, американской и английской литературы (Юкио Мисима, Кэндзи Маруяма, Ясуси Иноуэ, КорагессанБойл, Малкольм Брэдбери, Питер Устинов и др.).
+    &lt;br /&gt;
+  &lt;/li&gt;
+
+  &lt;li&gt;&lt;strong&gt;Лоис П. Франкел (Lois P. Frankel) &lt;/strong&gt;- не только ведущий специалист по подготовке персонала, но и один из пионеров в этой области. Основываясь на десятилетнем опыте работы в нефтяной компании и собственных наблюдениях, Франкел организовала международную фирму по тренировке персонала &amp;quot;Корпорейт Коучинг Интернешнл&amp;quot;. Как консультант работала компаниями &amp;quot;Миллер&amp;quot;, &amp;quot;Уолт Дисней&amp;quot;, &amp;quot;Локхид Мартин&amp;quot;, газетой &amp;quot;Голливуд репортер&amp;quot; и многими другими организациями. Является автором ряда книг по практической философии: &amp;quot;Женщины, гнев и депрессия&amp;quot;, &amp;quot;Начни свою карьеру&amp;quot;, &amp;quot;Превосходя ваши силы&amp;quot;. Ее книги &amp;quot;Хорошие девочки не добиваются успеха в бизнесе&amp;quot; и &amp;quot;Хорошие девочки не становятся богатыми&amp;quot; стали бестселлерами во многих странах и переведены на более чем двадцать языков. Постоянный участник различных конференций и международных симпозиумов, Франкел также работает с общественными некоммерческими организациями. Член Американской Психологической Ассоциации, Национальной Ассоциации Спикеров и Общества управления человеческими ресурсами, имеет степень доктора психологии Южно- Калифорнийского Университета.
+    &lt;br /&gt;
+  &lt;/li&gt;
+
+  &lt;li&gt;&lt;strong&gt;Аллен Карр (Allen Carr)&lt;/strong&gt; - oдин из самых активных и известных борцов с курением, чьи книги разошлись по всему миру многомиллионными тиражами. Благодаря разработанному им методу и его книгам миллионы людей во всем мире нашли в себе силы избавиться от никотиновой зависимости. Среди его клиентов были такие знаменитости как актер Энтони Хопкинс и известный британский предприниматель-миллиардер Ричард Брэнсон. Несмотря на многолетний его отказ от курения, в июле 2006 года врачи диагностировали у Аллена Кара не подлежащий операции рак легких. Узнав об этом, Карр заявил: &amp;quot;По моим оценкам, я вылечил двадцать пять миллионов человек за эти годы. И если моя болезнь - расплата за это, то я готов заплатить&amp;quot;. Аллен Карр ушел из жизни в том же году - 26 ноября он скончался в собственном доме на побережье Коста-дель-Соль в городе Малага в Испании.
+    &lt;br /&gt;
+  &lt;/li&gt;
+
+  &lt;li&gt;&lt;strong&gt;Сергей Минаев&lt;/strong&gt; - известный бизнесмен и публицист. Очень популярен как сетевой писатель. Дебютный роман &amp;quot;Духless&amp;quot; с первых дней выхода в свет стал лидером продаж.
+    &lt;br /&gt;
+  &lt;/li&gt;
+
+  &lt;li&gt;&lt;strong&gt;Анна Гавальда (Anna Gavalda) -&amp;nbsp;&lt;/strong&gt; училась в Сорбонне, работала кассиршей и официанткой, занималась журналистикой. В 1992 году победила в национальном конкурсе на лучшее любовное письмо. В 1998 году она завоевала премию &amp;quot;Кровь в чернильнице&amp;quot; за новеллу &amp;quot;Aristote&amp;quot; и победила еще в двух литературных конкурсах. В 1999 году вышла книга Анны Гавальды &amp;quot;Мне бы хотелось, чтоб меня кто-нибудь где-нибудь ждал&amp;hellip;&amp;quot;, удостоенная в 2000 году Гран-при RTL. Этот сборник новелл в течение следующих четырех лет был переведен почти на 30 языков и принес своему автору славу новой звезды французской словесности. В 2002 году вышел первый роман Гавальды - &amp;quot;Я его любила&amp;quot;, а в следующем году она продолжает работу над романом &amp;quot;Ensemble, c&#039;est tout&amp;quot;. Анна Гавальда живет на юго-востоке Парижа, пишет каждый день по три часа и воспитывает двух детей.
+    &lt;br /&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+',
+                                'DETAIL_TEXT_TYPE' => 'html',
+                                'DATE_CREATE' => '12.01.2015 23:09:59',
+                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
+                                'TAGS' => 'лучший автор',
+                                'PROPERTIES' => Array (
+                                    'KEYWORDS' => Array (
+                                        'PROPERTY_TYPE' => 'S',
+                                        'VALUE' => 'лучший автор',
+                                    ),
+                                    'THEMES' => Array (
+                                        'PROPERTY_TYPE' => 'G',
+                                        'VALUE' => Array (
+                                            '0' => '3',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            '2' => Array (
+                                'CODE' => 'OLD_ID_13',
+                                'EXTERNAL_ID' => '1730',
+                                'NAME' => 'Российские писатели вошли в список молодых литературных талантов США',
+                                'ACTIVE' => 'Y',
+                                'DATE_ACTIVE_FROM' => '06.10.2009',
+                                'SORT' => '500',
+                                'PREVIEW_PICTURE' => '',
+                                'PREVIEW_TEXT' => 'Авторитетный в англоязычном литературном мире британский журнал Granta составил новый перечень наиболее многообещающих молодых писателей США. В него вошли и писатели русского происхождения. ',
+                                'PREVIEW_TEXT_TYPE' => 'html',
+                                'DETAIL_PICTURE' => '',
+                                'DETAIL_TEXT' => '
+&lt;p&gt;Авторитетный в англоязычном литературном мире британский журнал Granta составил новый перечень наиболее многообещающих молодых писателей США. В него вошли и писатели русского происхождения &amp;ndash; это москвичка Ольга Грушина, живущая и работающая теперь в Вашингтоне, и бывший ленинградец Гэри Штейнгарт, обосновавшийся на Манхэттене. Презентация журнала с новым престижным перечнем состоялась на днях в Нью-Йорке. &lt;/p&gt;
+
+&lt;p&gt;В течение года компетентное жюри в составе шести человек, писателей, публицистов и редакторов, читали и выбирали молодых &amp;quot;звезд&amp;quot; американской литературы. Всего в новом интернациональном списке журнала Granta значатся имена 21 писателя в возрасте до 35 лет, говорится на сайте журнала. Наряду с представителями США в нем значатся, например, уроженцы Дели, Лимы и Пекина, а также чикагский таец и вашингтонский нигериец. &lt;/p&gt;
+
+&lt;p&gt;Ольга Грушина, американская писательница русского происхождения, проживающая в США с 1989 года, дебютировала с написанным на английском языке романом &amp;quot;Жизнь Суханова в сновидениях&amp;quot; (&amp;quot;The Dream Life of Sukhanov&amp;quot;) в прошлом году. Он был опубликован в издательстве G. P. Putnams Sons. &lt;/p&gt;
+
+&lt;p&gt;Книга получила очень высокие отзывы от критиков из ведущих американских и британских изданий - от The New York Times до The Independent. Он вошел в сотню &amp;quot;самых заметных книг 2006 года&amp;quot; по версии газеты The New York Times. Эта американская газета, рецензии которой считаются одними из самых влиятельных в США, ежегодно составляет перечень самых ярких книг. В 2006 году роман был номинирован на британскую литературную премию Orange Prize. &lt;/p&gt;
+
+&lt;p&gt;Штейнгарт известен, как автор романов &amp;quot;Абсурдистан&amp;quot; и &amp;quot;Пособие для русского дебютанта&amp;quot;, передает ИТАР-ТАСС. Книга также издана на английском языке. &lt;/p&gt;
+
+&lt;p&gt;Предыдущий список журнал Granta составлял в 1996 году - он оказался во многом пророческим. Британский Observer называет лист Granta &amp;quot;списком, который определяет литературную повестку для целого поколения&amp;quot;. &lt;/p&gt;
+
+&lt;p&gt;Литературный журнал был основан в 1889 году в Кембридже и носит имя реки, протекающей через университетский городок. С 1979 года он выходит в обновленном формате - как ежеквартальный вестник новой литературы и эссеистики. &lt;/p&gt;
+
+&lt;p&gt;Наряду с молодыми авторами на его страницах печатались такие корифеи, как Мартин Эмис, Сол Беллоу, Милан Кундера, Габриэль Гарсиа Маркес и другие. Один из номеров новой Granta в 1998 году был целиком посвящен России. &lt;/p&gt;
+',
+                                'DETAIL_TEXT_TYPE' => 'html',
+                                'DATE_CREATE' => '12.01.2015 23:09:59',
+                                'TIMESTAMP_X' => '12.01.2015 23:10:00',
+                                'TAGS' => 'авторы',
+                                'PROPERTIES' => Array (
+                                    'KEYWORDS' => Array (
+                                        'PROPERTY_TYPE' => 'S',
+                                        'VALUE' => 'авторы',
+                                    ),
+                                    'THEMES' => Array (
+                                        'PROPERTY_TYPE' => 'G',
+                                        'VALUE' => Array (
+                                            '0' => '3',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    '3' => Array (
+                        'TIMESTAMP_X' => '12.01.2015 23:09:58',
+                        'DATE_CREATE' => '12.01.2015 23:09:58',
+                        'IBLOCK_SECTION_ID' => '',
+                        'ACTIVE' => 'Y',
+                        'GLOBAL_ACTIVE' => 'Y',
+                        'SORT' => '500',
+                        'NAME' => 'Конкурсы',
+                        'PICTURE' => '',
+                        'LEFT_MARGIN' => '9',
+                        'RIGHT_MARGIN' => '10',
+                        'DEPTH_LEVEL' => '1',
+                        'DESCRIPTION' => '',
+                        'DESCRIPTION_TYPE' => 'text',
+                        'SEARCHABLE_CONTENT' => 'КОНКУРСЫ
+',
+                        'CODE' => 'OLD_ID_8',
+                        'XML_ID' => '221',
+                        'DETAIL_PICTURE' => '',
+                        'EXTERNAL_ID' => '221',
+                        'SECTIONS' => Array (
+                            '0' => '',
+                        ),
+                        'ELEMENTS' => Array (
+                            '0' => Array (
+                                'CODE' => 'OLD_ID_5',
+                                'EXTERNAL_ID' => '1300',
+                                'NAME' => 'Конкурс на лучшую рецензию',
+                                'ACTIVE' => 'Y',
+                                'DATE_ACTIVE_FROM' => '01.10.2009',
+                                'SORT' => '500',
+                                'PREVIEW_PICTURE' => '',
+                                'PREVIEW_TEXT' => 'Сегодняшняя дата - официальное начало конкурса на лучшую рецензию на любую из книг нашего каталога. ',
+                                'PREVIEW_TEXT_TYPE' => 'html',
+                                'DETAIL_PICTURE' => '',
+                                'DETAIL_TEXT' => 'Конкурс проводится со 2 марта по 2 июня 2007 года. Окончание приема заявок 1 июня, 2 июня - объявление итогов конкурса.&lt;br&gt;&lt;br&gt;Жюри оценивает рецензии на книги, представленные в каталоге на нашем сайте.&amp;nbsp;&amp;nbsp;&lt;br&gt;&lt;br&gt;Все присланные Вами рецензии будут переданы на суд компетентного жюри, в состав которого входят редакторы популярных изданий, писатели, дизайнеры издательских домов. &lt;br&gt;&lt;br&gt;Жюри оценивает талантливость рецензии, ее остроумие, литературные достоинства. Отношение автора к рецензируемой книге и характер рецензии &amp;#40;положительный, отрицательный, амбивалентный&amp;#41; значения не имеет и критерием оценки не является. &lt;br&gt;&lt;br&gt;Количество рецензий, представленных одним автором не ограничено. &lt;br&gt;&lt;br&gt;Победителям конкурса будут вручены призы: комплекты книг от издательства &amp;quot;Книжный дом&amp;quot;.',
+                                'DETAIL_TEXT_TYPE' => 'html',
+                                'DATE_CREATE' => '12.01.2015 23:09:58',
+                                'TIMESTAMP_X' => '12.01.2015 23:09:58',
+                                'TAGS' => 'конкурс рецензия',
+                                'PROPERTIES' => Array (
+                                    'KEYWORDS' => Array (
+                                        'PROPERTY_TYPE' => 'S',
+                                        'VALUE' => 'конкурс рецензия',
+                                    ),
+                                    'THEMES' => Array (
+                                        'PROPERTY_TYPE' => 'G',
+                                        'VALUE' => Array (
+                                            '0' => '3',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            '1' => Array (
+                                'CODE' => 'OLD_ID_11',
+                                'EXTERNAL_ID' => '1685',
+                                'NAME' => 'Конкурс &quot;Книга будущего&quot;',
+                                'ACTIVE' => 'Y',
+                                'DATE_ACTIVE_FROM' => '06.10.2009',
+                                'SORT' => '500',
+                                'PREVIEW_PICTURE' => '',
+                                'PREVIEW_TEXT' => 'Журнал &amp;quot;Самиздат&amp;quot; объявляет о проведении конкурса &amp;quot;Книга будущего&amp;quot;, который пройдет с 15.03.2007 по 1.06.2007. ',
+                                'PREVIEW_TEXT_TYPE' => 'html',
+                                'DETAIL_PICTURE' => '',
+                                'DETAIL_TEXT' => '
+&lt;p&gt;Основные положения конкурса:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;работы принимаются с 15.03.2007 по 15.05.2007; &lt;/li&gt;
+
+  &lt;li&gt;рассматривается одна работа от одного автора; &lt;/li&gt;
+
+  &lt;li&gt;работы, участвовавщие в других конкурсах не принимаются; &lt;/li&gt;
+
+  &lt;li&gt;не принимаются работы с ненормативной лексикой. &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Работы, присланные позже указанного срока проведения конкурса не рассматриваются.&lt;/p&gt;
+
+&lt;p&gt;В состав жюри входят редакторы журнала, писатели-фантасты.&amp;nbsp;Каждый член жюри оценивает работу по десятибальной системе.&amp;nbsp;Победителями считаются работы, набравшие наибольшее количество баллов.&lt;/p&gt;
+
+&lt;p&gt;Победителям конкурса будут вручены призы от журнала &amp;quot;Самиздат&amp;quot;.&lt;/p&gt;
+',
+                                'DETAIL_TEXT_TYPE' => 'html',
+                                'DATE_CREATE' => '12.01.2015 23:09:59',
+                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
+                                'TAGS' => 'конкурс книга',
+                                'PROPERTIES' => Array (
+                                    'KEYWORDS' => Array (
+                                        'PROPERTY_TYPE' => 'S',
+                                        'VALUE' => 'конкурс книга',
+                                    ),
+                                    'THEMES' => Array (
+                                        'PROPERTY_TYPE' => 'G',
+                                        'VALUE' => Array (
+                                            '0' => '2',
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    '4' => '',
                 ),
             ),
-        ),
-    ),
-    '1' => Array (
-        'IBLOCK_TYPE_ID' => 'articles2',
-        'LID' => 'ru',
-        'NAME' => 'Статьи',
-        'SECTION_NAME' => 'Разделы',
-        'ELEMENT_NAME' => 'Статья',
-        'ID' => 'articles2',
-        'SECTIONS' => 'Y',
-        'EDIT_FILE_BEFORE' => '',
-        'EDIT_FILE_AFTER' => '',
-        'IN_RSS' => 'N',
-        'SORT' => '20',
-        'LANG' => Array (
-            'ru' => Array (
-                'NAME' => 'Статьи',
-                'SECTION_NAME' => 'Разделы',
-                'ELEMENT_NAME' => 'Статья',
-            ),
-        ),
-        'IBLOCKS' => Array (
-        ),
-    ),
-    '2' => Array (
-        'IBLOCK_TYPE_ID' => 'books',
-        'LID' => 'ru',
-        'NAME' => 'Каталог книг',
-        'SECTION_NAME' => 'Разделы',
-        'ELEMENT_NAME' => 'Элемент',
-        'ID' => 'books',
-        'SECTIONS' => 'Y',
-        'EDIT_FILE_BEFORE' => '',
-        'EDIT_FILE_AFTER' => '',
-        'IN_RSS' => 'N',
-        'SORT' => '60',
-        'LANG' => Array (
-            'ru' => Array (
-                'NAME' => 'Каталог книг',
-                'SECTION_NAME' => 'Разделы',
-                'ELEMENT_NAME' => 'Элемент',
-            ),
-        ),
-        'IBLOCKS' => Array (
-        ),
-    ),
-    '3' => Array (
-        'IBLOCK_TYPE_ID' => 'news',
-        'LID' => 'ru',
-        'NAME' => 'Новости',
-        'SECTION_NAME' => 'Группы',
-        'ELEMENT_NAME' => 'Новость',
-        'ID' => 'news',
-        'SECTIONS' => 'Y',
-        'EDIT_FILE_BEFORE' => '',
-        'EDIT_FILE_AFTER' => '',
-        'IN_RSS' => 'N',
-        'SORT' => '10',
-        'LANG' => Array (
-            'ru' => Array (
-                'NAME' => 'Новости',
-                'SECTION_NAME' => 'Группы',
-                'ELEMENT_NAME' => 'Новость',
-            ),
-        ),
-        'IBLOCKS' => Array (
-        ),
-    ),
-    '4' => Array (
-        'IBLOCK_TYPE_ID' => 'services',
-        'LID' => 'ru',
-        'NAME' => 'Сервисы',
-        'SECTION_NAME' => 'Разделы',
-        'ELEMENT_NAME' => 'Элемент',
-        'ID' => 'services',
-        'SECTIONS' => 'Y',
-        'EDIT_FILE_BEFORE' => '',
-        'EDIT_FILE_AFTER' => '',
-        'IN_RSS' => 'N',
-        'SORT' => '50',
-        'LANG' => Array (
-            'ru' => Array (
-                'NAME' => 'Сервисы',
-                'SECTION_NAME' => 'Разделы',
-                'ELEMENT_NAME' => 'Элемент',
-            ),
-        ),
-        'IBLOCKS' => Array (
-        ),
-    ),
-    '5' => Array (
-        'IBLOCK_TYPE_ID' => 'xmlcatalog',
-        'LID' => 'ru',
-        'NAME' => 'Каталог товаров 1С',
-        'SECTION_NAME' => 'Разделы',
-        'ELEMENT_NAME' => 'Товары',
-        'ID' => 'xmlcatalog',
-        'SECTIONS' => 'Y',
-        'EDIT_FILE_BEFORE' => '',
-        'EDIT_FILE_AFTER' => '',
-        'IN_RSS' => 'N',
-        'SORT' => '80',
-        'LANG' => Array (
-            'ru' => Array (
-                'NAME' => 'Каталог товаров 1С',
-                'SECTION_NAME' => 'Разделы',
-                'ELEMENT_NAME' => 'Товары',
-            ),
-        ),
-        'IBLOCKS' => Array (
         ),
     ),
 );

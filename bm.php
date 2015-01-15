@@ -30,11 +30,11 @@ class BitrixMigration
         "EDIT_FILE_AFTER","SECTIONS_NAME","SECTION_NAME","ELEMENTS_NAME","ELEMENT_NAME","PROPS"
     );
 
-    protected $arIblockTypeKeys = array(
-        "IBLOCK_TYPE_ID","LID","NAME","SECTION_NAME","ELEMENT_NAME","ID","SECTIONS","EDIT_FILE_BEFORE","EDIT_FILE_AFTER","IN_RSS","SORT","IBLOCKS"
+    protected $arIblockTypeKeys = array( //"IBLOCK_TYPE_ID",
+        "LID","NAME","SECTION_NAME","ELEMENT_NAME","ID","SECTIONS","EDIT_FILE_BEFORE","EDIT_FILE_AFTER","IN_RSS","SORT","IBLOCKS"
     );
 
-    protected $arSectionKeys = array(
+    protected $arSectionKeys = array( //"IBLOCK_TYPE_ID",
         "TIMESTAMP_X","DATE_CREATE","IBLOCK_SECTION_ID","ACTIVE","GLOBAL_ACTIVE","SORT","NAME","PICTURE","LEFT_MARGIN","RIGHT_MARGIN","DEPTH_LEVEL","DESCRIPTION","DESCRIPTION_TYPE","SEARCHABLE_CONTENT","CODE","XML_ID","DETAIL_PICTURE","EXTERNAL_ID"
     );
     protected $arElementKeys = array(
@@ -66,7 +66,7 @@ class BitrixMigration
         ?>
         <html>
         <head>
-            <title>Импорт Инфоблоков 1c-Bitrix</title>
+            <title>Импорт/Экспорт Инфоблоков 1c-Bitrix</title>
             <style>
                 .disabled {color: #ddd;}
                 label, input[type=button] {cursor: pointer;}
@@ -204,17 +204,18 @@ class BitrixMigration
 
             $this->addType( $arType );
             foreach($arType['IBLOCKS'] as $arIblock){
-                $arIblock['IBLOCK_TYPE_ID'] = $arType['IBLOCK_TYPE_ID'];
-                $this->addIblock( $arIblock );
-                foreach($arIblock['PROPS'] as $arProperties){
-                    $arProperties['IBLOCK_ID'] = $this->iblockIdByCode[$arIblock['CODE']];
-                    $this->addProperty( $arProperties );
+                $arIblock['IBLOCK_TYPE_ID'] = $arType['ID'];
+                $iNewIblockId = $this->addIblock( $arIblock );
+                foreach($arIblock['PROPS'] as $arProperty){
+                    $arProperty['IBLOCK_ID'] = $iNewIblockId;
+                    $this->addProperty( $arProperty );
                 }
                 if ( count($arIblock['SECTIONS'])>0 ){
-                    $this->uploadSections( $arIblock['SECTIONS'], $this->iblockIdByCode[$arIblock['CODE']] );
+                    $this->uploadSections( $arIblock, $iNewIblockId );
                 }
             }
         }
+        echo "<br /><b>Загружен массив:</b>";
         echo '<pre>';
         print_r($arResult);
         echo '</pre>';
@@ -259,10 +260,10 @@ class BitrixMigration
     /*
      * Загрузка разделов и элементов
      */
-    protected function uploadSections( $arItems, $iIblockId )
+    protected function uploadSections( $arIblock, $iIblockId )
     {
-        foreach($arItems as $arSection){
-            if ($arSection['IS_ROOT']=="Y"){
+        foreach($arIblock['SECTIONS'] as $arSection){
+            if ($arSection['IS_ROOT']=="Y" && isset($arSection['ELEMENTS'][0])){
                 foreach($arSection['ELEMENTS'] as $arElement){
                     $arElement["IBLOCK_SECTION_ID"] = false;
                     $arElement["IBLOCK_ID"] = $iIblockId;
@@ -271,36 +272,66 @@ class BitrixMigration
 
             }else {
                 $arSection["IBLOCK_ID"] = $iIblockId;
-                $iSectionId = $this->addSection( $arSection);
-                if ( intval($iSectionId) > 0) {
-                    foreach($arSection['ELEMENTS'] as $arElement){
-                        $arElement["IBLOCK_SECTION_ID"] = $iSectionId;
-                        $arElement["IBLOCK_ID"] = $iIblockId;
-                        $this->addElement( $arElement );
-                    }
-                }
+                $arSection["IBLOCK_TYPE_ID"] = $arIblock['IBLOCK_TYPE_ID'];
+                $arSection["IBLOCK_SECTION_ID"] = false;
+
+                $this->addSection( $arSection);
+
             }
 
         }
     }
+
+    //Рекурсивная функция для добавления дерева разделов и элементов
     protected function addSection( $arSection )
     {
+        //TODO: Сделать рефакторинг этого метода
 
+        $iNewSectionId = 0; //TODO : Видимо эта переменная видна в рекурсивном методе
+        $iIblockId = 0;
+        $sIblockTypeId = $arSection['IBLOCK_TYPE_ID'];
         if ( strlen($arSection['CODE'])>0){
-            $arFilter = Array('IBLOCK_ID'=>$arSection['IBLOCK_ID'], 'CODE'=>$arSection['CODE']);
+            $arFilter = Array('IBLOCK_ID'=>$arSection['IBLOCK_ID'], 'CODE'=>$arSection['CODE'],'IBLOCK_TYPE_ID'=>$sIblockTypeId);
             $db_list = CIBlockSection::GetList(Array(), $arFilter, true);
             if($arRes = $db_list->GetNext()){
-               return $arRes['ID'];//такой раздел уже есть
+                $iNewSectionId = $arRes['ID'];//такой раздел уже есть
+                $iIblockId = $arRes['IBLOCK_ID'];
             }
         }
-        $bs = new CIBlockSection;
-        unset( $arSection['ELEMENTS'] );
-        if (is_array($arSection['PICTURE']))
-            $arSection['PICTURE'] = $this->prepareFile( $arSection['PICTURE'] );
-        $iNewSectionId= $bs->Add($arSection);
-        unset( $bs );
+
+        if ($iNewSectionId==0){
+            $bs = new CIBlockSection;
+            if (is_array($arSection['PICTURE']))
+                $arSection['PICTURE'] = $this->prepareFile($arSection['PICTURE']);
+            if ($iNewSectionId = $bs->Add($arSection)) {
+                echo '<br /><b>Новый раздел ' . $iNewSectionId . ' добавлен.</b>';
+                $iIblockId = $arSection['IBLOCK_ID'];
+            }
+            unset($bs);
+        }
+
+        if ( intval($iNewSectionId) > 0  && intval($iIblockId)>0 ) {
+            //добавляем элементы раздела
+            if (isset($arSection['ELEMENTS'][0])) {
+                foreach ($arSection['ELEMENTS'] as $arElement) {
+                    $arElement["IBLOCK_SECTION_ID"] = $iNewSectionId;
+                    $arElement["IBLOCK_ID"] = $iIblockId;
+                    $this->addElement($arElement);
+                }
+            }
+            //добавляем подразделы
+            if (isset($arSection['SECTIONS'][0])) {
+                foreach ($arSection['SECTIONS'] as $arSection) {
+                    $arSection["IBLOCK_SECTION_ID"] = $iNewSectionId;
+                    $arSection["IBLOCK_ID"] = $iIblockId;
+                    $arSection['IBLOCK_TYPE_ID'] = $sIblockTypeId;
+                    $this->addSection($arSection);
+                }
+            }
+        }
         return $iNewSectionId;
     }
+
     protected function addElement( $arElement )
     {
         if (is_array($arElement['DETAIL_PICTURE']))
@@ -327,7 +358,7 @@ class BitrixMigration
 
         $el = new CIblockElement();
         if ($iNewId = $el->Add( $arElement ))
-            echo 'Новый элемент '.$iNewId.' добавлен.';
+            echo '<br /><b>Новый элемент '.$iNewId.' добавлен.</b>';
         else
             echo $el->LAST_ERROR;
 
@@ -339,10 +370,11 @@ class BitrixMigration
     {
         $db_iblock_type = CIBlockType::GetList(false, array("=ID"=>$arType["ID"]));
         if($ar_iblock_type = $db_iblock_type->Fetch()){
-            echo 'Тип инфоблока '.$arType["ID"].' уже есть.';
+            echo '<br /><b>Тип инфоблока '.$arType["ID"].' уже есть.</b>';
         }else {
             $obBlocktype = new CIBlockType;
             $res = $obBlocktype->Add($arType);
+            echo '<br /><b>Новый тип инфоблока '.$arType["ID"].' добавлен.</b>';
         }
     }
 
@@ -360,15 +392,19 @@ class BitrixMigration
 
             $this->iblockIdByCode[$arFindedIblock['CODE']] = $arFindedIblock['ID'];
             echo 'Инфоблока '.$arIblock["CODE"].' уже есть.';
-
+            return $arFindedIblock['ID'];
         }else {
             echo 'Инфоблок не найден.';
             $ib = new CIBlock;
-            if ($this->iblockIdByCode[$arIblock['CODE']] = $ib->Add($arIblock))
-                echo 'Инфоблок успешно добавлен.';
-            else
+            $iNewIblockId = false;
+            if ($iNewIblockId = $ib->Add($arIblock)) {
+                $this->iblockIdByCode[$arIblock['CODE']] = $iNewIblockId;
+                echo '<br /><b>Инфоблок успешно добавлен.</b>';
+            }else {
                 echo $ib->LAST_ERROR;
+            }
             unset($ib);
+            return $iNewIblockId;
 
         }
     }
@@ -403,13 +439,6 @@ class BitrixMigration
     }
 
 
-    protected function filterItem($id,$type)
-    {
-        if (!$this->setFilter) return true;
-
-        return  in_array($id,$this->filter[$type]);
-    }
-
     protected function getIbStructure()
     {
         CModule::IncludeModule("iblock");
@@ -428,7 +457,8 @@ class BitrixMigration
                     )
                 );
                 $arIBType['IBLOCKS'] = $this->getIBlocksArray( $sTypeId );
-                $arResult[] =  $arIBType;
+                if ( isset($arIBType['IBLOCKS'][0]))
+                    $arResult[] =  $arIBType;
             }
         }
         $this->arResult = $arResult;
@@ -454,7 +484,7 @@ class BitrixMigration
                 $ar_res['PROPS'] = $this->getIBlocksProperties( $iIBlockID );
 
                 if ($this->bImportElements){
-                    $ar_res['SECTIONS'] = $this->getIblockSections( $iIBlockID );
+                    $ar_res['SECTIONS'] = $this->getSections( $iIBlockID );
                 }
                 //myPrintR($ar_res,__FILE__,__LINE__ );
 
@@ -462,6 +492,12 @@ class BitrixMigration
             }
         }
         return $arResult;
+    }
+    protected function filterItem($id,$type)
+    {
+        if (!$this->setFilter) return true;
+
+        return  in_array($id,$this->filter[$type]);
     }
 
     protected function getIBlocksProperties($iblockId)
@@ -501,13 +537,13 @@ class BitrixMigration
     }
 
 
-    protected function getIblockSections( $iIblockId, $iParentSectionId = false )
+    protected function getSections( $iIblockId, $iParentSectionId = false )
     {
         $arSections = array();
 
         //добавляем корневой раздел если есть элементы в корне
         if (!$iParentSectionId){
-            $arRootElements = $this->getIblockElements( $iIblockId, false );
+            $arRootElements = $this->getElements( $iIblockId, false );
             if (count($arRootElements)>0){
                 $arSections[] = array(
                     "IS_ROOT" => "Y",
@@ -519,6 +555,9 @@ class BitrixMigration
         while($arSection = $db_list->GetNext()){
             //фильтруем параметры
             $iSectionId = $arSection['ID'];
+
+            if ( empty($arSection['CODE']) ) $arSection['CODE']= 'OLD_ID_'.$arSection['ID'];
+
             $arSection = array_intersect_key($arSection, array_flip( $this->arSectionKeys ) );
 
             if (intval($arSection['PICTURE'])>0){
@@ -527,12 +566,12 @@ class BitrixMigration
 
             //подключаем подразделы
             if ($iSectionId>0){
-                $arSubSections = $this->getIblockSections( $iIblockId, $iSectionId );
+                $arSubSections = $this->getSections( $iIblockId, $iSectionId );
                 if ( count($arSubSections)>0 ) {
                     $arSection['SECTIONS'] = $arSubSections;
                 }
             }
-            $arSection['ELEMENTS'] = $this->getIblockElements( $iIblockId, $iSectionId );
+            $arSection['ELEMENTS'] = $this->getElements( $iIblockId, $iSectionId );
 
             $arSections[] = $arSection;
         }
@@ -540,7 +579,7 @@ class BitrixMigration
         return $arSections; //$this->arrayToString($arSections,'arElements');
     }
 
-    protected function getIblockElements( $iIblockId, $iSectionId  )
+    protected function getElements( $iIblockId, $iSectionId  )
     {
         $arElements = array();
         $arSelect = Array("ID","CODE","EXTERNAL_ID","NAME","IBLOCK_ID","IBLOCK_SECTION_ID","ACTIVE","DATE_ACTIVE_FROM","
@@ -551,19 +590,9 @@ class BitrixMigration
         while($ob = $res->GetNextElement()){
             $arFields = $ob->GetFields();
 
+            if ( empty($arFields['CODE']) ) $arFields['CODE']= 'OLD_ID_'.$arFields['ID'];
 
             $this->prepareElementFields( $arFields );
-            /*
-            //Получаем массив разделов элемента
-            $dbGroups = CIBlockElement::GetElementGroups($arFields['ID'], true);
-            $arElementSections = Array();
-            while($arGroup = $dbGroups->Fetch()){
-                $arElementSections[] = $arGroup["ID"];
-            }
-            if (!isset($arElementSections[0])) $arElementSections = false;
-
-            $arFields['SECTION_ID'] = $arElementSections;*/
-
 
             $arProperties = $ob->GetProperties();
             foreach($arProperties as $sPropertyCode => $arProperty){
