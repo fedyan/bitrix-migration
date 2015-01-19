@@ -1,10 +1,11 @@
 <?php
 /**
  * Class BitrixMigration
- * Класс позволяет экспортировать структуру инфоблоков в PHP массив,
- * который можно использовать для создания новых инфоблоков.
+ * Класс позволяет экспортировать структуру, элементы и разделы инфоблоков в массив
+ * для дальнейшего импорта
  * @author Verbovenko Fyodor <4fyodor@gmail.com>
- * @version 1.0
+ * @version 2.0
+ * https://github.com/fedyan/BitrixMigration
  */
 
 class BitrixMigration
@@ -13,7 +14,7 @@ class BitrixMigration
     public $bImportElements = true;
     protected $sFullFilesPath;
     protected $arResult = array();
-    protected $arrayName = NULL;
+    protected $arrayName = 'arResult';
 
 
     protected $filter = array();
@@ -30,33 +31,28 @@ class BitrixMigration
         "EDIT_FILE_AFTER","SECTIONS_NAME","SECTION_NAME","ELEMENTS_NAME","ELEMENT_NAME","PROPS"
     );
 
-    protected $arIblockTypeKeys = array( //"IBLOCK_TYPE_ID",
-        "LID","NAME","SECTION_NAME","ELEMENT_NAME","ID","SECTIONS","EDIT_FILE_BEFORE","EDIT_FILE_AFTER","IN_RSS","SORT","IBLOCKS"
+    protected $arIblockTypeKeys = array(
+        "LID","NAME","SECTION_NAME","ELEMENT_NAME","ID","SECTIONS","SORT","IBLOCKS"
     );
 
-    protected $arSectionKeys = array( //"IBLOCK_TYPE_ID",
+    protected $arSectionKeys = array(
         "TIMESTAMP_X","DATE_CREATE","IBLOCK_SECTION_ID","ACTIVE","GLOBAL_ACTIVE","SORT","NAME","PICTURE","LEFT_MARGIN","RIGHT_MARGIN","DEPTH_LEVEL","DESCRIPTION","DESCRIPTION_TYPE","SEARCHABLE_CONTENT","CODE","XML_ID","DETAIL_PICTURE","EXTERNAL_ID"
     );
     protected $arElementKeys = array(
-        "PROPERTIES","CODE","EXTERNAL_ID","NAME","SECTION_ID","ACTIVE","DATE_ACTIVE_FROM","
-                        DATE_ACTIVE_TO","SORT","PREVIEW_PICTURE","PREVIEW_TEXT","PREVIEW_TEXT_TYPE","DETAIL_PICTURE","DETAIL_TEXT",
+        "PROPERTY_VALUES","CODE","EXTERNAL_ID","NAME","SECTION_ID","ACTIVE","DATE_ACTIVE_FROM","DATE_ACTIVE_TO","SORT","PREVIEW_PICTURE","PREVIEW_TEXT","PREVIEW_TEXT_TYPE","DETAIL_PICTURE","DETAIL_TEXT",
         "DETAIL_TEXT_TYPE","DATE_CREATE","TIMESTAMP_X","TAGS"
     );
 
-
-    protected $iblockIdByCode = array();
-
-    public function __construct($scriptName)
+    public function __construct($scriptPath)
     {
         CModule::IncludeModule("iblock");
-        $this->scriptName = basename( $scriptName );
-        $this->sFullFilesPath = getcwd ().$this->sStoreFilesDir;
+        $this->scriptName = basename( $scriptPath );
+        $this->sFullFilesPath = dirname($scriptPath).$this->sStoreFilesDir;
     }
 
 
     public function start()
     {
-        $this->init();
         if ($_REQUEST['ajax_call']=="Y") $this->ajax();
         if ($_REQUEST['save']=="Y") $this->saveFile();
         $this->bImportElements = false;
@@ -215,16 +211,19 @@ class BitrixMigration
                 }
             }
         }
-        echo "<br /><b>Загружен массив:</b>";
-        echo '<pre>';
-        print_r($arResult);
-        echo '</pre>';
-    }
-    protected function init()
-    {
-        $this->arrayName = 'arResult';
+        $this->addMessage( 'Массив загружен.' );
 
     }
+
+    public function addMessage( $sMess, $bBold = false )
+    {
+        if ($bBold){
+            echo "<p><b>".$sMess."</b></p>";
+        }else {
+            echo "<p>".$sMess."</p>";
+        }
+    }
+
 
     protected function ajax()
     {
@@ -263,31 +262,25 @@ class BitrixMigration
     protected function uploadSections( $arIblock, $iIblockId )
     {
         foreach($arIblock['SECTIONS'] as $arSection){
-            if ($arSection['IS_ROOT']=="Y" && isset($arSection['ELEMENTS'][0])){
+            if ( $arSection['IS_ROOT']=="Y" && count($arSection['ELEMENTS'])>0 ){
                 foreach($arSection['ELEMENTS'] as $arElement){
                     $arElement["IBLOCK_SECTION_ID"] = false;
                     $arElement["IBLOCK_ID"] = $iIblockId;
                     $this->addElement( $arElement );
                 }
-
             }else {
                 $arSection["IBLOCK_ID"] = $iIblockId;
                 $arSection["IBLOCK_TYPE_ID"] = $arIblock['IBLOCK_TYPE_ID'];
                 $arSection["IBLOCK_SECTION_ID"] = false;
-
                 $this->addSection( $arSection);
-
             }
-
         }
     }
 
     //Рекурсивная функция для добавления дерева разделов и элементов
     protected function addSection( $arSection )
     {
-        //TODO: Сделать рефакторинг этого метода
-
-        $iNewSectionId = 0; //TODO : Видимо эта переменная видна в рекурсивном методе
+        $iNewSectionId = 0;
         $iIblockId = 0;
         $sIblockTypeId = $arSection['IBLOCK_TYPE_ID'];
         if ( strlen($arSection['CODE'])>0){
@@ -304,7 +297,7 @@ class BitrixMigration
             if (is_array($arSection['PICTURE']))
                 $arSection['PICTURE'] = $this->prepareFile($arSection['PICTURE']);
             if ($iNewSectionId = $bs->Add($arSection)) {
-                echo '<br /><b>Новый раздел ' . $iNewSectionId . ' добавлен.</b>';
+                $this->addMessage('Новый раздел ' . $iNewSectionId . ' добавлен.',true);
                 $iIblockId = $arSection['IBLOCK_ID'];
             }
             unset($bs);
@@ -312,7 +305,7 @@ class BitrixMigration
 
         if ( intval($iNewSectionId) > 0  && intval($iIblockId)>0 ) {
             //добавляем элементы раздела
-            if (isset($arSection['ELEMENTS'][0])) {
+            if ( count($arSection['ELEMENTS'])>0 ) {
                 foreach ($arSection['ELEMENTS'] as $arElement) {
                     $arElement["IBLOCK_SECTION_ID"] = $iNewSectionId;
                     $arElement["IBLOCK_ID"] = $iIblockId;
@@ -320,7 +313,7 @@ class BitrixMigration
                 }
             }
             //добавляем подразделы
-            if (isset($arSection['SECTIONS'][0])) {
+            if ( count($arSection['SECTIONS'])>0 ) {
                 foreach ($arSection['SECTIONS'] as $arSection) {
                     $arSection["IBLOCK_SECTION_ID"] = $iNewSectionId;
                     $arSection["IBLOCK_ID"] = $iIblockId;
@@ -334,10 +327,7 @@ class BitrixMigration
 
     protected function addElement( $arElement )
     {
-        if (is_array($arElement['DETAIL_PICTURE']))
-            $arSection['DETAIL_PICTURE'] = $this->prepareFile( $arElement['DETAIL_PICTURE'] );
-        if (is_array($arElement['PREVIEW_PICTURE']))
-            $arSection['PREVIEW_PICTURE'] = $this->prepareFile( $arElement['PREVIEW_PICTURE'] );
+        $this->prepareElementFields($arElement, true);
 
         if (strlen($arElement['CODE'])>0 ){
             $arSelect = Array("ID");
@@ -345,11 +335,12 @@ class BitrixMigration
             $res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>1), $arSelect);
             if($ob = $res->GetNextElement()){
                 $arFields = $ob->GetFields();
+                //TODO: Обновлять свойства элемента
                 $el = new CIblockElement();
                 if ($el->Update($arFields['ID'],$arElement))
-                    echo 'Элемент '.$arElement['CODE'].' обновлен.';
+                    $this->addMessage( 'Элемент '.$arElement['CODE'].' обновлен.' );
                 else
-                    echo $el->LAST_ERROR;
+                    $this->addMessage( $el->LAST_ERROR );
 
                 unset( $el );
                 return $arFields['ID'];
@@ -358,9 +349,9 @@ class BitrixMigration
 
         $el = new CIblockElement();
         if ($iNewId = $el->Add( $arElement ))
-            echo '<br /><b>Новый элемент '.$iNewId.' добавлен.</b>';
+            $this->addMessage( 'Новый элемент '.$iNewId.' добавлен.',true );
         else
-            echo $el->LAST_ERROR;
+            $this->addMessage( $el->LAST_ERROR );
 
         unset( $el );
         return $iNewId;
@@ -370,11 +361,11 @@ class BitrixMigration
     {
         $db_iblock_type = CIBlockType::GetList(false, array("=ID"=>$arType["ID"]));
         if($ar_iblock_type = $db_iblock_type->Fetch()){
-            echo '<br /><b>Тип инфоблока '.$arType["ID"].' уже есть.</b>';
+            $this->addMessage( 'Тип инфоблока '.$arType["ID"].' уже есть.' );
         }else {
             $obBlocktype = new CIBlockType;
-            $res = $obBlocktype->Add($arType);
-            echo '<br /><b>Новый тип инфоблока '.$arType["ID"].' добавлен.</b>';
+            if ($res = $obBlocktype->Add($arType))
+                $this->addMessage( 'Новый тип инфоблока '.$arType["ID"].' добавлен.',true );
         }
     }
 
@@ -389,19 +380,15 @@ class BitrixMigration
         );
 
         if($arFindedIblock = $res->Fetch() ){
-
-            $this->iblockIdByCode[$arFindedIblock['CODE']] = $arFindedIblock['ID'];
-            echo 'Инфоблока '.$arIblock["CODE"].' уже есть.';
+            $this->addMessage( 'Инфоблока '.$arIblock["CODE"].' уже есть.');
             return $arFindedIblock['ID'];
         }else {
-            echo 'Инфоблок не найден.';
             $ib = new CIBlock;
-            $iNewIblockId = false;
+            $iNewIblockId = 0;
             if ($iNewIblockId = $ib->Add($arIblock)) {
-                $this->iblockIdByCode[$arIblock['CODE']] = $iNewIblockId;
-                echo '<br /><b>Инфоблок успешно добавлен.</b>';
+                $this->addMessage( 'Инфоблок успешно добавлен.',true);
             }else {
-                echo $ib->LAST_ERROR;
+                $this->addMessage( $ib->LAST_ERROR );
             }
             unset($ib);
             return $iNewIblockId;
@@ -414,11 +401,11 @@ class BitrixMigration
         $properties = CIBlockProperty::GetList(Array("sort"=>"asc", "name"=>"asc"), Array("IBLOCK_ID"=>$arProperty['IBLOCK_ID'],"CODE"=>$arProperty["CODE"]));
 
         if($prop_fields = $properties->GetNext()){
-            echo '<br />Свойство '.$arProperty["CODE"].' уже есть.';
+            $this->addMessage( 'Свойство '.$arProperty["CODE"].' уже есть.' );
         }else {
             $ibp = new CIBlockProperty;
             if ($PropID = $ibp->Add($arProperty)){
-                echo '<br /><b>Свойство '.$arProperty["CODE"].' добавлено.</b>';
+                $this->addMessage( 'Свойство '.$arProperty["CODE"].' добавлено.',true );
             }
             unset( $ibp );
         }
@@ -442,7 +429,7 @@ class BitrixMigration
     protected function getIbStructure()
     {
         CModule::IncludeModule("iblock");
-        $db_iblock_type = CIBlockType::GetList(array(),array()); //"id"=>"help"
+        $db_iblock_type = CIBlockType::GetList(array(),array());
         $arResult = array();
         while($ar_iblock_type = $db_iblock_type->Fetch()){
 
@@ -450,7 +437,7 @@ class BitrixMigration
                 $sTypeId = $arIBType['IBLOCK_TYPE_ID'];
                 $arIBType = array_intersect_key($arIBType, array_flip( $this->arIblockTypeKeys ) );
                 $arIBType['LANG']=Array(
-                    $arIBType['LID']=>Array(
+                    LANGUAGE_ID=>Array(
                         'NAME'=>$arIBType['NAME'],
                         'SECTION_NAME'=>$arIBType['SECTION_NAME'],
                         'ELEMENT_NAME'=>$arIBType['ELEMENT_NAME']
@@ -468,12 +455,7 @@ class BitrixMigration
     protected function getIBlocksArray($type)
     {
         $arResult = array();
-        $res = CIBlock::GetList(
-            Array(),
-            Array(
-                'TYPE'=>$type,
-        ), true);
-
+        $res = CIBlock::GetList(Array(), Array('TYPE'=>$type), true);
         while($ar_res = $res->Fetch()){
 
             $iIBlockID = $ar_res['ID'];
@@ -486,8 +468,6 @@ class BitrixMigration
                 if ($this->bImportElements){
                     $ar_res['SECTIONS'] = $this->getSections( $iIBlockID );
                 }
-                //myPrintR($ar_res,__FILE__,__LINE__ );
-
                 $arResult[] = $ar_res;
             }
         }
@@ -572,10 +552,8 @@ class BitrixMigration
                 }
             }
             $arSection['ELEMENTS'] = $this->getElements( $iIblockId, $iSectionId );
-
             $arSections[] = $arSection;
         }
-        $arSections[] = $arSection;
         return $arSections; //$this->arrayToString($arSections,'arElements');
     }
 
@@ -603,7 +581,7 @@ class BitrixMigration
                 if ($arProperty["PROPERTY_TYPE"]=="F"){
                     $arProperty['FILE'] = $this->getFile( $arProperty['VALUE'] );
                 }
-                $arFields["PROPERTIES"][ $sPropertyCode ] = $arProperty;
+                $arFields["PROPERTY_VALUES"][ $sPropertyCode ] = $arProperty;
             }
 
             $arFields = array_intersect_key($arFields, array_flip( $this->arElementKeys ) );
@@ -612,21 +590,54 @@ class BitrixMigration
         return $arElements;
     }
 
-    protected function prepareElementFields(&$arFields)
+    protected function prepareElementFields(&$arFields, $back = false)
     {
-        foreach($arFields as $key=>$value){
-            switch($key){
-                case "DETAIL_PICTURE":
-                case "PREVIEW_PICTURE":
-                    $arFields[$key] = $this->getFile( intval($arFields[$key]) );
-                break;
-                case "DETAIL_TEXT":
-                case "PREVIEW_TEXT":
+        if ($back===false){
+            foreach($arFields as $key=>$value){
+                switch($key){
+                    case "DETAIL_PICTURE":
+                    case "PREVIEW_PICTURE":
+                        $arFields[$key] = $this->getFile( intval($arFields[$key]) );
+                        break;
+                    case "NAME":
+                    case "DETAIL_TEXT":
+                    case "PREVIEW_TEXT":
 
-                    $arFields[$key] = htmlspecialchars($arFields["~".$key], ENT_QUOTES);;
-                break;
+                        $arFields[$key] = htmlspecialchars($arFields["~".$key], ENT_QUOTES);;
+                        break;
 
+                }
             }
+            //обратная обработка полей
+        }else {
+            foreach($arFields as $key=>$value){
+                switch($key){
+                    case "DETAIL_PICTURE":
+                    case "PREVIEW_PICTURE":
+                        $arFields[$key] = $this->prepareFile( $arFields[$key] );
+                        break;
+                    case "NAME":
+                    case "DETAIL_TEXT":
+                    case "PREVIEW_TEXT":
+                        if (isset($arFields["~".$key]))
+                            $arFields[$key] = htmlspecialchars_decode($arFields["~".$key], ENT_QUOTES);
+                        else
+                            $arFields[$key] = htmlspecialchars_decode($arFields[$key], ENT_QUOTES);
+                        break;
+
+                    case "PROPERTY_VALUES":
+                        foreach($arFields[$key] as &$arProperty){
+                            if ( $arProperty['PROPERTY_TYPE'] == 'F' && is_array($arProperty['FILE']) ){
+                                $arProperty = $this->prepareFile( $arProperty['FILE'] );
+                            }else {
+                                $arProperty = htmlspecialchars_decode($arProperty['VALUE']);
+                            }
+                        }
+                        break;
+
+                }
+            }
+
         }
     }
 
@@ -637,9 +648,9 @@ class BitrixMigration
 
         $arPathInfo = pathinfo( $_SERVER['DOCUMENT_ROOT'].$arFile['SRC'] );
         $sFileName = $arFile['ID'].'.'.$arPathInfo['extension'];
-
         if (!file_exists( $this->sFullFilesPath )) {
-            mkdir($this->sFullFilesPath, 0775, true);
+            if ( !mkdir($this->sFullFilesPath, 0775, true) )
+                $this->addMessage('Ошибка создания директории.');
         }
         if (!file_exists( $this->sFullFilesPath.'/'.$sFileName)) {
             if (copy( $_SERVER['DOCUMENT_ROOT'].$arFile['SRC'],$this->sFullFilesPath.'/'.$sFileName))
@@ -650,27 +661,10 @@ class BitrixMigration
         return $arFile;
     }
 
-    /*
-     *  "ID" => "17",
-        "TIMESTAMP_X" => "13.01.2015 21:09:47",
-        "MODULE_ID" => "iblock",
-        "HEIGHT" => "1080",
-        "WIDTH" => "1920",
-        "FILE_SIZE" => "3299943",
-        "CONTENT_TYPE" => "image/jpeg",
-        "SUBDIR" => "iblock/95d",
-        "FILE_NAME" => "conflating_by_mbaldelli-d82slpr.jpg",
-        "ORIGINAL_NAME" => "conflating_by_mbaldelli-d82slpr.jpg",
-        "DESCRIPTION" => "",
-        "HANDLER_ID" => "",
-        "~src" => "",
-        "SRC" => "/upload/iblock/95d/conflating_by_mbaldelli-d82slpr.jpg",
-        "NEW_SRC" => "17.jpg",
-     * */
     protected function prepareFile( $arFile )
     {
-        if (!file_exists( $this->sFullFilesPath.'/'.$arFile['NEW_SRC'] )) {
-            return CFile::MakeFileArray($this->sFullFilesPath.'/'.$arFile['NEW_SRC']);
+        if (file_exists( $this->sFullFilesPath.$arFile['NEW_SRC'] )) {
+            return CFile::MakeFileArray($this->sFullFilesPath.$arFile['NEW_SRC']);
 
         }
         return false;

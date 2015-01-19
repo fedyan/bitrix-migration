@@ -4,35 +4,32 @@ include("bm.php");
 $arResult = Array (
     '0' => Array (
         'LID' => 'ru',
-        'NAME' => 'Новости',
-        'SECTION_NAME' => 'Группы',
-        'ELEMENT_NAME' => 'Новость',
-        'ID' => 'news2',
+        'NAME' => 'ITSfera Includer 2222',
+        'SECTION_NAME' => '',
+        'ELEMENT_NAME' => '',
+        'ID' => 'itsfera_includer3',
         'SECTIONS' => 'Y',
-        'EDIT_FILE_BEFORE' => '',
-        'EDIT_FILE_AFTER' => '',
-        'IN_RSS' => 'N',
-        'SORT' => '10',
+        'SORT' => '500',
         'LANG' => Array (
             'ru' => Array (
-                'NAME' => 'Новости',
-                'SECTION_NAME' => 'Группы',
-                'ELEMENT_NAME' => 'Новость',
+                'NAME' => 'ITSfera Includer',
+                'SECTION_NAME' => '',
+                'ELEMENT_NAME' => '',
             ),
         ),
         'IBLOCKS' => Array (
             '0' => Array (
-                'ID' => '3',
-                'CODE' => 'shop_news',
-                'NAME' => 'Новости магазина',
+                'ID' => '26',
+                'CODE' => 'itsfera_includer_content',
+                'NAME' => 'Слайдер',
                 'ACTIVE' => 'Y',
-                'SORT' => '100',
-                'LIST_PAGE_URL' => '/content/news/',
-                'DETAIL_PAGE_URL' => '/content/news/#SECTION_ID#/#ELEMENT_ID#/',
-                'SECTION_PAGE_URL' => '/content/news/#SECTION_ID#/',
+                'SORT' => '500',
+                'LIST_PAGE_URL' => '#SITE_DIR#/itsfera_includer/index.php?ID=#IBLOCK_ID#',
+                'DETAIL_PAGE_URL' => '#SITE_DIR#/itsfera_includer/detail.php?ID=#ELEMENT_ID#',
+                'SECTION_PAGE_URL' => '#SITE_DIR#/itsfera_includer/list.php?SECTION_ID=#SECTION_ID#',
                 'INDEX_ELEMENT' => 'Y',
                 'INDEX_SECTION' => 'Y',
-                'WORKFLOW' => 'Y',
+                'WORKFLOW' => 'N',
                 'BIZPROC' => 'N',
                 'SECTION_CHOOSER' => 'L',
                 'LIST_MODE' => '',
@@ -40,708 +37,260 @@ $arResult = Array (
                 'VERSION' => '1',
                 'EDIT_FILE_BEFORE' => '',
                 'EDIT_FILE_AFTER' => '',
-                'SECTIONS_NAME' => 'Разделы новостей',
-                'SECTION_NAME' => 'Раздел новостей',
-                'ELEMENTS_NAME' => 'Новости',
-                'ELEMENT_NAME' => 'Новость',
+                'SECTIONS_NAME' => 'Разделы',
+                'SECTION_NAME' => 'Раздел',
+                'ELEMENTS_NAME' => 'Элементы',
+                'ELEMENT_NAME' => 'Элемент',
                 'SITE_ID' => Array (
                     '0' => 's1',
                 ),
                 'PROPS' => Array (
-                    'DESCRIPTION' => Array (
-                        'NAME' => 'Описание',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '100',
-                        'CODE' => 'DESCRIPTION',
-                        'PROPERTY_TYPE' => 'S',
-                        'MULTIPLE' => 'N',
-                        'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg',
-                        'MULTIPLE_CNT' => '5',
-                        'LINK_IBLOCK_ID' => '',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
-                    'SOURCE' => Array (
-                        'NAME' => 'Источник',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '200',
-                        'CODE' => 'SOURCE',
-                        'PROPERTY_TYPE' => 'S',
-                        'MULTIPLE' => 'N',
-                        'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg',
-                        'MULTIPLE_CNT' => '5',
-                        'LINK_IBLOCK_ID' => '',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
-                    'KEYWORDS' => Array (
-                        'NAME' => 'Ключевые слова',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '300',
-                        'CODE' => 'KEYWORDS',
-                        'PROPERTY_TYPE' => 'S',
-                        'MULTIPLE' => 'N',
-                        'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg',
-                        'MULTIPLE_CNT' => '5',
-                        'LINK_IBLOCK_ID' => '',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
-                    'THEMES' => Array (
-                        'NAME' => 'Темы',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '400',
-                        'CODE' => 'THEMES',
-                        'PROPERTY_TYPE' => 'G',
-                        'MULTIPLE' => 'Y',
-                        'FILE_TYPE' => 'jpg, gif, bmp, png, jpeg',
-                        'MULTIPLE_CNT' => '5',
-                        'LINK_IBLOCK_ID' => '1',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
-                    'BROWSER_TITLE' => Array (
-                        'NAME' => 'Заголовок окна браузера',
-                        'ACTIVE' => 'Y',
-                        'SORT' => '1000',
-                        'CODE' => 'BROWSER_TITLE',
-                        'PROPERTY_TYPE' => 'S',
-                        'MULTIPLE' => 'N',
-                        'FILE_TYPE' => '',
-                        'MULTIPLE_CNT' => '1',
-                        'LINK_IBLOCK_ID' => '',
-                        'IS_REQUIRED' => '',
-                        'USER_TYPE' => '',
-                    ),
                 ),
                 'SECTIONS' => Array (
                     '0' => Array (
-                        'TIMESTAMP_X' => '12.01.2015 23:09:58',
-                        'DATE_CREATE' => '12.01.2015 23:09:58',
+                        'TIMESTAMP_X' => '16.01.2015 19:58:19',
+                        'DATE_CREATE' => '16.01.2015 19:58:19',
                         'IBLOCK_SECTION_ID' => '',
                         'ACTIVE' => 'Y',
                         'GLOBAL_ACTIVE' => 'Y',
                         'SORT' => '500',
-                        'NAME' => 'Выставки',
+                        'NAME' => 'Демо 1',
                         'PICTURE' => '',
                         'LEFT_MARGIN' => '1',
-                        'RIGHT_MARGIN' => '4',
+                        'RIGHT_MARGIN' => '2',
                         'DEPTH_LEVEL' => '1',
                         'DESCRIPTION' => '',
                         'DESCRIPTION_TYPE' => 'text',
-                        'SEARCHABLE_CONTENT' => 'ВЫСТАВКИ
+                        'SEARCHABLE_CONTENT' => 'ДЕМО 1
 ',
-                        'CODE' => 'OLD_ID_5',
-                        'XML_ID' => '222',
+                        'CODE' => 'demo-1',
+                        'XML_ID' => '',
                         'DETAIL_PICTURE' => '',
-                        'EXTERNAL_ID' => '222',
-                        'SECTIONS' => Array (
-                            '0' => Array (
-                                'TIMESTAMP_X' => '15.01.2015 21:24:19',
-                                'DATE_CREATE' => '15.01.2015 21:24:19',
-                                'IBLOCK_SECTION_ID' => '5',
-                                'ACTIVE' => 'Y',
-                                'GLOBAL_ACTIVE' => 'Y',
-                                'SORT' => '500',
-                                'NAME' => 'Подраздел выставок',
-                                'PICTURE' => '',
-                                'LEFT_MARGIN' => '2',
-                                'RIGHT_MARGIN' => '3',
-                                'DEPTH_LEVEL' => '2',
-                                'DESCRIPTION' => '',
-                                'DESCRIPTION_TYPE' => 'text',
-                                'SEARCHABLE_CONTENT' => 'ПОДРАЗДЕЛ ВЫСТАВОК
-',
-                                'CODE' => 'OLD_ID_90',
-                                'XML_ID' => '',
-                                'DETAIL_PICTURE' => '',
-                                'EXTERNAL_ID' => '',
-                                'SECTIONS' => Array (
-                                    '0' => '',
-                                ),
-                                'ELEMENTS' => Array (
-                                    '0' => Array (
-                                        'CODE' => 'OLD_ID_345',
-                                        'EXTERNAL_ID' => '345',
-                                        'NAME' => 'Тестовая новость',
-                                        'ACTIVE' => 'Y',
-                                        'DATE_ACTIVE_FROM' => '15.01.2015 21:24:55',
-                                        'SORT' => '500',
-                                        'PREVIEW_PICTURE' => Array (
-                                            'ID' => '173',
-                                            'TIMESTAMP_X' => '15.01.2015 21:28:35',
-                                            'MODULE_ID' => 'iblock',
-                                            'HEIGHT' => '150',
-                                            'WIDTH' => '200',
-                                            'FILE_SIZE' => '6844',
-                                            'CONTENT_TYPE' => 'image/jpeg',
-                                            'SUBDIR' => 'iblock/8c9',
-                                            'FILE_NAME' => 'G0852686.JPG',
-                                            'ORIGINAL_NAME' => 'G0852686.JPG',
-                                            'DESCRIPTION' => '',
-                                            'HANDLER_ID' => '',
-                                            '~src' => '',
-                                            'SRC' => '/upload/iblock/8c9/G0852686.JPG',
-                                            'NEW_SRC' => '173.JPG',
-                                        ),
-                                        'PREVIEW_TEXT' => 'Мажоритарная избирательная система позволяет пренебречь колебаниями корпуса, хотя этого в любом случае требует континентально-европейский тип политической культуры. Идея правового государства, в соответствии с основным законом динамики, очевидна не для всех. Институциализация вызывает марксизм. Ротор поступательно даёт более простую систему дифференциальных уравнений, если исключить гирокомпас, даже если не учитывать выбег гироскопа. Регулярная прецессия определяет социализм, утверждает руководитель аппарата Правительства. Динамическое уравнение Эйлера категорически иллюстрирует христианско-демократический национализм.',
-                                        'PREVIEW_TEXT_TYPE' => 'text',
-                                        'DETAIL_PICTURE' => Array (
-                                            'ID' => '174',
-                                            'TIMESTAMP_X' => '15.01.2015 21:28:35',
-                                            'MODULE_ID' => 'iblock',
-                                            'HEIGHT' => '300',
-                                            'WIDTH' => '400',
-                                            'FILE_SIZE' => '20733',
-                                            'CONTENT_TYPE' => 'image/jpeg',
-                                            'SUBDIR' => 'iblock/d0e',
-                                            'FILE_NAME' => 'G0852686.JPG',
-                                            'ORIGINAL_NAME' => 'G0852686.JPG',
-                                            'DESCRIPTION' => '',
-                                            'HANDLER_ID' => '',
-                                            '~src' => '',
-                                            'SRC' => '/upload/iblock/d0e/G0852686.JPG',
-                                            'NEW_SRC' => '174.JPG',
-                                        ),
-                                        'DETAIL_TEXT' => 'Мажоритарная избирательная система позволяет пренебречь колебаниями корпуса, хотя этого в любом случае требует континентально-европейский тип политической культуры. Идея правового государства, в соответствии с основным законом динамики, очевидна не для всех. Институциализация вызывает марксизм. Ротор поступательно даёт более простую систему дифференциальных уравнений, если исключить гирокомпас, даже если не учитывать выбег гироскопа. Регулярная прецессия определяет социализм, утверждает руководитель аппарата Правительства. Динамическое уравнение Эйлера категорически иллюстрирует христианско-демократический национализм.',
-                                        'DETAIL_TEXT_TYPE' => 'text',
-                                        'DATE_CREATE' => '15.01.2015 21:28:35',
-                                        'TIMESTAMP_X' => '15.01.2015 21:28:35',
-                                        'TAGS' => 'тег1, тег2',
-                                        'PROPERTIES' => Array (
-                                            'SOURCE' => Array (
-                                                'PROPERTY_TYPE' => 'S',
-                                                'VALUE' => 'энциклопедия',
-                                            ),
-                                            'THEMES' => Array (
-                                                'PROPERTY_TYPE' => 'G',
-                                                'VALUE' => Array (
-                                                    '0' => '3',
-                                                ),
-                                            ),
-                                        ),
-                                    ),
-                                ),
-                            ),
-                            '1' => '',
-                        ),
+                        'EXTERNAL_ID' => '',
                         'ELEMENTS' => Array (
                             '0' => Array (
-                                'CODE' => 'OLD_ID_9',
-                                'EXTERNAL_ID' => '1310',
-                                'NAME' => 'Выставка &quot;Книжный мир - 2007&quot;',
+                                'CODE' => 'poezda',
+                                'EXTERNAL_ID' => '9',
+                                'NAME' => 'Поезда',
                                 'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '05.10.2009',
+                                'DATE_ACTIVE_FROM' => '',
                                 'SORT' => '500',
                                 'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'С 15.03.2007 по 17.03.2007 в Краснодаре пройдет 3-я специализированная выставка книжной продукции &amp;quot;Книжный мир - 2007&amp;quot;.
-&lt;br /&gt;
- ',
-                                'PREVIEW_TEXT_TYPE' => 'html',
-                                'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => '
-&lt;p&gt;С 15.03.2007 по 17.03.2007 в Краснодаре пройдет 3-я специализированная выставка книжной продукции &amp;quot;Книжный мир - 2007&amp;quot;. &lt;/p&gt;
-
-&lt;p&gt;Cпециализированная выставка издательств, книготорговых компаний, книжной и полиграфической продукции.Учебно-методическая литература, пособия; учебники и специализированные издания; научная литература; справочники, словари, энциклопедии; художественная литература; детская литература (сказки, развивающие пособия); газеты, журналы; календари, альбомы, открытки; канцелярские принадлежности; школьно-письменные принадлежности; бумажно-беловая продукция.&lt;/p&gt;
-
-&lt;p&gt;&lt;b&gt;Место проведения:&lt;/b&gt; Выставочный Центр &amp;quot;КраснодарЭкспо&amp;quot;, ул. Зиповская, 5&lt;/p&gt;
-
-&lt;p&gt;Выставка проходит в рамках Форума &lt;b&gt;&amp;quot;Создай себя сам&amp;quot;&lt;/b&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;b&gt;Организаторы выставки:&lt;/b&gt;
-  &lt;br /&gt;
- Выставочный Центр &amp;quot;КраснодарЭКСПО&amp;quot;
-  &lt;br /&gt;
- Администрация Краснодарского края
-  &lt;br /&gt;
- Департамент образования и науки Краснодарского края
-  &lt;br /&gt;
- Департамент культуры Краснодарского края
-  &lt;br /&gt;
- Департамент по физической культуре и спорту Краснодарского края
-  &lt;br /&gt;
- Департамент здравоохранения Краснодарского края
-  &lt;br /&gt;
- Департамент федеральной государственной службы занятости населения по Краснодарскому краю
-  &lt;br /&gt;
- Комитет по делам молодежи Краснодарского края&lt;/p&gt;
- ',
-                                'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:59',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
-                                'TAGS' => 'выставка',
-                                'PROPERTIES' => Array (
-                                    'KEYWORDS' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'выставка',
-                                    ),
-                                    'THEMES' => Array (
-                                        'PROPERTY_TYPE' => 'G',
-                                        'VALUE' => Array (
-                                            '0' => '1',
-                                        ),
-                                    ),
+                                'PREVIEW_TEXT' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at blandit mi. Morbi et odio et purus finibus ultricies. Suspendisse potenti.',
+                                'PREVIEW_TEXT_TYPE' => 'text',
+                                'DETAIL_PICTURE' => Array (
+                                    'ID' => '187',
+                                    'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                    'MODULE_ID' => 'iblock',
+                                    'HEIGHT' => '768',
+                                    'WIDTH' => '1024',
+                                    'FILE_SIZE' => '472843',
+                                    'CONTENT_TYPE' => 'image/jpeg',
+                                    'SUBDIR' => 'iblock/ad7',
+                                    'FILE_NAME' => '9.jpg',
+                                    'ORIGINAL_NAME' => '9.jpg',
+                                    'DESCRIPTION' => '',
+                                    'HANDLER_ID' => '',
+                                    '~src' => '',
+                                    'SRC' => '/upload/iblock/ad7/9.jpg',
+                                    'NEW_SRC' => '187.jpg',
                                 ),
+                                'DETAIL_TEXT' => '',
+                                'DETAIL_TEXT_TYPE' => 'text',
+                                'DATE_CREATE' => '16.01.2015 19:58:19',
+                                'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                'TAGS' => '',
                             ),
                             '1' => Array (
-                                'CODE' => 'OLD_ID_12',
-                                'EXTERNAL_ID' => '1698',
-                                'NAME' => 'Выставка &quot;Книги России&quot;',
+                                'CODE' => 'ulitka',
+                                'EXTERNAL_ID' => '10',
+                                'NAME' => 'Улитка',
                                 'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '06.10.2009',
+                                'DATE_ACTIVE_FROM' => '',
                                 'SORT' => '500',
                                 'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Традиционный весенний форум отечественных книжников - Национальная выставка-ярмарка &amp;laquo;Книги России&amp;raquo; проходит на территории Всероссийского выставочного центра с 1998 года. В этом году выставка проходит с 14 по 19 марта. ',
-                                'PREVIEW_TEXT_TYPE' => 'html',
-                                'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => '&lt;p&gt;Деловое мероприятие, традиционно ориентированное на продвижение издательской продукции накануне весенне-летнего сезона, выставка весьма положительно сказывается на торговой судьбе новинок, которые должны поступить в продажу в течение лета и осени.&lt;/p&gt;
-
-&lt;p&gt;Участники выставки &amp;ndash; книгораспространители, издатели, полиграфисты, библиотекари, изготовители бумаги, финансисты (около 1000 организаций) оборудуют свои экспозиции на площади в 10 000 квадратных метров, представив до 200 000 наименований книг на языках народов Российской Федерации. &lt;/p&gt;
-
-&lt;p&gt;Оргкомитет выставки ведет твердую линию по поддержке регионального книгоиздания. Именно поэтому все региональные издатели получают возможность представить свои книги на специальных коллективных стендах. В числе этих экспозиций &amp;ndash; коллективный стенд региональных и национальных издательств России, выставка изданий для профессионального образования. &lt;/p&gt;
-
-&lt;p&gt;Особый интерес журналистов и читателей вызовет традиционный стенд &amp;laquo;Российские литературные журналы&amp;raquo;, на котором представлены &amp;laquo;Новый мир&amp;raquo;, &amp;laquo;Знамя&amp;raquo;, &amp;laquo;Октябрь&amp;raquo; и другие &amp;laquo;толстые&amp;raquo; журналы, специальная авторская программа которых предусматривает встречи лучших авторов со своими преданными читателями. &lt;/p&gt;
-
-&lt;p&gt;Издательства России также представят разнообразную и насыщенную деловую программу: презентации, круглые столы, встречи с авторами. В рамках выставки-ярмарки многие издательства по традиции приглашает своих самых знаменитых авторов, встречи с которыми выливаются в праздник духовного общения книголюбов и писателей. &lt;/p&gt;
-
-&lt;p&gt;Состояние чтения отражает состояние общества, а состояние детского чтения показывает отношение общества к своему будущему. Именно поэтому в рамках Национальной ярмарки постоянно предусматривается большое количество деловых мероприятий, посвященных проблемам детского чтения, детского книгоиздания. &lt;/p&gt;
-
-&lt;p&gt;Национальная ярмарка &amp;ndash; прекрасный испытательный полигон, позволяющий протестировать российский издательский бизнес, проверить соответствие отечественного книгоиздания международному уровню и объединить российских книжников в сообщество подлинных профессионалов. &lt;/p&gt;
- ',
-                                'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:59',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
-                                'TAGS' => 'выставка книги',
-                                'PROPERTIES' => Array (
-                                    'KEYWORDS' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'выставка книги',
-                                    ),
-                                    'THEMES' => Array (
-                                        'PROPERTY_TYPE' => 'G',
-                                        'VALUE' => Array (
-                                            '0' => '1',
-                                        ),
-                                    ),
+                                'PREVIEW_TEXT' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at blandit mi. Morbi et odio et purus finibus ultricies. Suspendisse potenti. ',
+                                'PREVIEW_TEXT_TYPE' => 'text',
+                                'DETAIL_PICTURE' => Array (
+                                    'ID' => '188',
+                                    'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                    'MODULE_ID' => 'iblock',
+                                    'HEIGHT' => '1365',
+                                    'WIDTH' => '2048',
+                                    'FILE_SIZE' => '200126',
+                                    'CONTENT_TYPE' => 'image/jpeg',
+                                    'SUBDIR' => 'iblock/586',
+                                    'FILE_NAME' => '10.jpg',
+                                    'ORIGINAL_NAME' => '10.jpg',
+                                    'DESCRIPTION' => '',
+                                    'HANDLER_ID' => '',
+                                    '~src' => '',
+                                    'SRC' => '/upload/iblock/586/10.jpg',
+                                    'NEW_SRC' => '188.jpg',
                                 ),
+                                'DETAIL_TEXT' => '',
+                                'DETAIL_TEXT_TYPE' => 'text',
+                                'DATE_CREATE' => '16.01.2015 19:58:19',
+                                'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                'TAGS' => '',
                             ),
                             '2' => Array (
-                                'CODE' => 'OLD_ID_14',
-                                'EXTERNAL_ID' => '1732',
-                                'NAME' => 'Выставка &quot;PostPrint - 2007&quot;',
+                                'CODE' => 'tsvetok',
+                                'EXTERNAL_ID' => '11',
+                                'NAME' => 'Цветок',
                                 'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '06.10.2009',
+                                'DATE_ACTIVE_FROM' => '',
                                 'SORT' => '500',
                                 'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Торговая выставка книгопечатания. ',
-                                'PREVIEW_TEXT_TYPE' => 'html',
-                                'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => '
-&lt;p&gt;С 25.04.2007 по 27.04.2007 в Берлине (Германия) пройдет торговая выставка книгопечатания.&lt;/p&gt;
-
-&lt;p&gt;Организаторы выставки: &lt;strong&gt;Messe Berlin GmbH&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Рубрика: &lt;strong&gt;Рекламная и издательская деятельность&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Место проведения: &lt;strong&gt;Messegelande&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Выставка &lt;b&gt;PostPrint&lt;/b&gt; сосредотачивается на печати и распределении. Преимущество состоит в том, что всестороннее понятие выставки теперь включает все стадии технологического процесса печати (планирование, цифровая печать, бумага, распределение).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Основные тематические разделы&lt;/strong&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Маркировка &lt;/li&gt;
-
-  &lt;li&gt;Обработка бумаги &lt;/li&gt;
-
-  &lt;li&gt;Печать &lt;/li&gt;
-
-  &lt;li&gt;Программное обеспечение &lt;/li&gt;
-&lt;/ul&gt;
-',
-                                'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:10:00',
-                                'TIMESTAMP_X' => '12.01.2015 23:10:00',
-                                'TAGS' => 'выставка',
-                                'PROPERTIES' => Array (
-                                    'KEYWORDS' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'выставка',
-                                    ),
-                                    'THEMES' => Array (
-                                        'PROPERTY_TYPE' => 'G',
-                                        'VALUE' => Array (
-                                            '0' => '1',
-                                        ),
-                                    ),
+                                'PREVIEW_TEXT' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at blandit mi. Morbi et odio et purus finibus ultricies. Suspendisse potenti. ',
+                                'PREVIEW_TEXT_TYPE' => 'text',
+                                'DETAIL_PICTURE' => Array (
+                                    'ID' => '189',
+                                    'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                    'MODULE_ID' => 'iblock',
+                                    'HEIGHT' => '1441',
+                                    'WIDTH' => '2048',
+                                    'FILE_SIZE' => '2039798',
+                                    'CONTENT_TYPE' => 'image/jpeg',
+                                    'SUBDIR' => 'iblock/adf',
+                                    'FILE_NAME' => '11.jpg',
+                                    'ORIGINAL_NAME' => '11.jpg',
+                                    'DESCRIPTION' => '',
+                                    'HANDLER_ID' => '',
+                                    '~src' => '',
+                                    'SRC' => '/upload/iblock/adf/11.jpg',
+                                    'NEW_SRC' => '189.jpg',
                                 ),
+                                'DETAIL_TEXT' => '',
+                                'DETAIL_TEXT_TYPE' => 'text',
+                                'DATE_CREATE' => '16.01.2015 19:58:19',
+                                'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                'TAGS' => '',
                             ),
                         ),
                     ),
                     '1' => Array (
-                        'TIMESTAMP_X' => '12.01.2015 23:09:58',
-                        'DATE_CREATE' => '12.01.2015 23:09:58',
+                        'TIMESTAMP_X' => '16.01.2015 19:58:19',
+                        'DATE_CREATE' => '16.01.2015 19:58:19',
                         'IBLOCK_SECTION_ID' => '',
                         'ACTIVE' => 'Y',
                         'GLOBAL_ACTIVE' => 'Y',
                         'SORT' => '500',
-                        'NAME' => 'Доставка и поиск',
+                        'NAME' => 'Демо 2',
                         'PICTURE' => '',
-                        'LEFT_MARGIN' => '5',
-                        'RIGHT_MARGIN' => '6',
+                        'LEFT_MARGIN' => '3',
+                        'RIGHT_MARGIN' => '4',
                         'DEPTH_LEVEL' => '1',
                         'DESCRIPTION' => '',
                         'DESCRIPTION_TYPE' => 'text',
-                        'SEARCHABLE_CONTENT' => 'ДОСТАВКА И ПОИСК
+                        'SEARCHABLE_CONTENT' => 'ДЕМО 2
 ',
-                        'CODE' => 'OLD_ID_6',
-                        'XML_ID' => '223',
+                        'CODE' => 'demo-2',
+                        'XML_ID' => '',
                         'DETAIL_PICTURE' => '',
-                        'EXTERNAL_ID' => '223',
-                        'SECTIONS' => Array (
-                            '0' => '',
-                        ),
+                        'EXTERNAL_ID' => '',
                         'ELEMENTS' => Array (
                             '0' => Array (
-                                'CODE' => 'OLD_ID_6',
-                                'EXTERNAL_ID' => '1302',
-                                'NAME' => 'Доставка книг',
+                                'CODE' => 'ptitsa',
+                                'EXTERNAL_ID' => '12',
+                                'NAME' => 'Птица',
                                 'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '02.10.2009',
+                                'DATE_ACTIVE_FROM' => '',
                                 'SORT' => '500',
                                 'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Доставка книг возможна по почте во все регионы России. ',
-                                'PREVIEW_TEXT_TYPE' => 'html',
-                                'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => 'Доставка товаров по Москве.&lt;br&gt;&lt;br&gt;1. Доставка книг осуществляется на следующий рабочий день после оплаты. По возможности, мы стараемся доставлять книги в день заказа.&lt;br&gt;2. Доставка работает ежедневно с 11 до 19 часов. В субботу и воскресенье до 16 часов.&lt;br&gt;3. Время доставки сотрудник службы доставки согласует с Вами по телефону.&lt;br&gt;4. Доставка по Москве БЕСПЛАТНАЯ. Заказанные книги принесут Вам домой до двери.&lt;br&gt;5. Доставка товаров по Московской области осуществляется по определенным тарифам.&lt;br&gt;&lt;br&gt;Доставка товаров по России.&lt;br&gt;&lt;br&gt;1. Доставка товаров за пределы Московской области осуществляется транспортными компаниями.&lt;br&gt;2. Стоимость доставки зависит от веса и объема товара, а также от типа доставки.&lt;br&gt;3. В стоимость доставки заказа включается страховка.&lt;br&gt;4. Срок выполнения доставки зависит от типа доставки и города. Заказ передается на доставку транспортной компании на следующий день после получения денег.&lt;br&gt;5. Счет с полной стоимостью заказа &amp;#40;сумма товаров &amp;#43; стоимость доставки &amp;#43; страховка&amp;#41; высылается в течение рабочего дня по электронной почте или по факсу.&lt;br&gt;6. Вы можете оплатить счет в любом &amp;#40;или предложенном в счете&amp;#41; отделении Сбербанка для частных лиц или через свой расчетный счет для организаций.&lt;br&gt;7. Для своевременного резервирования товара вышлите нам копии платежных документов по электронной почте или по факсу.',
-                                'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:58',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:58',
-                                'TAGS' => 'доставка книг',
-                                'PROPERTIES' => Array (
-                                    'KEYWORDS' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'доставка книг',
-                                    ),
-                                    'THEMES' => Array (
-                                        'PROPERTY_TYPE' => 'G',
-                                        'VALUE' => Array (
-                                            '0' => '2',
-                                        ),
-                                    ),
-                                ),
-                            ),
-                            '1' => Array (
-                                'CODE' => 'OLD_ID_8',
-                                'EXTERNAL_ID' => '1306',
-                                'NAME' => 'Google отсканирует 30 млн книг',
-                                'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '04.10.2009',
-                                'SORT' => '500',
-                                'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Компания Google намерена приложить большие усилия для совершенствования своей системы поиска книг Google Book Search. ',
-                                'PREVIEW_TEXT_TYPE' => 'html',
+                                'PREVIEW_TEXT' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at blandit mi. Morbi et odio et purus finibus ultricies. Suspendisse potenti. ',
+                                'PREVIEW_TEXT_TYPE' => 'text',
                                 'DETAIL_PICTURE' => Array (
-                                    'ID' => '1',
-                                    'TIMESTAMP_X' => '12.01.2015 23:09:59',
+                                    'ID' => '190',
+                                    'TIMESTAMP_X' => '17.01.2015 13:42:29',
                                     'MODULE_ID' => 'iblock',
-                                    'HEIGHT' => '155',
-                                    'WIDTH' => '220',
-                                    'FILE_SIZE' => '21887',
+                                    'HEIGHT' => '1314',
+                                    'WIDTH' => '2048',
+                                    'FILE_SIZE' => '926226',
                                     'CONTENT_TYPE' => 'image/jpeg',
-                                    'SUBDIR' => 'iblock/e19',
-                                    'FILE_NAME' => 'google.jpg',
-                                    'ORIGINAL_NAME' => 'google.jpg',
+                                    'SUBDIR' => 'iblock/f6e',
+                                    'FILE_NAME' => '12.jpg',
+                                    'ORIGINAL_NAME' => '12.jpg',
                                     'DESCRIPTION' => '',
                                     'HANDLER_ID' => '',
                                     '~src' => '',
-                                    'SRC' => '/upload/iblock/e19/google.jpg',
-                                    'NEW_SRC' => '1.jpg',
+                                    'SRC' => '/upload/iblock/f6e/12.jpg',
+                                    'NEW_SRC' => '190.jpg',
                                 ),
-                                'DETAIL_TEXT' => 'Компания Google намерена приложить большие усилия для совершенствования своей системы поиска книг Google Book Search. &lt;br&gt;&lt;br&gt;В рамках данной инициативы компания Google осуществляет сканирование книг, которые хранятся в Нью-Йоркской публичной библиотеке, а также библиотеках Стенфордского, Гарвардского, Мичиганского и Оксфордского университетов. На сегодня отсканированы примерно миллион книг.&lt;br&gt;&lt;br&gt;Защищенные копирайтом материалы пользователи полностью просматривать не могут. Книжный поисковик предлагает доступ и к полным текстам, однако это касается лишь тех произведений, которые не защищены авторским правом. &lt;br&gt;&lt;br&gt;Предполагается, что в цифровой вид будут переведены до 30 млн книг. Google обещает, что вскоре пользователи Google Book Search смогут покупать книги для просмотра непосредственно в окне браузера, причем их копирование и распечатка будут запрещены. &lt;br&gt;&lt;br&gt;Одновременно с книжным бизнесом Google, как отмечает Hollywood Reporter, намерена развивать и видеосервисы. В первую очередь, это касается служб Google Video и YouTube. Причем в компании Google подчеркивают, что система Google Video предназначена для поиска видео в интернете, тогда как сервис YouTube позволяет размещать и просматривать ролики, в том числе любительские. Иными словами, поскольку Google Video и YouTube выполняют различные функции, они не должны мешать работе друг друга. &lt;br&gt;&lt;br&gt;Google также уделяет внимание рынку видеорекламы. Нужно отметить, что большую часть доходов Google получает именно от размещения рекламных ссылок в результатах поиска. Отображение анимированных рекламных объявлений и видеороликов, теоретически, позволит Google увеличить прибыль.',
-                                'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:59',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
-                                'TAGS' => 'Google книги',
-                                'PROPERTIES' => Array (
-                                    'SOURCE' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'science.compulenta.ru ',
-                                    ),
-                                    'KEYWORDS' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'Google книги',
-                                    ),
-                                    'THEMES' => Array (
-                                        'PROPERTY_TYPE' => 'G',
-                                        'VALUE' => Array (
-                                            '0' => '4',
-                                        ),
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                    '2' => Array (
-                        'TIMESTAMP_X' => '12.01.2015 23:09:58',
-                        'DATE_CREATE' => '12.01.2015 23:09:58',
-                        'IBLOCK_SECTION_ID' => '',
-                        'ACTIVE' => 'Y',
-                        'GLOBAL_ACTIVE' => 'Y',
-                        'SORT' => '500',
-                        'NAME' => 'Книги и авторы',
-                        'PICTURE' => '',
-                        'LEFT_MARGIN' => '7',
-                        'RIGHT_MARGIN' => '8',
-                        'DEPTH_LEVEL' => '1',
-                        'DESCRIPTION' => '',
-                        'DESCRIPTION_TYPE' => 'text',
-                        'SEARCHABLE_CONTENT' => 'КНИГИ И АВТОРЫ
-',
-                        'CODE' => 'OLD_ID_7',
-                        'XML_ID' => '220',
-                        'DETAIL_PICTURE' => '',
-                        'EXTERNAL_ID' => '220',
-                        'SECTIONS' => Array (
-                            '0' => '',
-                        ),
-                        'ELEMENTS' => Array (
-                            '0' => Array (
-                                'CODE' => 'OLD_ID_7',
-                                'EXTERNAL_ID' => '1304',
-                                'NAME' => 'Названы лучшие книги и издательства 2006 года',
-                                'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '03.10.2009',
-                                'SORT' => '500',
-                                'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'В Российской государственной библиотеке (РГБ) состоялась церемония вручения премий &amp;quot;Лучшие книги и издательства года&amp;quot;, сообщает РИА &amp;quot;Новости&amp;quot;.',
-                                'PREVIEW_TEXT_TYPE' => 'html',
-                                'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => 'В Российской государственной библиотеке &amp;#40;РГБ&amp;#41; состоялась церемония вручения премий &amp;quot;Лучшие книги и издательства года&amp;quot;, сообщает РИА &amp;quot;Новости&amp;quot;.&lt;br&gt;&lt;br&gt;Премий были удостоены Евгений Примаков &amp;#40;мемуары &amp;quot;Минное поле политики&amp;quot;&amp;#41;, кардиохирург Лео Бокерия &amp;#40;&amp;quot;Здоровье России&amp;quot;, &amp;quot;Социально-значимые болезни в Российской Федерации&amp;quot;&amp;#41;, историк Анатолий Смирнов &amp;#40;жизнеописание Карамзина&amp;#41;, Владимир и Сергей Луневы &amp;#40;иллюстрированная история Святогорской лавры &amp;quot;Путь к Истине&amp;quot;&amp;#41;, юрист Александр Звягинцев &amp;#40;&amp;quot;Нюрнбергский набат&amp;quot;&amp;#41;, директор издательства &amp;quot;Росспэн&amp;quot; Андрей Сорокин &amp;#40;энциклопедия &amp;quot;Государственная Дума России 1906-2006&amp;quot;&amp;#41;.&lt;br&gt;&lt;br&gt;Лауреатами стали также писатель Анатолий Салуцкий &amp;#40;роман &amp;quot;Из России с любовью&amp;quot;&amp;#41;, историк Александр Боханов &amp;#40;цикл книг по истории России&amp;#41;, политолог Вячеслав Кеворков &amp;#40;&amp;quot;Исповедь перед казнью. Из воспоминаний следователя по особо важным делам МГБ СССР&amp;quot;&amp;#41;, доктор биологических наук Марина Бобкова &amp;#40;исследование &amp;quot;Иммунитет и ВИЧ-инфекция&amp;quot;&amp;#41;, настоятель Сретенского монастыря архимандрит Тихон &amp;#40;Шевкунов&amp;#41; за издание религиозной литературы, писатель Владимир Бутромеев &amp;#40;энциклопедический справочник &amp;quot;Символ власти&amp;quot;&amp;#41;.&lt;br&gt;&lt;br&gt;Лучшими издательствами названы &amp;quot;Молодая гвардия&amp;quot;, &amp;quot;Эксмо&amp;quot;, &amp;quot;Правда Севера&amp;quot;, Тюменского государственного университета, центр &amp;quot;Учебная книга&amp;quot; &amp;#40;Екатеринбург&amp;#41;, &amp;quot;Русский путь&amp;quot;, Пушкинский фонд &amp;quot;Классика&amp;quot;.&lt;br&gt;&lt;br&gt;&amp;quot;Особенность нынешнего награждения состоит в том, что жюри обращает внимание на книги, символизирующие преемственность отечественной истории&amp;quot;, - сказал, открывая церемонию председатель жюри, генеральный директор Русского биографического института Святослав Рыбас. &amp;quot;Мы хотим этим сказать нашему обществу: пора более взвешено относиться к собственной истории и перестать рассматривать ее как поле брани&amp;quot;, - подчеркнул он.&lt;br&gt;&lt;br&gt;В свою очередь директор РГБ Виктор Федоров заявил, что книгоиздание в России успешно развивается и по числу названий изданных книг уже достигло уровня СССР.&lt;br&gt;&lt;br&gt;Премия &amp;quot;Лучшие книги и издательства года&amp;quot;, девизом которой является &amp;quot;Благородство, красота, общественная польза&amp;quot;, учреждена пять лет назад Русским биографическим институтом, Российской государственной библиотекой и &amp;quot;Литературной газетой&amp;quot;.',
-                                'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:58',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
-                                'TAGS' => 'лучшие книги издательства',
-                                'PROPERTIES' => Array (
-                                    'SOURCE' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'NEWSru.com',
-                                    ),
-                                    'KEYWORDS' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'лучшие книги издательства',
-                                    ),
-                                    'THEMES' => Array (
-                                        'PROPERTY_TYPE' => 'G',
-                                        'VALUE' => Array (
-                                            '0' => '3',
-                                        ),
-                                    ),
-                                ),
+                                'DETAIL_TEXT' => '',
+                                'DETAIL_TEXT_TYPE' => 'text',
+                                'DATE_CREATE' => '16.01.2015 19:58:19',
+                                'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                'TAGS' => '',
                             ),
                             '1' => Array (
-                                'CODE' => 'OLD_ID_10',
-                                'EXTERNAL_ID' => '1317',
-                                'NAME' => 'Самые популярные авторы',
+                                'CODE' => 'most',
+                                'EXTERNAL_ID' => '13',
+                                'NAME' => 'Мост',
                                 'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '06.10.2009',
+                                'DATE_ACTIVE_FROM' => '',
                                 'SORT' => '500',
                                 'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Известен список&amp;nbsp;популярных авторов за последний год. Пятерка лучших:&amp;nbsp;Б. Акунин, Л.П. Франкел, А. Карр, С. Минаев, А. Гавальда.',
-                                'PREVIEW_TEXT_TYPE' => 'html',
-                                'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => '
-&lt;p&gt;Известен список&amp;nbsp;популярных авторов за последний год:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Борис Акунин&lt;/strong&gt; - псевдоним писателя, литературоведа и переводчика Григория Шалвовича Чхартишвили, под которым он публикует детективные произведения о сыщике Эрасте Фандорине. Родился писатель в Грузии в 1956 году. С 1958 года живет в Москве. Закончил историко-филологическое отделение Института стран Азии и Африки (МГУ). Заместитель главного редактора журнала &amp;quot;Иностранная литература&amp;quot;, главный редактор 20-томной &amp;quot;Антологии японской литературы&amp;quot;, председатель правления мегапроекта &amp;quot;Пушкинская библиотека&amp;quot; (Фонд Сороса). Автор книги &amp;quot;Писатель и самоубийство&amp;quot; (М.: Новое литературное обозрение, 1999), литературно-критических статей, переводов японской, американской и английской литературы (Юкио Мисима, Кэндзи Маруяма, Ясуси Иноуэ, КорагессанБойл, Малкольм Брэдбери, Питер Устинов и др.).
-    &lt;br /&gt;
-  &lt;/li&gt;
-
-  &lt;li&gt;&lt;strong&gt;Лоис П. Франкел (Lois P. Frankel) &lt;/strong&gt;- не только ведущий специалист по подготовке персонала, но и один из пионеров в этой области. Основываясь на десятилетнем опыте работы в нефтяной компании и собственных наблюдениях, Франкел организовала международную фирму по тренировке персонала &amp;quot;Корпорейт Коучинг Интернешнл&amp;quot;. Как консультант работала компаниями &amp;quot;Миллер&amp;quot;, &amp;quot;Уолт Дисней&amp;quot;, &amp;quot;Локхид Мартин&amp;quot;, газетой &amp;quot;Голливуд репортер&amp;quot; и многими другими организациями. Является автором ряда книг по практической философии: &amp;quot;Женщины, гнев и депрессия&amp;quot;, &amp;quot;Начни свою карьеру&amp;quot;, &amp;quot;Превосходя ваши силы&amp;quot;. Ее книги &amp;quot;Хорошие девочки не добиваются успеха в бизнесе&amp;quot; и &amp;quot;Хорошие девочки не становятся богатыми&amp;quot; стали бестселлерами во многих странах и переведены на более чем двадцать языков. Постоянный участник различных конференций и международных симпозиумов, Франкел также работает с общественными некоммерческими организациями. Член Американской Психологической Ассоциации, Национальной Ассоциации Спикеров и Общества управления человеческими ресурсами, имеет степень доктора психологии Южно- Калифорнийского Университета.
-    &lt;br /&gt;
-  &lt;/li&gt;
-
-  &lt;li&gt;&lt;strong&gt;Аллен Карр (Allen Carr)&lt;/strong&gt; - oдин из самых активных и известных борцов с курением, чьи книги разошлись по всему миру многомиллионными тиражами. Благодаря разработанному им методу и его книгам миллионы людей во всем мире нашли в себе силы избавиться от никотиновой зависимости. Среди его клиентов были такие знаменитости как актер Энтони Хопкинс и известный британский предприниматель-миллиардер Ричард Брэнсон. Несмотря на многолетний его отказ от курения, в июле 2006 года врачи диагностировали у Аллена Кара не подлежащий операции рак легких. Узнав об этом, Карр заявил: &amp;quot;По моим оценкам, я вылечил двадцать пять миллионов человек за эти годы. И если моя болезнь - расплата за это, то я готов заплатить&amp;quot;. Аллен Карр ушел из жизни в том же году - 26 ноября он скончался в собственном доме на побережье Коста-дель-Соль в городе Малага в Испании.
-    &lt;br /&gt;
-  &lt;/li&gt;
-
-  &lt;li&gt;&lt;strong&gt;Сергей Минаев&lt;/strong&gt; - известный бизнесмен и публицист. Очень популярен как сетевой писатель. Дебютный роман &amp;quot;Духless&amp;quot; с первых дней выхода в свет стал лидером продаж.
-    &lt;br /&gt;
-  &lt;/li&gt;
-
-  &lt;li&gt;&lt;strong&gt;Анна Гавальда (Anna Gavalda) -&amp;nbsp;&lt;/strong&gt; училась в Сорбонне, работала кассиршей и официанткой, занималась журналистикой. В 1992 году победила в национальном конкурсе на лучшее любовное письмо. В 1998 году она завоевала премию &amp;quot;Кровь в чернильнице&amp;quot; за новеллу &amp;quot;Aristote&amp;quot; и победила еще в двух литературных конкурсах. В 1999 году вышла книга Анны Гавальды &amp;quot;Мне бы хотелось, чтоб меня кто-нибудь где-нибудь ждал&amp;hellip;&amp;quot;, удостоенная в 2000 году Гран-при RTL. Этот сборник новелл в течение следующих четырех лет был переведен почти на 30 языков и принес своему автору славу новой звезды французской словесности. В 2002 году вышел первый роман Гавальды - &amp;quot;Я его любила&amp;quot;, а в следующем году она продолжает работу над романом &amp;quot;Ensemble, c&#039;est tout&amp;quot;. Анна Гавальда живет на юго-востоке Парижа, пишет каждый день по три часа и воспитывает двух детей.
-    &lt;br /&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-',
-                                'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:59',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
-                                'TAGS' => 'лучший автор',
-                                'PROPERTIES' => Array (
-                                    'KEYWORDS' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'лучший автор',
-                                    ),
-                                    'THEMES' => Array (
-                                        'PROPERTY_TYPE' => 'G',
-                                        'VALUE' => Array (
-                                            '0' => '3',
-                                        ),
-                                    ),
+                                'PREVIEW_TEXT' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at blandit mi. Morbi et odio et purus finibus ultricies. Suspendisse potenti.',
+                                'PREVIEW_TEXT_TYPE' => 'text',
+                                'DETAIL_PICTURE' => Array (
+                                    'ID' => '191',
+                                    'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                    'MODULE_ID' => 'iblock',
+                                    'HEIGHT' => '1348',
+                                    'WIDTH' => '2048',
+                                    'FILE_SIZE' => '850725',
+                                    'CONTENT_TYPE' => 'image/jpeg',
+                                    'SUBDIR' => 'iblock/2a6',
+                                    'FILE_NAME' => '13.jpg',
+                                    'ORIGINAL_NAME' => '13.jpg',
+                                    'DESCRIPTION' => '',
+                                    'HANDLER_ID' => '',
+                                    '~src' => '',
+                                    'SRC' => '/upload/iblock/2a6/13.jpg',
+                                    'NEW_SRC' => '191.jpg',
                                 ),
+                                'DETAIL_TEXT' => '',
+                                'DETAIL_TEXT_TYPE' => 'text',
+                                'DATE_CREATE' => '16.01.2015 19:58:19',
+                                'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                'TAGS' => '',
                             ),
                             '2' => Array (
-                                'CODE' => 'OLD_ID_13',
-                                'EXTERNAL_ID' => '1730',
-                                'NAME' => 'Российские писатели вошли в список молодых литературных талантов США',
+                                'CODE' => 'utro',
+                                'EXTERNAL_ID' => '14',
+                                'NAME' => 'Утро',
                                 'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '06.10.2009',
+                                'DATE_ACTIVE_FROM' => '',
                                 'SORT' => '500',
                                 'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Авторитетный в англоязычном литературном мире британский журнал Granta составил новый перечень наиболее многообещающих молодых писателей США. В него вошли и писатели русского происхождения. ',
-                                'PREVIEW_TEXT_TYPE' => 'html',
-                                'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => '
-&lt;p&gt;Авторитетный в англоязычном литературном мире британский журнал Granta составил новый перечень наиболее многообещающих молодых писателей США. В него вошли и писатели русского происхождения &amp;ndash; это москвичка Ольга Грушина, живущая и работающая теперь в Вашингтоне, и бывший ленинградец Гэри Штейнгарт, обосновавшийся на Манхэттене. Презентация журнала с новым престижным перечнем состоялась на днях в Нью-Йорке. &lt;/p&gt;
-
-&lt;p&gt;В течение года компетентное жюри в составе шести человек, писателей, публицистов и редакторов, читали и выбирали молодых &amp;quot;звезд&amp;quot; американской литературы. Всего в новом интернациональном списке журнала Granta значатся имена 21 писателя в возрасте до 35 лет, говорится на сайте журнала. Наряду с представителями США в нем значатся, например, уроженцы Дели, Лимы и Пекина, а также чикагский таец и вашингтонский нигериец. &lt;/p&gt;
-
-&lt;p&gt;Ольга Грушина, американская писательница русского происхождения, проживающая в США с 1989 года, дебютировала с написанным на английском языке романом &amp;quot;Жизнь Суханова в сновидениях&amp;quot; (&amp;quot;The Dream Life of Sukhanov&amp;quot;) в прошлом году. Он был опубликован в издательстве G. P. Putnams Sons. &lt;/p&gt;
-
-&lt;p&gt;Книга получила очень высокие отзывы от критиков из ведущих американских и британских изданий - от The New York Times до The Independent. Он вошел в сотню &amp;quot;самых заметных книг 2006 года&amp;quot; по версии газеты The New York Times. Эта американская газета, рецензии которой считаются одними из самых влиятельных в США, ежегодно составляет перечень самых ярких книг. В 2006 году роман был номинирован на британскую литературную премию Orange Prize. &lt;/p&gt;
-
-&lt;p&gt;Штейнгарт известен, как автор романов &amp;quot;Абсурдистан&amp;quot; и &amp;quot;Пособие для русского дебютанта&amp;quot;, передает ИТАР-ТАСС. Книга также издана на английском языке. &lt;/p&gt;
-
-&lt;p&gt;Предыдущий список журнал Granta составлял в 1996 году - он оказался во многом пророческим. Британский Observer называет лист Granta &amp;quot;списком, который определяет литературную повестку для целого поколения&amp;quot;. &lt;/p&gt;
-
-&lt;p&gt;Литературный журнал был основан в 1889 году в Кембридже и носит имя реки, протекающей через университетский городок. С 1979 года он выходит в обновленном формате - как ежеквартальный вестник новой литературы и эссеистики. &lt;/p&gt;
-
-&lt;p&gt;Наряду с молодыми авторами на его страницах печатались такие корифеи, как Мартин Эмис, Сол Беллоу, Милан Кундера, Габриэль Гарсиа Маркес и другие. Один из номеров новой Granta в 1998 году был целиком посвящен России. &lt;/p&gt;
-',
-                                'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:59',
-                                'TIMESTAMP_X' => '12.01.2015 23:10:00',
-                                'TAGS' => 'авторы',
-                                'PROPERTIES' => Array (
-                                    'KEYWORDS' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'авторы',
-                                    ),
-                                    'THEMES' => Array (
-                                        'PROPERTY_TYPE' => 'G',
-                                        'VALUE' => Array (
-                                            '0' => '3',
-                                        ),
-                                    ),
+                                'PREVIEW_TEXT' => 'Lorem ipsum dolor sit amet, &quot;consectetur&quot; adipiscing elit. Sed at blandit mi. Morbi et odio et purus finibus ultricies. Suspendisse potenti. ',
+                                'PREVIEW_TEXT_TYPE' => 'text',
+                                'DETAIL_PICTURE' => Array (
+                                    'ID' => '192',
+                                    'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                    'MODULE_ID' => 'iblock',
+                                    'HEIGHT' => '1361',
+                                    'WIDTH' => '2048',
+                                    'FILE_SIZE' => '923891',
+                                    'CONTENT_TYPE' => 'image/jpeg',
+                                    'SUBDIR' => 'iblock/ddc',
+                                    'FILE_NAME' => '14.jpg',
+                                    'ORIGINAL_NAME' => '14.jpg',
+                                    'DESCRIPTION' => '',
+                                    'HANDLER_ID' => '',
+                                    '~src' => '',
+                                    'SRC' => '/upload/iblock/ddc/14.jpg',
+                                    'NEW_SRC' => '192.jpg',
                                 ),
+                                'DETAIL_TEXT' => '',
+                                'DETAIL_TEXT_TYPE' => 'text',
+                                'DATE_CREATE' => '16.01.2015 19:58:19',
+                                'TIMESTAMP_X' => '17.01.2015 13:42:29',
+                                'TAGS' => '',
                             ),
                         ),
                     ),
-                    '3' => Array (
-                        'TIMESTAMP_X' => '12.01.2015 23:09:58',
-                        'DATE_CREATE' => '12.01.2015 23:09:58',
-                        'IBLOCK_SECTION_ID' => '',
-                        'ACTIVE' => 'Y',
-                        'GLOBAL_ACTIVE' => 'Y',
-                        'SORT' => '500',
-                        'NAME' => 'Конкурсы',
-                        'PICTURE' => '',
-                        'LEFT_MARGIN' => '9',
-                        'RIGHT_MARGIN' => '10',
-                        'DEPTH_LEVEL' => '1',
-                        'DESCRIPTION' => '',
-                        'DESCRIPTION_TYPE' => 'text',
-                        'SEARCHABLE_CONTENT' => 'КОНКУРСЫ
-',
-                        'CODE' => 'OLD_ID_8',
-                        'XML_ID' => '221',
-                        'DETAIL_PICTURE' => '',
-                        'EXTERNAL_ID' => '221',
-                        'SECTIONS' => Array (
-                            '0' => '',
-                        ),
-                        'ELEMENTS' => Array (
-                            '0' => Array (
-                                'CODE' => 'OLD_ID_5',
-                                'EXTERNAL_ID' => '1300',
-                                'NAME' => 'Конкурс на лучшую рецензию',
-                                'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '01.10.2009',
-                                'SORT' => '500',
-                                'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Сегодняшняя дата - официальное начало конкурса на лучшую рецензию на любую из книг нашего каталога. ',
-                                'PREVIEW_TEXT_TYPE' => 'html',
-                                'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => 'Конкурс проводится со 2 марта по 2 июня 2007 года. Окончание приема заявок 1 июня, 2 июня - объявление итогов конкурса.&lt;br&gt;&lt;br&gt;Жюри оценивает рецензии на книги, представленные в каталоге на нашем сайте.&amp;nbsp;&amp;nbsp;&lt;br&gt;&lt;br&gt;Все присланные Вами рецензии будут переданы на суд компетентного жюри, в состав которого входят редакторы популярных изданий, писатели, дизайнеры издательских домов. &lt;br&gt;&lt;br&gt;Жюри оценивает талантливость рецензии, ее остроумие, литературные достоинства. Отношение автора к рецензируемой книге и характер рецензии &amp;#40;положительный, отрицательный, амбивалентный&amp;#41; значения не имеет и критерием оценки не является. &lt;br&gt;&lt;br&gt;Количество рецензий, представленных одним автором не ограничено. &lt;br&gt;&lt;br&gt;Победителям конкурса будут вручены призы: комплекты книг от издательства &amp;quot;Книжный дом&amp;quot;.',
-                                'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:58',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:58',
-                                'TAGS' => 'конкурс рецензия',
-                                'PROPERTIES' => Array (
-                                    'KEYWORDS' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'конкурс рецензия',
-                                    ),
-                                    'THEMES' => Array (
-                                        'PROPERTY_TYPE' => 'G',
-                                        'VALUE' => Array (
-                                            '0' => '3',
-                                        ),
-                                    ),
-                                ),
-                            ),
-                            '1' => Array (
-                                'CODE' => 'OLD_ID_11',
-                                'EXTERNAL_ID' => '1685',
-                                'NAME' => 'Конкурс &quot;Книга будущего&quot;',
-                                'ACTIVE' => 'Y',
-                                'DATE_ACTIVE_FROM' => '06.10.2009',
-                                'SORT' => '500',
-                                'PREVIEW_PICTURE' => '',
-                                'PREVIEW_TEXT' => 'Журнал &amp;quot;Самиздат&amp;quot; объявляет о проведении конкурса &amp;quot;Книга будущего&amp;quot;, который пройдет с 15.03.2007 по 1.06.2007. ',
-                                'PREVIEW_TEXT_TYPE' => 'html',
-                                'DETAIL_PICTURE' => '',
-                                'DETAIL_TEXT' => '
-&lt;p&gt;Основные положения конкурса:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;работы принимаются с 15.03.2007 по 15.05.2007; &lt;/li&gt;
-
-  &lt;li&gt;рассматривается одна работа от одного автора; &lt;/li&gt;
-
-  &lt;li&gt;работы, участвовавщие в других конкурсах не принимаются; &lt;/li&gt;
-
-  &lt;li&gt;не принимаются работы с ненормативной лексикой. &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Работы, присланные позже указанного срока проведения конкурса не рассматриваются.&lt;/p&gt;
-
-&lt;p&gt;В состав жюри входят редакторы журнала, писатели-фантасты.&amp;nbsp;Каждый член жюри оценивает работу по десятибальной системе.&amp;nbsp;Победителями считаются работы, набравшие наибольшее количество баллов.&lt;/p&gt;
-
-&lt;p&gt;Победителям конкурса будут вручены призы от журнала &amp;quot;Самиздат&amp;quot;.&lt;/p&gt;
-',
-                                'DETAIL_TEXT_TYPE' => 'html',
-                                'DATE_CREATE' => '12.01.2015 23:09:59',
-                                'TIMESTAMP_X' => '12.01.2015 23:09:59',
-                                'TAGS' => 'конкурс книга',
-                                'PROPERTIES' => Array (
-                                    'KEYWORDS' => Array (
-                                        'PROPERTY_TYPE' => 'S',
-                                        'VALUE' => 'конкурс книга',
-                                    ),
-                                    'THEMES' => Array (
-                                        'PROPERTY_TYPE' => 'G',
-                                        'VALUE' => Array (
-                                            '0' => '2',
-                                        ),
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                    '4' => '',
                 ),
             ),
         ),
