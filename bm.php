@@ -670,6 +670,7 @@ class BitrixMigration
         return false;
     }
 
+//TODO Заменить на функцию var_export
     protected static function arrayToString($array,$arrayName, $indent='    ')
     {
         if ($indent=='    ')
