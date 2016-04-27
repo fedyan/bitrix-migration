@@ -6,4 +6,3 @@ BitrixMigration 2.0
 
 ## Интерфейс
 ![Interface](interface.jpg "Интерфейс")
-
