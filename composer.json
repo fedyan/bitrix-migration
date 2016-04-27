@@ -1,0 +1,19 @@
+{
+"name": "fedyan/bm",
+	"description": "Import and Export bitrix iblocks data by php array",
+	"keywords":["bitrix","iblock","import","export"],	
+	"license":"MIT",
+	"support":{
+		"source":"https://github.com/fedyan/BitrixMigration"
+	},
+	"authors":[{
+	"name":"Fyodor Verbovenko",
+	"email":"4fyodor@gmail.com"
+
+}],
+
+	    "require": {
+        	"php": ">=5.3.0",
+	        "another-vendor/package": "1.*"
+    }
+}
