@@ -11,10 +11,7 @@
 	"email":"4fyodor@gmail.com"
 
 }],
-	"minimum-stability": "dev", 
-
 	    "require": {
-        	"php": ">=5.3.0",
-	        "another-vendor/package": "1.*"
-    }
+        	"php": ">=5.3.0"
+    	}
 }
