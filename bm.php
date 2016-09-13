@@ -7,7 +7,6 @@
  * @version 2.0
  * https://github.com/fedyan/BitrixMigration
  */
-
 class BitrixMigration
 {
     public $sStoreFilesDir = '/bm_files/';
@@ -82,12 +81,22 @@ class BitrixMigration
                     }
 
                     $("#iblocks-list").find("input").change(function () {
-                        sendRequest();
+                        if ( !$('#hide_output').is(":checked")) {
+                            sendRequest();
+                            $('#result_textarea').show();
+                        }else {
+                            $('#result_textarea').hide();
+                        }
+
+
 
                     });
 
+
+
+
                     $("input[name=save]").click(function () {
-                        if ( $("#result_textarea").text().length<=0 ) {
+                        if ( !$('#hide_output').is(":checked") &&  $("#result_textarea").text().length<=0 ) {
                             resultMessage('Выберите один из инфоблоков.','red');
                             return false;
                         }
@@ -98,9 +107,17 @@ class BitrixMigration
                             var sFileName = $("input[name=file-name]").val();
                             var sScript = $("#result_textarea").val();
 
-                            $(".iblocks-lists").after("<div id='loader'>Загружается...</div>")
+							var sHideOuput = $('#hide_output').is(":checked")?"Y":"N";
+                            var sLoadElements = $('#items').is(":checked")?"Y":"N";
+							
+                            $(".iblocks-lists").after("<div id='loader'>Загружается...</div>");
+							
+							var iblocks = [];
+							$('.iblocks').each(function(){
+								if ($(this).is(":checked")) iblocks.push($(this).val());
+							});
 
-                            $.post( currentScriptName,{save:"Y",file:sFileName, script: sScript}, function( data ) {
+                            $.post( currentScriptName,{save:"Y",file:sFileName,items:sLoadElements, iblocks:iblocks, hide:sHideOuput, script: sScript}, function( data ) {
                                  //console.log(data);
 
                                  if (data=="True") {
@@ -113,7 +130,8 @@ class BitrixMigration
                                      resultMessage("Возникли проблемы при сохранение файла. Возможные причины: <br />" +
                                          "- Имя файла может состоять из букв латинского алфавита и цифр, <br />" +
                                          "- Файл с таким именем уже существует, <br />" +
-                                         "- Возможно у скрипта не хватает прав на запись в эту папку.",'red');
+                                         "- Возможно у скрипта не хватает прав на запись в эту папку, <br />" +
+                                         "- Формируемый файл слишком большой и скрипт подвисает.",'red');
                                  }
 
                                  $("#loader").remove();
@@ -147,8 +165,13 @@ class BitrixMigration
                         var formInputs = $("#iblocks-list").serialize();
                         formInputs +="&ajax_call=Y";
                         $.post(currentScriptName, formInputs, function (data) {
-                            $("#result_textarea").text(data);
-                            $("#loader").remove();
+							$("#loader").remove();
+							
+							if ( !$('#hide_output').is(":checked")){
+								$("#result_textarea").text(data);                            
+							}else { 
+								$("#result_textarea").text('Данные сохранены в файл.');
+							}
                         });
                     }
 
@@ -159,6 +182,7 @@ class BitrixMigration
         <body>
         <input type="button" id="unselect_all" name="unselect_all" value="Снять для всех">
         <input type="button" id="select_all" name="select_all" value="Установить для всех">
+		 		 
         <div class="iblocks-lists">
             <form name="iblocks-list" id="iblocks-list">
                 <ul>
@@ -176,10 +200,17 @@ class BitrixMigration
                 </ul>
 
                 <hr />
-                <input class="iblocks" id="items" type="checkbox" name="items" value="Y">
+				<p>
+                <input id="items" type="checkbox" name="items" value="Y">
                 <label for="items">
                     Выгружать разделы и элементы
                 </label>
+				</p>
+				
+				<p><input id="hide_output" checked="checked" type="checkbox" name="hide_output" value="Y">
+                <label for="hide_output">
+						Не выводить массив
+                </label></p>
 
 
             </form>
@@ -188,7 +219,7 @@ class BitrixMigration
         <input type="text" name="file-name" value="import">.php
         <input type="button" name="save" value="Сохранить в файл"> или можете сделать copy&paste кода:
         <span id="do-something"><br /><br />Выберите один из инфоблоков.</span>
-        <textarea id="result_textarea" style="width:100%; height: 50%; position: relative; bottom: 0;"></textarea>
+        <textarea id="result_textarea" style="display:none; width:100%; height: 50%; position: relative; bottom: 0;"></textarea>
         </body>
         </html>
         <?
@@ -244,7 +275,19 @@ class BitrixMigration
         $ext = '.php';
         if ( !file_exists($fileName.$ext) && $fileName===$_REQUEST['file']){
             $fileName = $fileName.$ext;
-            $res = file_put_contents($fileName,$scriptString);
+			if ($_REQUEST['hide']=="Y"){
+			
+				$this->filter = $_REQUEST;
+				$this->bImportElements = $_REQUEST['items']==="Y";
+				if (count($this->filter)>0) $this->setFilter = true;
+				$this->getIbStructure();
+				$content = $this->generateFileContent();
+				$res = file_put_contents($fileName,$content); 
+				
+				
+			}else {
+				$res = file_put_contents($fileName,$scriptString);
+			}
             if ($res>0)
                 echo 'True';
             else
