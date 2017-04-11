@@ -185,8 +185,11 @@ class BitrixMigration
 		 		 
         <div class="iblocks-lists">
             <form name="iblocks-list" id="iblocks-list">
-                <ul>
                     <? foreach ($this->arResult as $arIblockType): ?>
+			<p><b>
+			<?=$arIblockType['NAME'] ;?>
+			</b></p>
+			<ul>
                         <? foreach ($arIblockType['IBLOCKS'] as $arIblock): ?>
                             <li>
                                 <input class="iblocks" id="iblock<?= $arIblock['ID'] ?>" type="checkbox" name="iblocks[]"
@@ -196,8 +199,8 @@ class BitrixMigration
                                 </label>
                             </li>
                         <? endforeach; ?>
+			</ul>
                     <? endforeach; ?>
-                </ul>
 
                 <hr />
 				<p>
